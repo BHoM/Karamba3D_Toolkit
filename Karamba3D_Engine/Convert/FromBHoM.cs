@@ -42,7 +42,7 @@ namespace BH.Engine.Adapters.Karamba3D
         [Description("Description of the method")]
         [Input("obj", "Description of the input")]
         [Output("outputName", "Description of output.")]
-        public static string SampleMethod(this object obj)
+        public static string FromBHoM(this object bhomObject)
         {
             return "";
         }
