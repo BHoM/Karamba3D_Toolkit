@@ -42,96 +42,17 @@ namespace BH.Adapter.Karamba3D
         [Description("Initialises the File_Adapter without a target location. Allows to target multiple files. Target file locations will have to be specified in the Adapter Action.")]
         public Karamba3DAdapter()
         {
-            // By default, if they exist already, the files to be created are wiped out and then re-created.
-            this.m_AdapterSettings.DefaultPushType = oM.Adapter.PushType.DeleteThenCreate;
-        }
-
-        [Description("Initialises the File_Adapter with a target location." +
-            "\nWhen Pushing, this is used for pushing objects that are not BHoM `File` or `Directory`, like generic objects." +
-            "\nWhen Pulling, if no request is specified, a FileContentRequest is automatically generated with this location.")]
-        [Input("targetLocation", "FilePath, including file extension.")]
-        public Karamba3DAdapter(string targetLocation)
-        {
-            Init(targetLocation);
-        }
-
-        [Description("Initialises the File_Adapter with a target location." +
-           "\nWhen Pushing, this is used for pushing objects that are not BHoM `File` or `Directory`, like generic objects." +
-           "\nWhen Pulling, if no request is specified, a FileContentRequest is automatically generated with this location.")]
-        [Input("folder", "Folder path.")]
-        [Input("fileName", "File name, including file extension.")]
-        public Karamba3DAdapter(string folder, string fileName)
-        {
-            if (folder?.Count() > 2 && folder?.ElementAt(1) != ':')
-                folder = Path.Combine(@"C:\ProgramData\BHoM\DataSets", folder);
-
-            string location = Path.Combine(folder, fileName);
-
-            Init(location);
         }
 
         /***************************************************/
         /**** Private Fields                            ****/
         /***************************************************/
 
-        private bool m_Push_enableDeleteWarning = true;
-        private bool m_Remove_enableDeleteWarning = true;
-        private bool m_Remove_enableDeleteAlert = true;
-        private bool m_Execute_enableWarning = true;
-        private string m_defaultFilePath = null;
-
 
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
 
-        // Initialisation method for when the File Adapter is instantiated with a location.
-        private bool Init(string location)
-        {
-            if (string.IsNullOrWhiteSpace(location))
-            {
-                BH.Engine.Base.Compute.RecordError("Please specifiy a valid target location.");
-                return true;
-            }
-
-            m_defaultFilePath = location;
-
-            if (!ProcessExtension(ref m_defaultFilePath))
-                return false;
-
-            BH.Engine.Base.Compute.RecordNote($"The adapter will always target the input location `{location}`." +
-                $"\nTo target multiple Files, use the {this.GetType().Name} constructor with no input.");
-
-            // By default, the objects are appendend to the file if it exists already.
-            this.m_AdapterSettings.DefaultPushType = oM.Adapter.PushType.CreateOnly;
-
-            return true;
-        }
-
-        /***************************************************/
-
-        // Checks on the file extension.
-        private bool ProcessExtension(ref string filePath)
-        {
-            string ext = Path.GetExtension(filePath);
-
-            if (!Path.HasExtension(m_defaultFilePath))
-            {
-                Engine.Base.Compute.RecordNote($"No extension specified in the FileName input. Defaulting to .json.");
-                ext = ".json";
-                filePath += ext;
-            }
-
-            if (ext != ".json")
-            {
-                Engine.Base.Compute.RecordError($"File_Adapter currently supports only .json extension type.\nSpecified file extension is `{ext}`.");
-                return false;
-            }
-
-            return true;
-        }
-
-        /***************************************************/
     }
 }
 
