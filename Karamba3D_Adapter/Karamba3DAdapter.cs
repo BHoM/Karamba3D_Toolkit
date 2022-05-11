@@ -28,7 +28,6 @@ using BH.oM.Base.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.IO.Abstractions;
 using System.Linq;
 
 namespace BH.Adapter.Karamba3D

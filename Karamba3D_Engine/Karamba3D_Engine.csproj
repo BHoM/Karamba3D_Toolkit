@@ -51,8 +51,17 @@
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Geometry_oM">
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_oM.dll</HintPath>
+    </Reference>
+    <Reference Include="karambaCommon">
+      <HintPath>..\Assemblies\karambaCommon.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Physical_oM">
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Physical_oM.dll</HintPath>
     </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
@@ -63,6 +72,12 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\Serialiser_Engine.dll</HintPath>
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Structure_Engine">
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Structure_oM">
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_oM.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -81,25 +96,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\FromBHoM.cs" />
+    <Compile Include="Convert\FromBHoM\FromBHoM.cs" />
+    <Compile Include="Convert\ToBHoM\ModelTruss.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Convert\ToBHoM.cs" />
+    <Compile Include="Convert\ToBHoM\ToBHoM.cs" />
     <Compile Include="Query\SampleMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj">
-      <Project>{d344dcf0-788d-4e0a-8596-70199a080619}</Project>
-      <Name>Karamba3D_oM</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Compute\" />
     <Folder Include="Create\" />
     <Folder Include="Modify\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj">
+      <Project>{d344dcf0-788d-4e0a-8596-70199a080619}</Project>
+      <Name>Karamba3D_oM</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

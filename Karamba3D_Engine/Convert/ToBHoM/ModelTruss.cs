@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
@@ -20,35 +20,23 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
-using BH.oM.Adapters.Karamba3D;
-using BH.oM.Base.Attributes;
-using System;
+using BH.oM.Structure.Elements;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Query
     {
-        /***************************************************/
-        /*** Methods                                     ***/
-        /***************************************************/
-
-        [Description("Description of the method")]
-        [Input("obj", "Description of the input")]
-        [Output("outputName", "Description of output.")]
-        public static string ToBHoM(this object obj)
+        public static Bar ToBHoM(this Karamba.Elements.ModelTruss obj)
         {
-            return "";
+            var test = new Karamba.Elements.ModelTruss(0, new Karamba.Elements.BuilderBeam(), new List<int>(), new List<Karamba.Nodes.Node>());
+
+            Bar result = new Bar()
+            {
+                //Position = obj.pos_disp.ToBHoM()
+            };
+
+            return result;
         }
- 
-        /***************************************************/
     }
 }
-
-
