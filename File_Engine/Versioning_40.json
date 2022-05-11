@@ -1,0 +1,10 @@
+﻿{
+    "Namespace": {
+        "ToNew": {
+            "BH.Engine.Adapters.Filing": "BH.Engine.Adapters.File"
+        },
+        "ToOld": {
+            "BH.Engine.Adapters.File": "BH.Engine.Adapters.Filing"
+        }
+    }
+}
