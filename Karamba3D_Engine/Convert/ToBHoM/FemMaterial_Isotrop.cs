@@ -44,40 +44,6 @@ namespace BH.Engine.Adapters.Karamba3D
         /*** Methods                                     ***/
         /***************************************************/
 
-        public static Point ToBHoM(this Point3 obj)
-        {
-            Point result = new Point()
-            {
-                X = obj.X,
-                Y = obj.Y,
-                Z = obj.Z
-            };
-
-            return result;
-        }
-
-        public static Vector ToBHoM(this Karamba.Geometry.Vector3 obj)
-        {
-            Vector result = new Vector()
-            {
-                X = obj.X,
-                Y = obj.Y,
-                Z = obj.Z
-            };
-
-            return result;
-        }
-
-        public static Node ToBHoM(this Karamba.Nodes.Node obj)
-        {
-            Node result = new Node()
-            {
-                Position = obj.pos_disp.ToBHoM()
-            };
-
-            return result;
-        }
-
         public static IIsotropic ToBHoM(this Karamba.Materials.FemMaterial_Isotrop obj)
         {
             if (obj.family.ToLower().Contains("concrete"))
@@ -139,12 +105,6 @@ namespace BH.Engine.Adapters.Karamba3D
             return genericIsotropicMaterial;
         }
 
-      
-
-        //public static Bar ToBHoM(this Karamba.Models.Model obj)
-        //{
-
-        //}
 
         /***************************************************/
     }

@@ -68,7 +68,14 @@ namespace BH.Adapter.Karamba3D
 
         public override List<object> Push(IEnumerable<object> objects, string tag = "", PushType pushType = PushType.AdapterDefault, ActionConfig actionConfig = null)
         {
-            return new List<object>();
+            List<object> convertedObjects = new List<object>();
+
+            foreach (var obj in objects)
+            {
+                convertedObjects.Add(obj.IToBHoM());
+            }
+
+            return convertedObjects;
         }
 
         /***************************************************/

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
@@ -20,39 +20,22 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter;
-using BH.Engine.Reflection;
-using BH.oM.Base;
-using BH.oM.Data.Requests;
-using BH.oM.Base.Attributes;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
+using BH.oM.Geometry;
+using BH.oM.Structure.Elements;
+using Karamba.Geometry;
 
-namespace BH.Adapter.Karamba3D
+namespace BH.Engine.Adapters.Karamba3D
 {
-    public partial class Karamba3DAdapter : BHoMAdapter
+    public static partial class Query
     {
-        /***************************************************/
-        /**** Constructors                              ****/
-        /***************************************************/
-
-        [Description("")]
-        public Karamba3DAdapter()
+        public static Node ToBHoM(this Karamba.Nodes.Node obj)
         {
+            Node result = new Node()
+            {
+                Position = obj.pos_disp.ToBHoM()
+            };
+
+            return result;
         }
-
-        /***************************************************/
-        /**** Private Fields                            ****/
-        /***************************************************/
-
-
-        /***************************************************/
-        /**** Private Methods                           ****/
-        /***************************************************/
-
     }
 }
-
-

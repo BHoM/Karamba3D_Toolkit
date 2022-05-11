@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
@@ -20,36 +20,23 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
-using BH.oM.Adapters.Karamba3D;
-using BH.oM.Base.Attributes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KarambaCommon.Utilities;
+using BH.oM.Geometry;
+using Karamba.Geometry;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Convert
+    public static partial class Query
     {
-        /***************************************************/
-        /*** Methods                                     ***/
-        /***************************************************/
-
-        [Description("Description of the method")]
-        [Input("obj", "Description of the input")]
-        [Output("outputName", "Description of output.")]
-        public static string FromBHoM(this object bhomObject)
+        public static Vector ToBHoM(this Karamba.Geometry.Vector3 obj)
         {
-            return "";
+            Vector result = new Vector()
+            {
+                X = obj.X,
+                Y = obj.Y,
+                Z = obj.Z
+            };
+
+            return result;
         }
- 
-        /***************************************************/
     }
 }
-
-

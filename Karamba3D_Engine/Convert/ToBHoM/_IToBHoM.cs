@@ -20,38 +20,44 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter;
-using BH.Engine.Reflection;
 using BH.oM.Base;
-using BH.oM.Data.Requests;
+using BH.oM.Adapters.Karamba3D;
 using BH.oM.Base.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Karamba.Geometry;
+using BH.oM.Geometry;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.MaterialFragments;
+using Karamba.Utilities;
 
-namespace BH.Adapter.Karamba3D
+namespace BH.Engine.Adapters.Karamba3D
 {
-    public partial class Karamba3DAdapter : BHoMAdapter
+    public static partial class Query
     {
         /***************************************************/
-        /**** Constructors                              ****/
+        /*** Methods                                     ***/
         /***************************************************/
 
-        [Description("")]
-        public Karamba3DAdapter()
+        // Entry point
+        public static IObject IToBHoM(this object obj)
         {
+            return ToBHoM(obj as dynamic);
+        }
+
+        // Fallback method
+        private static IObject ToBHoM(this object obj)
+        {
+            BH.Engine.Base.Compute.RecordError($"Could not find a convert method for {obj.GetType().FullName}.");
+            return null;
         }
 
         /***************************************************/
-        /**** Private Fields                            ****/
-        /***************************************************/
-
-
-        /***************************************************/
-        /**** Private Methods                           ****/
-        /***************************************************/
-
     }
 }
 
