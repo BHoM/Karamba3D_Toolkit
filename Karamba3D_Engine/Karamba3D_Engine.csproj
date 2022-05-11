@@ -88,14 +88,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\File_oM\Karamba3D_oM.csproj">
+    <ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj">
       <Project>{d344dcf0-788d-4e0a-8596-70199a080619}</Project>
       <Name>Karamba3D_oM</Name>
       <Private>False</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Versioning_40.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Compute\" />
