@@ -20,42 +20,34 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Adapters.Karamba3D;
-using BH.Engine.Reflection;
-using BH.oM.Adapter;
-using BH.oM.Data.Requests;
+using BH.oM.Base;
 using BH.oM.Adapters.Karamba3D;
+using BH.oM.Base.Attributes;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
-using System.IO.Abstractions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BH.Engine.Base;
 
-namespace BH.Adapter.Karamba3D
+namespace BH.Engine.Adapters.Karamba3D
 {
-    public partial class Karamba3DAdapter
+    public static partial class Convert
     {
         /***************************************************/
-        /**** Methods                                  *****/
+        /*** Methods                                     ***/
         /***************************************************/
 
-        public override bool SetupPullRequest(object request, out IRequest pullRequest)
+        [Description("Description of the method")]
+        [Input("obj", "Description of the input")]
+        [Output("outputName", "Description of output.")]
+        public static string SampleMethod(this object obj)
         {
-            pullRequest = new FilterRequest();
-            return false;
+            return "";
         }
-
-        public override IEnumerable<object> Pull(IRequest request, PullType pullType = PullType.AdapterDefault, ActionConfig actionConfig = null)
-        {
-            return new List<object>();
-        }
-
+ 
         /***************************************************/
-
     }
 }
 
