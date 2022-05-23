@@ -15,14 +15,18 @@ namespace BH.Engine.Adapters.Karamba3D
             if (obj.family.ToUpper().StartsWith("HE"))
             {
                 name = "HE";
-                var dataSets = BH.Engine.Library.Query.Datasets(name);
-                dataSets.AddRange(BH.Engine.Library.Query.Datasets(string.Concat(name,"+")));
+                var dataSets = BH.Engine.Library.Query.Datasets("HE");
+                // dataSets.AddRange(BH.Engine.Library.Query.Datasets(string.Concat(name,"+")));
 
-                var number = Regex.Match(obj.name, @"^[0-9]*$");
-                obj.name.Replace(number.Value, string.Empty);
-                var sectionType = obj.name.Replace(name, string.Empty);
+                var number = Regex.Match(obj.name, @"\d+");
+                var sectionType = obj.name.Replace(number.Value, string.Empty);
+                sectionType = sectionType.Replace(name, string.Empty);
 
-                var allSections = dataSets.SelectMany(d=> d.Data).OfType<ISectionProperty>();
+                var test1 = dataSets.FirstOrDefault();
+
+
+                var allSections = dataSets.SelectMany(d=> d.Data);
+
 
                 foreach (var section in allSections)
                 {
@@ -37,9 +41,8 @@ namespace BH.Engine.Adapters.Karamba3D
                     if (bhomSectionType != sectionType)
                         continue;
 
-                    result = section;
-
-                }
+                    result = (ISectionProperty)section;
+                }  
             }
 
             return result;

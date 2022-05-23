@@ -57,10 +57,6 @@
     <Reference Include="karambaCommon">
       <HintPath>..\Assemblies\karambaCommon.dll</HintPath>
     </Reference>
-    <Reference Include="Library_Engine, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -101,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\FromBHoM\_IFromBHoM.cs" />
+    <Compile Include="Convert\Helpers.cs" />
     <Compile Include="Convert\ToBHoM\CroSec.cs" />
     <Compile Include="Convert\ToBHoM\FemMaterial_Isotrop.cs" />
     <Compile Include="Convert\ToBHoM\ModelTruss.cs" />
@@ -121,6 +118,10 @@
     <Folder Include="Modify\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BHoM_Engine\Library_Engine\Library_Engine.csproj">
+      <Project>{e49210db-ff70-40d9-84cf-12bcefde1f9e}</Project>
+      <Name>Library_Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj">
       <Project>{d344dcf0-788d-4e0a-8596-70199a080619}</Project>
       <Name>Karamba3D_oM</Name>
@@ -130,12 +131,6 @@
   <PropertyGroup>
     <PostBuildEvent>
 xcopy "$(TargetDir)$(TargetFileName)"  "C:\ProgramData\BHoM\Assemblies" /Y
-
-xcopy "$(TargetDir)Newtonsoft.Json.dll" "C:\ProgramData\BHoM\Assemblies" /Y
-    
-xcopy "$(TargetDir)System.IO.Abstractions.TestingHelpers.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
-    
-xcopy "$(TargetDir)System.IO.Abstractions.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
-</PostBuildEvent>
+EXIT 0</PostBuildEvent>
   </PropertyGroup>
 </Project>

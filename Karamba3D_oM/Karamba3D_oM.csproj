@@ -63,6 +63,6 @@
   <PropertyGroup>
     <PostBuildEvent>
 xcopy "$(TargetDir)$(TargetFileName)"  "C:\ProgramData\BHoM\Assemblies" /Y
-    </PostBuildEvent>
+EXIT 0</PostBuildEvent>
   </PropertyGroup>
 </Project>
