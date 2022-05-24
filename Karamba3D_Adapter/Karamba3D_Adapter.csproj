@@ -106,7 +106,6 @@
     <ProjectReference Include="..\Karamba3D_Engine\Karamba3D_Engine.csproj">
       <Project>{d0b2a7e0-1d68-42a6-b699-8bb648d50932}</Project>
       <Name>Karamba3D_Engine</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj">
       <Project>{d344dcf0-788d-4e0a-8596-70199a080619}</Project>

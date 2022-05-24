@@ -9,7 +9,7 @@ namespace Karamba3D_Tests
     public class CroSecTests
     {
         [Test]
-        public void HEConversion()
+        public void HEconversion()
         {
             // Assert
             var croSec = new CroSec_I()
