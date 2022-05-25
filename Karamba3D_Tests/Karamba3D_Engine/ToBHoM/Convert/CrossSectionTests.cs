@@ -1,16 +1,17 @@
 using System.Linq;
 using BH.Engine.Adapters.Karamba3D;
 using Karamba.CrossSections;
+using NUnit.Framework;
 
 namespace Karamba3D_Tests
 {
-    using NUnit.Framework;
-
-    public class CroSecTests
+    public static class CrossSectionTests
     {
         [Test]
-        public void HEconversion()
+        public static void HEconversion()
         {
+            BH.Engine.Base.Compute.LoadAllAssemblies();
+
             // Assert
             var croSec = new CroSec_I()
             {
