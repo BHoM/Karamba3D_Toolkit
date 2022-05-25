@@ -99,8 +99,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\GetDatasetData.cs" />
     <Compile Include="Convert\FromBHoM\_IFromBHoM.cs" />
-    <Compile Include="Convert\Helpers.cs" />
     <Compile Include="Convert\ToBHoM\CroSec.cs" />
     <Compile Include="Convert\ToBHoM\FemMaterial_Isotrop.cs" />
     <Compile Include="Convert\ToBHoM\ModelTruss.cs" />
@@ -116,7 +116,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Compute\" />
     <Folder Include="Create\" />
     <Folder Include="Modify\" />
   </ItemGroup>

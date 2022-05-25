@@ -22,11 +22,17 @@
 
 using BH.oM.Geometry;
 using Karamba.Geometry;
+using System;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Query
-    { 
+    {
+        public static object ReadDataSets()
+        {
+            throw new NotImplementedException();
+        }
+
         public static Point ToBHoM(this Point3 obj)
         {
             Point result = new Point()

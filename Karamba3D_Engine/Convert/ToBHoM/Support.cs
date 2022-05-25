@@ -12,8 +12,7 @@ namespace BH.Engine.Adapters.Karamba3D
         {
             if (obj.hasLocalCoosys)
             {
-                
-                Compute.RecordError("Local coordinate system not implemented yet");
+                BH.Engine.Base.Compute.RecordError("Local coordinate system not implemented yet");
                 return null;
             }
 
