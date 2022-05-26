@@ -30,7 +30,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
+using Karamba.Geometry;
+using BH.oM.Geometry;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.MaterialFragments;
+using Karamba.Utilities;
+using Karamba.Materials;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
@@ -40,11 +45,15 @@ namespace BH.Engine.Adapters.Karamba3D
         /*** Methods                                     ***/
         /***************************************************/
 
-        public static int CrossSectionNumber(this string crossSectionName)
+        public static IMaterialFragment ToBHoM(this Karamba.Materials.FemMaterial obj)
         {
-            int sectionNumber = int.Parse(Regex.Match(crossSectionName, @"\d+").Value);
-            return sectionNumber;
+            FemMaterial_Isotrop isotropic = obj as FemMaterial_Isotrop;
+            if (isotropic != null)
+                return isotropic.ToBHoM();
+
+            throw new NotImplementedException($"Material conversion for `{obj.name}` not yet implemented.");
         }
+
 
         /***************************************************/
     }

@@ -76,6 +76,14 @@
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Spatial_Engine, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\ProgramData\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Spatial_oM, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\ProgramData\BHoM\Assemblies\Spatial_oM.dll</HintPath>
+    </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>
     </Reference>
@@ -102,6 +110,7 @@
     <Compile Include="Compute\GetDatasetData.cs" />
     <Compile Include="Convert\FromBHoM\_IFromBHoM.cs" />
     <Compile Include="Convert\ToBHoM\CroSec.cs" />
+    <Compile Include="Convert\ToBHoM\FemMaterial.cs" />
     <Compile Include="Convert\ToBHoM\FemMaterial_Isotrop.cs" />
     <Compile Include="Convert\ToBHoM\ModelTruss.cs" />
     <Compile Include="Convert\ToBHoM\Node.cs" />
