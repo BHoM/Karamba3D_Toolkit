@@ -9,9 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BH.Engine.Adapters.Karamba3D</RootNamespace>
     <AssemblyName>Karamba3D_Engine</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,14 +59,24 @@
     <Reference Include="Geometry_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_oM.dll</HintPath>
     </Reference>
-    <Reference Include="karambaCommon">
-      <HintPath>..\Assemblies\karambaCommon.dll</HintPath>
+    <Reference Include="KarambaCommon, Version=2.2.0.14, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\KarambaCommon.3.0.0\lib\net48\KarambaCommon.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Library_Engine, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
     </Reference>
     <Reference Include="Physical_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Physical_oM.dll</HintPath>
+    </Reference>
+    <Reference Include="Piglet, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Piglet.1.5.0\lib\net45\Piglet.dll</HintPath>
     </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
@@ -122,6 +134,7 @@
     <Compile Include="Query\SampleMethod.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -129,10 +142,6 @@
     <Folder Include="Modify\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BHoM_Engine\Library_Engine\Library_Engine.csproj">
-      <Project>{e49210db-ff70-40d9-84cf-12bcefde1f9e}</Project>
-      <Name>Library_Engine</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj">
       <Project>{d344dcf0-788d-4e0a-8596-70199a080619}</Project>
       <Name>Karamba3D_oM</Name>
@@ -144,4 +153,11 @@
 xcopy "$(TargetDir)$(TargetFileName)"  "C:\ProgramData\BHoM\Assemblies" /Y
 EXIT 0</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\Baseclass.Contrib.Nuget.Output.2.4.3\build\Baseclass.Contrib.Nuget.Output.targets" Condition="Exists('..\packages\Baseclass.Contrib.Nuget.Output.2.4.3\build\Baseclass.Contrib.Nuget.Output.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Baseclass.Contrib.Nuget.Output.2.4.3\build\Baseclass.Contrib.Nuget.Output.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Baseclass.Contrib.Nuget.Output.2.4.3\build\Baseclass.Contrib.Nuget.Output.targets'))" />
+  </Target>
 </Project>

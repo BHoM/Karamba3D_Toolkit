@@ -13,9 +13,23 @@ namespace BH.Engine.Adapters.Karamba3D
     {
         public static ISectionProperty ToBHoM(this CroSec obj)
         {
+            /*
+             * 1.Read the material from the Karamba section and convert to BhOM the material.
+             *
+             * 2. If the material is compatible with an existing BhOM cross section type where a database
+             * is provided, e.g. steel. Try to pick the corresponding profile from the database based on conversion tab inside KarambaToolkit folder.
+             *
+             * 3. Try to create the BhOM.Spatial.Shape.IProfile from the cross section type
+             *
+             * 4. If the material is not a GenericIsotropicMaterial , try to assign the proper material based
+             * cross section type. Otherwise convert to GenericSection or ExplicitSection when was
+             * not possible to assign a valid IProfile.  
+             */
+
             if (obj == null)
                 return null;
 
+            // mapper table for cross sections.
             ISectionProperty result = null;
             if (!string.IsNullOrWhiteSpace(obj.family) &&
                 obj.material.family.ToLower().Contains("steel") &&
@@ -64,6 +78,8 @@ namespace BH.Engine.Adapters.Karamba3D
 
                 return BHoMConcreteSection;
             }
+
+            // Conversion from our global unit to bhom. Check our units with INIReader.Instance()
 
             return result;
         }
