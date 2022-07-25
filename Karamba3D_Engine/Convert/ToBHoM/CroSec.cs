@@ -19,11 +19,11 @@ namespace BH.Engine.Adapters.Karamba3D
              * 2. If the material is compatible with an existing BhOM cross section type where a database
              * is provided, e.g. steel. Try to pick the corresponding profile from the database based on conversion tab inside KarambaToolkit folder.
              *
-             * 3. Try to create the BhOM.Spatial.Shape.IProfile from the cross section type
+             * 3. Try to create the BhOM.Spatial.Shape.IProfile from the cross section type.
              *
              * 4. If the material is not a GenericIsotropicMaterial , try to assign the proper material based
              * cross section type. Otherwise convert to GenericSection or ExplicitSection when was
-             * not possible to assign a valid IProfile.  
+             * not possible to assign a valid IProfile
              */
 
             if (obj == null)
