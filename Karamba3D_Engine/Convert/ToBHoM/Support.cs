@@ -6,24 +6,31 @@ using Karamba.Supports;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Query
+    public static partial class Convert
     {
-        public static Constraint6DOF ToBHoM(this Support obj)
+        public static Constraint6DOF ToBHoM(this Support k3dSupport)
         {
-            if (obj.hasLocalCoosys)
+            if (k3dSupport.hasLocalCoosys)
             {
                 BH.Engine.Base.Compute.RecordError("Local coordinate system not implemented yet");
                 return null;
             }
 
             // TODO add prescribed displacements.
+            var bhomSupport = Structure.Create.Constraint6DOF(
+                k3dSupport.Condition[0],
+                k3dSupport.Condition[1],
+                k3dSupport.Condition[2],
+                k3dSupport.Condition[3],
+                k3dSupport.Condition[4],
+                k3dSupport.Condition[5]);
 
-            var support = Structure.Create.Constraint6DOF(obj.Condition[0], obj.Condition[1], obj.Condition[2], obj.Condition[3], obj.Condition[4], obj.Condition[5]);
-            support.CustomData.Add(nameof(obj.indexSet), obj.indexSet);
-            support.CustomData.Add(nameof(obj.positionSet), obj.positionSet);
-            support.CustomData.Add(nameof(obj.node_ind), obj.node_ind);
-            support.CustomData.Add(nameof(obj.position), obj.position);
-            return support;
+            bhomSupport.CustomData.Add(nameof(k3dSupport.indexSet), k3dSupport.indexSet);
+            bhomSupport.CustomData.Add(nameof(k3dSupport.positionSet), k3dSupport.positionSet);
+            bhomSupport.CustomData.Add(nameof(k3dSupport.node_ind), k3dSupport.node_ind);
+            bhomSupport.CustomData.Add(nameof(k3dSupport.position), k3dSupport.position);
+
+            return bhomSupport;
         }
     }
 }

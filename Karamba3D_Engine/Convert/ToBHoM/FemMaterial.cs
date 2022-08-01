@@ -39,19 +39,18 @@ using Karamba.Materials;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Query
+    public static partial class Convert
     {
         /***************************************************/
         /*** Methods                                     ***/
         /***************************************************/
 
-        public static IMaterialFragment ToBHoM(this Karamba.Materials.FemMaterial obj)
+        public static IMaterialFragment ToBHoM(this Karamba.Materials.FemMaterial k3dMaterial)
         {
-            FemMaterial_Isotrop isotropic = obj as FemMaterial_Isotrop;
-            if (isotropic != null)
-                return isotropic.ToBHoM();
+            if (k3dMaterial is FemMaterial_Isotrop k3dIsotropic)
+                return k3dIsotropic.ToBHoM();
 
-            throw new NotImplementedException($"Material conversion for `{obj.name}` not yet implemented.");
+            throw new NotImplementedException($"Material conversion for `{k3dMaterial.name}` not yet implemented.");
         }
 
 

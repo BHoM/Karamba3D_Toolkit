@@ -38,7 +38,7 @@ using Karamba.Utilities;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Query
+    public static partial class Convert
     {
         /***************************************************/
         /*** Methods                                     ***/

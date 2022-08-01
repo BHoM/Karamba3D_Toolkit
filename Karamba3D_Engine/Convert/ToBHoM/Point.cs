@@ -26,7 +26,7 @@ using System;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Query
+    public static partial class Convert
     {
         public static object ReadDataSets()
         {

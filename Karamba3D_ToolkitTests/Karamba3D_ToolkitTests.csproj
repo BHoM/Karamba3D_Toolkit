@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="KarambaCommon" Version="3.0.0" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Karamba3D_Adapter\Karamba3D_Adapter.csproj" />
+    <ProjectReference Include="..\Karamba3D_Engine\Karamba3D_Engine.csproj" />
+    <ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Geometry_oM">
+      <HintPath>..\..\..\..\ProgramData\BHoM\Assemblies\Geometry_oM.dll</HintPath>
+    </Reference>
+    <Reference Include="Structure_oM">
+      <HintPath>..\..\..\..\ProgramData\BHoM\Assemblies\Structure_oM.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y&#xD;&#xA;EXIT 0" />
+  </Target>
+
+</Project>

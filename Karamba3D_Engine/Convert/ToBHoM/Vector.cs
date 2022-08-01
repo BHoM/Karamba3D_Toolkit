@@ -25,7 +25,7 @@ using Karamba.Geometry;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Query
+    public static partial class Convert
     {
         public static Vector ToBHoM(this Karamba.Geometry.Vector3 obj)
         {

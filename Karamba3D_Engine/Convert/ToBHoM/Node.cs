@@ -26,7 +26,7 @@ using Karamba.Geometry;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Query
+    public static partial class Convert
     {
         public static Node ToBHoM(this Karamba.Nodes.Node obj)
         {
