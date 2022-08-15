@@ -10,6 +10,7 @@ using Karamba.CrossSections;
 using BH.Engine.Spatial;
 using BH.Engine.Structure;
 using feb;
+using Log = BH.Engine.Adapter.Karamba3D.Log;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
@@ -58,6 +59,12 @@ namespace BH.Engine.Adapters.Karamba3D
                     Asz = obj.Az,
                 };
             }
+
+            var test = obj.alpha_lt;
+            ExplicitSection es = new ExplicitSection();
+            es.CustomData[nameof(obj.Ay)] = obj.Ay;
+
+
         }
 
         private static bool TryGetSectionFromDataSet(string k3dSectionName, out ISectionProperty bhomSection)
@@ -85,9 +92,10 @@ namespace BH.Engine.Adapters.Karamba3D
 
             var dataSetName = csvRow[1];
             var sectionName = csvRow[2];
-            bhomSection = Compute.GetDatasetData<SteelSection>(dataSetName).FirstOrDefault(s => s.Name == sectionName);
+            var test = Compute.GetDatasetData<SteelSection>(dataSetName);
+            bhomSection = test.FirstOrDefault(s => s.Name == sectionName);
 
-            return bhomSection is null;
+            return bhomSection != null;
 
         }
 
@@ -167,7 +175,7 @@ namespace BH.Engine.Adapters.Karamba3D
                         if (iSection.fillet_r > 0)
                         {
                             // TODO Add resource file
-                            Base.Compute.RecordWarning(
+                            Log.RecordWarning(
                                 "The cross section fillet value is not compatible with not symmetrical flanges. The value has not been exported.");
                         }
 
