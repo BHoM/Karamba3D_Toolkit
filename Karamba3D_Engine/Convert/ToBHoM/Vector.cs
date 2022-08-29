@@ -29,14 +29,12 @@ namespace BH.Engine.Adapters.Karamba3D
     {
         public static Vector ToBHoM(this Karamba.Geometry.Vector3 obj)
         {
-            Vector result = new Vector()
+            return new Vector()
             {
                 X = obj.X,
                 Y = obj.Y,
                 Z = obj.Z
             };
-
-            return result;
         }
     }
 }

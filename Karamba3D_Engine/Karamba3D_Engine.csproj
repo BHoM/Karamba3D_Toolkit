@@ -38,6 +38,10 @@
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Analytical_oM, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\ProgramData\BHoM\Assemblies\Analytical_oM.dll</HintPath>
+    </Reference>
     <Reference Include="BHoM">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM.dll</HintPath>
@@ -55,6 +59,9 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\Data_oM.dll</HintPath>
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Dimensional_oM">
+      <HintPath>..\..\..\..\ProgramData\BHoM\Assemblies\Dimensional_oM.dll</HintPath>
     </Reference>
     <Reference Include="Geometry_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_oM.dll</HintPath>
@@ -124,7 +131,9 @@
     <Compile Include="Convert\ToBHoM\CroSec_Beam.cs" />
     <Compile Include="Convert\ToBHoM\FemMaterial.cs" />
     <Compile Include="Convert\ToBHoM\FemMaterial_Isotrop.cs" />
-    <Compile Include="Convert\ToBHoM\ModelTruss.cs" />
+    <Compile Include="Convert\ToBHoM\Load.cs" />
+    <Compile Include="Convert\ToBHoM\Model.cs" />
+    <Compile Include="Convert\ToBHoM\ModelElementStraightLine.cs" />
     <Compile Include="Convert\ToBHoM\Node.cs" />
     <Compile Include="Convert\ToBHoM\Support.cs" />
     <Compile Include="Convert\ToBHoM\Vector.cs" />

@@ -24,7 +24,7 @@ namespace BH.Engine.Adapters.Karamba3D
             if (TryGetSectionFromDataSet(obj.name, out var databaseSection))
             {
                 return databaseSection;
-            };
+            }
 
             var material = obj.material.ToBHoM();
             var profile = CreateProfile(obj);
@@ -59,12 +59,6 @@ namespace BH.Engine.Adapters.Karamba3D
                     Asz = obj.Az,
                 };
             }
-
-            var test = obj.alpha_lt;
-            ExplicitSection es = new ExplicitSection();
-            es.CustomData[nameof(obj.Ay)] = obj.Ay;
-
-
         }
 
         private static bool TryGetSectionFromDataSet(string k3dSectionName, out ISectionProperty bhomSection)

@@ -25,18 +25,17 @@ using System.Collections.Generic;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using System;
+    using Karamba.CrossSections;
+    using Karamba.Elements;
+    using Karamba.Loads;
+    using Karamba.Models;
+
     public static partial class Convert
     {
-        public static Bar ToBHoM(this Karamba.Elements.ModelTruss obj)
+        public static Bar ToBhOM(this Load k3dElement)
         {
-            var test = new Karamba.Elements.ModelTruss(0, new Karamba.Elements.BuilderBeam(), new List<int>(), new List<Karamba.Nodes.Node>());
-
-            Bar result = new Bar()
-            {
-                //Position = obj.pos_disp.ToBHoM()
-            };
-
-            return result;
+            throw new NotImplementedException();
         }
     }
 }

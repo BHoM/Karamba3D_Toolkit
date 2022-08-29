@@ -30,12 +30,13 @@ namespace BH.Engine.Adapters.Karamba3D
     {
         public static Node ToBHoM(this Karamba.Nodes.Node obj)
         {
-            Node result = new Node()
+            Node bhomNode = new Node()
             {
-                Position = obj.pos_disp.ToBHoM()
+                Name = obj.ind.ToString(),
+                Position = obj.pos.ToBHoM()
             };
 
-            return result;
+            return bhomNode;
         }
     }
 }
