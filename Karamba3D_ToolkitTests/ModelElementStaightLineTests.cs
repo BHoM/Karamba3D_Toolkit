@@ -4,8 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using BH.Engine.Adapters.Karamba3D;
+    using BH.Engine.Geometry;
     using BH.oM.Geometry;
+    using BH.oM.Geometry.CoordinateSystem;
     using BH.oM.Structure.Elements;
+    using FluentAssertions;
     using Karamba.CrossSections;
     using Karamba.Elements;
     using Karamba.Geometry;
@@ -21,34 +24,46 @@
     [TestFixture]
     public class ModelElementStaightLineTests
     {
-        public void CreateBeamToTest()
+        private Model CreateEightBeamModelToTest(double rotationAngle = 0.0)
         {
-            
+            Point3[] points =
+            {
+                Point3.Zero,
+                new Point3(1, 1, 1),
+                new Point3(-1, 1, 1),
+                new Point3(-1, -1, 1),
+                new Point3(1, -1, 1),
+                new Point3(1, 1, -1),
+                new Point3(-1, 1, -1),
+                new Point3(-1, -1, -1),
+                new Point3(1, -1, -1),
+            };
+
+            int i = 0;
+            var nodes = points.Select(p =>  new Node(i++, p)).ToList();
+
+            i = 0;
+            var baseNode = new Node(0, points[0]);
+            var beams = points.Skip(1).Select(p =>
+            {
+                i++;
+                int[] indices = { 0, i };
+                Node[] beamNodes = { baseNode, new Node(i, points[i]) };
+                var builder = new BuilderBeam();
+                builder.Ori = new BuilderElementStraightLineOrientation(null, new List<double> { rotationAngle });
+                return new ModelBeam(i, builder, indices, beamNodes.ToList());
+            }).ToList();
+
+            var model = new Model();
+            model.nodes.AddRange(nodes);
+            model.elems.AddRange(beams);
+            return model;
         }
 
         [Test]
         public void ToBhOMTest()
         {
             // Arrange
-            //var points = new[] { new Point3(0, 0, 0), new Point3(1, 0, 0) };
-            //var builderBeam = new BuilderBeam()
-            //{
-            //    Pos = new BuilderElementPositionByPoints(points),
-            //    ecce_glo = 0.5 * Vector3.UnitY,
-            //    ecce_loc = 0.5 * Vector3.UnitY,
-            //};
-            //var modelBuilder = new ModelBuilder(0.1);
-            //var model = modelBuilder.build(
-            //    points,
-            //    Enumerable.Empty<FemMaterial>().ToList(),
-            //    Enumerable.Empty<CroSec>().ToList(),
-            //    Enumerable.Empty<Support>().ToList(),
-            //    Enumerable.Empty<Load>().ToList(),
-            //    new[] { builderBeam },
-            //    Enumerable.Empty<ElemSet>().ToList(),
-            //    Enumerable.Empty<Joint>().ToList(),
-            //    new MessageLogger());
-
             var model = new Model();
             var builderBeam = new BuilderBeam();
             var modelNodes = new[] { new Node(0, new Point3(0, 0, 0)), new Node(1, new Point3(1, 0, 0)) };
@@ -75,27 +90,61 @@
         }
 
         [Test]
-        public void CoordinateSystemTest()
+        public void CoordinateSystemTest_LocalCoordinateSystems_HaveSameConvention()
         {
-            //Point3[] points =
+            // Arrange
+            var model = CreateEightBeamModelToTest();
+            var beams = model.elems.OfType<ModelBeam>();
+            var nodes = model.nodes;
+
+            // Act
+            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToArray();
+            var bhomBar = model.ToBhOM().OfType<Bar>();
+            var bhomCoordinateSystem = bhomBar.Select(BH.Engine.Structure.Query.CoordinateSystem).ToArray();
+
+            // Assert
+            Point test1 = Create.Point(1, 2, 3);
+            var test2 = Create.Point(1.1, 2.1, 3.1);
+
+            //test1.Should().BeEquivalentTo(test2, options => options.Using<double>(d => d.Subject.Should().BeApproximately(d.Expectation, 0.1)).When(info => info));
+
+            //for (int j = 0; j < k3dCoordinateSystems.Count(); j++)
             //{
-            //    Point3.Zero,
-            //    new Point3(1, 1, 1),
-            //    new Point3(-1, 1, 1),
-            //    new Point3(-1, -1, 1),
-            //    new Point3(1, -1, 1),
-            //    new Point3(1, 1, -1),
-            //    new Point3(-1, 1, -1),
-            //    new Point3(-1, -1, -1),
-            //    new Point3(1, -1, -1),
-            //};
+            //    var k3dCoSys = k3dCoordinateSystems[j];
+            //    k3dCoSys.X.X = k3dCoSys.X.X + 0.01;
+            //    var bhomCoSys = bhomCoordinateSystem[j];
+            //    k3dCoSys.Should()
+            //            .BeEquivalentTo(
+            //                bhomCoSys,
+            //                options =>
+            //                {
+            //                    return options.Using<double>(d => d.Subject.Should().BeApproximately(d.Expectation, 0.1))
+            //                           .WhenTypeIs<double>();
+            //                });
 
-            //int i = 0;
-            //var nodes = points.Select(p => new Node(i++, p));
+            //}
+        }
 
-            //int i = 0;
-            //var beams = points.Select(p => new ModelBeam(i++, new BuilderBeam(),) Node(i++, p));
+        [Test]
+        public void CoordinateSystemTest_WithRotationAngle()
+        {
+            // Arrange
+            var rotationAngle = 45;
+            var model = CreateEightBeamModelToTest(rotationAngle);
+            var beams = model.elems.OfType<ModelBeam>();
+            var nodes = model.nodes;
 
+            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToArray();
+            var bhomBar = model.ToBhOM().OfType<Bar>();
+            var bhomCoordinateSystem = bhomBar.Select(BH.Engine.Structure.Query.CoordinateSystem).ToArray();
+
+            // Assert
+            for (int j = 0; j < k3dCoordinateSystems.Count(); j++)
+            {
+                var k3dCoSys = k3dCoordinateSystems[j];
+                var bhomCoSys = bhomCoordinateSystem[j];
+                k3dCoSys.Should().BeEquivalentTo(bhomCoSys);
+            }
         }
 
 

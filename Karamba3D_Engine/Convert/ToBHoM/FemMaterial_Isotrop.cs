@@ -20,21 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
-using BH.oM.Adapters.Karamba3D;
-using BH.oM.Base.Attributes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Karamba.Geometry;
-using BH.oM.Geometry;
-using BH.oM.Structure.Elements;
 using BH.oM.Structure.MaterialFragments;
-using Karamba.Utilities;
 
 namespace BH.Engine.Adapters.Karamba3D
 {

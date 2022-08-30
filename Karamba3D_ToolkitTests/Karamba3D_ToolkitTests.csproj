@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.7.0" />
     <PackageReference Include="KarambaCommon" Version="3.0.0" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
@@ -25,6 +26,9 @@
     </Reference>
     <Reference Include="BHoM_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Dimensional_oM">
+      <HintPath>..\..\..\..\ProgramData\BHoM\Assemblies\Dimensional_oM.dll</HintPath>
     </Reference>
     <Reference Include="Geometry_Engine">
       <HintPath>..\..\..\..\ProgramData\BHoM\Assemblies\Geometry_Engine.dll</HintPath>

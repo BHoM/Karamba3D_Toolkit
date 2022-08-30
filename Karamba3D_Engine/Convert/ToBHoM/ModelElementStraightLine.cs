@@ -34,18 +34,12 @@ namespace BH.Engine.Adapters.Karamba3D
     {
         internal static Bar ToBhOM(this ModelElementStraightLine k3dElement, Model k3dModel, IDictionary<int, Node> bhomNodesMapper)
         {
+            // TODO See if ModelSpring can be converted to an existing BhOM object 
             if (k3dElement is ModelSpring)
             {
                 Base.Compute.RecordError("Spring is not supported yet");
                 return null;
             }
-
-            /*
-               The orientation angle has to be setup. The reason is that the convention for local coordinate
-               in Karamba3d is different to the one used in BhOM. Different convention can be seen in here:
-               BhOM: https://github.com/BHoM/documentation/wiki/BHoM-Structural-Conventions
-
-             */
 
             /* Release and support have no equivalent in Karamba so the won't be setup.
              */
@@ -60,29 +54,25 @@ namespace BH.Engine.Adapters.Karamba3D
             // TODO Store different eccentricities in custom data.
             var totalEccentricity = k3dElement.totalEccentricity(k3dModel).ToBHoM();
 
-            var bhomBar = new Bar()
+            return new Bar()
             {
                 Name = k3dElement.ind.ToString(),
                 StartNode = bhomNodesMapper[k3dElement.node_inds[0]],
                 EndNode = bhomNodesMapper[k3dElement.node_inds[1]],
                 SectionProperty = ((CroSec_Beam)k3dElement.crosec).ToBHoM(),
-                FEAType = BarFEAType.Axial,
+                FEAType = k3dElement is ModelBeam ? BarFEAType.Flexural : BarFEAType.Axial,
                 Offset = new Offset
                 {
                     Start = totalEccentricity,
                     End = totalEccentricity
 
                 },
-                OrientationAngle = 0,
-                Release = null, // TODO add these values below
+                OrientationAngle = k3dElement.res_alpha,
+                Release = null,
                 Support = null,
                 Tags = new HashSet<string>(),
                 CustomData = new Dictionary<string, object>()
             };
-
-            bhomBar.FEAType = k3dElement is ModelBeam ? BarFEAType.Flexural : BarFEAType.Axial;
-
-            return bhomBar;
         }
     }
 }

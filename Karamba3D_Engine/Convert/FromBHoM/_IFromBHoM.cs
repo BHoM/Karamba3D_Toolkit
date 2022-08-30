@@ -21,16 +21,6 @@
  */
 
 using BH.oM.Base;
-using BH.oM.Adapters.Karamba3D;
-using BH.oM.Base.Attributes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KarambaCommon.Utilities;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
