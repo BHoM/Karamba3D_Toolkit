@@ -37,7 +37,7 @@
             var loads = k3dModel.gravities.Values.Select(g => g.ToBhOM());
 
             // Convert all the supports and assign them to the corresponding node.
-            k3dModel.supports.ForEach(s => bhomNodes[s.node_ind].Support = s.ToBHoM());
+            k3dModel.supports.ForEach(s => bhomNodes[s.node_ind].RegisterSupport(s));
 
             return bhomElements.Values.Cast<IBHoMObject>()
                                .Concat(bhomNodes.Values)
