@@ -26,6 +26,8 @@ using Karamba.Geometry;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Karamba.Supports;
+
     public static partial class Convert
     {
         public static Node ToBHoM(this Karamba.Nodes.Node obj)
@@ -37,6 +39,16 @@ namespace BH.Engine.Adapters.Karamba3D
             };
 
             return bhomNode;
+        }
+
+        public static void RegisterSupport (this Node node, Support support)
+        {
+            node.Support = support.ToBHoM();
+
+            if (support.hasLocalCoosys)
+            {
+                node.Orientation = support.local_coosys.ToBHoM();
+            }
         }
     }
 }

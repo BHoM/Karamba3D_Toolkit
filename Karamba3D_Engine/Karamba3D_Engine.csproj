@@ -132,10 +132,12 @@
     <Compile Include="Convert\ToBHoM\CroSec_Beam.cs" />
     <Compile Include="Convert\ToBHoM\FemMaterial.cs" />
     <Compile Include="Convert\ToBHoM\FemMaterial_Isotrop.cs" />
+    <Compile Include="Convert\ToBHoM\GravityLoad.cs" />
     <Compile Include="Convert\ToBHoM\Load.cs" />
     <Compile Include="Convert\ToBHoM\Model.cs" />
     <Compile Include="Convert\ToBHoM\ModelElementStraightLine.cs" />
     <Compile Include="Convert\ToBHoM\Node.cs" />
+    <Compile Include="Convert\ToBHoM\Plane3.cs" />
     <Compile Include="Convert\ToBHoM\Support.cs" />
     <Compile Include="Convert\ToBHoM\Vector.cs" />
     <Compile Include="Convert\ToBHoM\Point.cs" />

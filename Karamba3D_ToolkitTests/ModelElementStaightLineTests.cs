@@ -1,24 +1,16 @@
 ﻿namespace Karamba3D_ToolkitTests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using BH.Engine.Adapters.Karamba3D;
     using BH.Engine.Geometry;
     using BH.oM.Geometry;
-    using BH.oM.Geometry.CoordinateSystem;
     using BH.oM.Structure.Elements;
     using FluentAssertions;
-    using Karamba.CrossSections;
     using Karamba.Elements;
     using Karamba.Geometry;
-    using Karamba.Joints;
-    using Karamba.Loads;
-    using Karamba.Materials;
     using Karamba.Models;
-    using Karamba.Supports;
-    using Karamba.Utilities;
     using NUnit.Framework;
+    using System.Collections.Generic;
+    using System.Linq;
     using Node = Karamba.Nodes.Node;
 
     [TestFixture]

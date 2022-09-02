@@ -10,12 +10,6 @@ namespace BH.Engine.Adapters.Karamba3D
     {
         public static Constraint6DOF ToBHoM(this Support k3dSupport)
         {
-            if (k3dSupport.hasLocalCoosys)
-            {
-                BH.Engine.Base.Compute.RecordError("Local coordinate system not implemented yet");
-                return null;
-            }
-
             // TODO add prescribed displacements.
             var bhomSupport = Structure.Create.Constraint6DOF(
                 k3dSupport.Condition[0],

@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Xml;
     using Karamba.Elements;
+    using Karamba.Supports;
     using oM.Base;
     using oM.Structure.Elements;
 
@@ -33,10 +34,17 @@
             }
 
             // Convert all the loads
-            // Convert all the supports
+            var loads = k3dModel.gravities.Values.Select(g => g.ToBhOM());
 
-            return  bhomElements.Values;
+            // Convert all the supports and assign them to the corresponding node.
+            k3dModel.supports.ForEach(s => bhomNodes[s.node_ind].Support = s.ToBHoM());
+
+            return bhomElements.Values.Cast<IBHoMObject>()
+                               .Concat(bhomNodes.Values)
+                               .Concat(loads);
         }
+
+        
         
     }
 }
