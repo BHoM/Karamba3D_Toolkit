@@ -2,11 +2,13 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Management.Automation.Language;
     using System.Xml;
     using Karamba.Elements;
     using Karamba.Supports;
     using oM.Base;
     using oM.Structure.Elements;
+    using oM.Structure.Loads;
 
     public static partial class Convert
     {
@@ -34,10 +36,17 @@
             }
 
             // Convert all the loads
-            var loads = k3dModel.gravities.Values.Select(g => g.ToBhOM());
-
+            IEnumerable<ILoad> loads = k3dModel.gravities.Values.Select(g => g.ToBhOM());
+            
             // Convert all the supports and assign them to the corresponding node.
-            k3dModel.supports.ForEach(s => bhomNodes[s.node_ind].RegisterSupport(s));
+            k3dModel.supports.ForEach(s =>
+            {
+                var node = bhomNodes[s.node_ind];
+                node.RegisterSupport(s);
+
+                if(s.TryToConvertIntoPointDisplacement(node, out var displacementLoad))
+                    loads.Append(displacementLoad);
+            });
 
             return bhomElements.Values.Cast<IBHoMObject>()
                                .Concat(bhomNodes.Values)

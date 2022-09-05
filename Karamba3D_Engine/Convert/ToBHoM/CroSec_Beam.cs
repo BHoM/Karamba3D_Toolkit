@@ -116,12 +116,12 @@ namespace BH.Engine.Adapters.Karamba3D
 
                 case CroSec_T tSection:
                 {
-                    // TODO Add fillets.
                     return Spatial.Create.TSectionProfile(
                         tSection._height,
                         tSection.uf_width,
                         tSection.w_thick,
-                        tSection.uf_thick);
+                        tSection.uf_thick,
+                        tSection.fillet_r);
                 }
 
                 case CroSec_Box box:

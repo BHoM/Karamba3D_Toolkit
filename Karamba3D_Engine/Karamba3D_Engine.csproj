@@ -133,6 +133,7 @@
     <Compile Include="Convert\ToBHoM\FemMaterial.cs" />
     <Compile Include="Convert\ToBHoM\FemMaterial_Isotrop.cs" />
     <Compile Include="Convert\ToBHoM\GravityLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Joint.cs" />
     <Compile Include="Convert\ToBHoM\Load.cs" />
     <Compile Include="Convert\ToBHoM\Model.cs" />
     <Compile Include="Convert\ToBHoM\ModelElementStraightLine.cs" />

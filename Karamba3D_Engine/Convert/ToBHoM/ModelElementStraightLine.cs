@@ -53,6 +53,8 @@ namespace BH.Engine.Adapters.Karamba3D
              */
             // TODO Store different eccentricities in custom data.
             var totalEccentricity = k3dElement.totalEccentricity(k3dModel).ToBHoM();
+            var release = ((ModelTruss)k3dElement).joint.ToBhOM();
+            
 
             return new Bar()
             {
@@ -68,7 +70,7 @@ namespace BH.Engine.Adapters.Karamba3D
 
                 },
                 OrientationAngle = k3dElement.res_alpha,
-                Release = null,
+                Release = release,
                 Support = null,
                 Tags = new HashSet<string>(),
                 CustomData = new Dictionary<string, object>()
