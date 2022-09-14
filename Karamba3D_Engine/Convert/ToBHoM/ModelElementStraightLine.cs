@@ -32,7 +32,7 @@ namespace BH.Engine.Adapters.Karamba3D
 
     public static partial class Convert
     {
-        internal static Bar ToBhOM(this ModelElementStraightLine k3dElement, Model k3dModel, IDictionary<int, Node> bhomNodesMapper)
+        internal static Bar ToBhOM(this ModelElementStraightLine k3dElement, Model k3dModel, BhOMModel bhomModel)
         {
             // TODO See if ModelSpring can be converted to an existing BhOM object 
             if (k3dElement is ModelSpring)
@@ -52,16 +52,16 @@ namespace BH.Engine.Adapters.Karamba3D
              * The offset should combine all of them together. In custom data they should be stored as separately instead.
              */
             // TODO Store different eccentricities in custom data.
-            var totalEccentricity = k3dElement.totalEccentricity(k3dModel).ToBHoM();
+            var totalEccentricity = k3dElement.totalEccentricity(k3dModel).ToBhOM();
             var release = ((ModelTruss)k3dElement).joint.ToBhOM();
             
 
             return new Bar()
             {
                 Name = k3dElement.ind.ToString(),
-                StartNode = bhomNodesMapper[k3dElement.node_inds[0]],
-                EndNode = bhomNodesMapper[k3dElement.node_inds[1]],
-                SectionProperty = ((CroSec_Beam)k3dElement.crosec).ToBHoM(),
+                StartNode = bhomModel.Nodes[k3dElement.node_inds[0]],
+                EndNode = bhomModel.Nodes[k3dElement.node_inds[1]],
+                SectionProperty = ((CroSec_Beam)k3dElement.crosec).ToBhOM(),
                 FEAType = k3dElement is ModelBeam ? BarFEAType.Flexural : BarFEAType.Axial,
                 Offset = new Offset
                 {

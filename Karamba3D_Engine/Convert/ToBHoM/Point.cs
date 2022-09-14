@@ -26,14 +26,9 @@ using System;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Convert
+    public static partial class Convertt
     {
-        public static object ReadDataSets()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static Point ToBHoM(this Point3 obj)
+        public static Point ToBhOM(this Point3 obj)
         {
             Point result = new Point()
             {

@@ -45,13 +45,13 @@ namespace BH.Engine.Adapters.Karamba3D
         /***************************************************/
 
         // Entry point
-        public static IObject IToBHoM(this object obj)
+        public static IObject IToBhOM(this object obj)
         {
-            return ToBHoM(obj as dynamic);
+            return ToBhOM(obj as dynamic);
         }
 
         // Fallback method
-        private static IObject ToBHoM(this object obj)
+        private static IObject ToBhOM(this object obj)
         {
             BH.Engine.Base.Compute.RecordError($"Could not find a convert method for {obj.GetType().FullName}.");
             return null;

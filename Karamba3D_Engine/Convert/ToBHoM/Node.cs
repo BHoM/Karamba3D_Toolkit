@@ -30,24 +30,24 @@ namespace BH.Engine.Adapters.Karamba3D
 
     public static partial class Convert
     {
-        public static Node ToBHoM(this Karamba.Nodes.Node obj)
+        public static Node ToBhOM(this Karamba.Nodes.Node obj)
         {
             Node bhomNode = new Node()
             {
                 Name = obj.ind.ToString(),
-                Position = obj.pos.ToBHoM()
+                Position = obj.pos.ToBhOM()
             };
 
             return bhomNode;
         }
 
-        public static void RegisterSupport (this Node node, Support support)
+        internal static void RegisterSupport (this Node node, Support support)
         {
-            node.Support = support.ToBHoM();
+            node.Support = support.ToBhOM();
 
             if (support.hasLocalCoosys)
             {
-                node.Orientation = support.local_coosys.ToBHoM();
+                node.Orientation = support.local_coosys.ToBhOM();
             }
         }
     }

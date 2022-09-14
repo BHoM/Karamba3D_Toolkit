@@ -14,43 +14,42 @@
     {
         public static IEnumerable<IBHoMObject> ToBhOM(this Karamba.Models.Model k3dModel)
         {
-            var bhomNodes = new Dictionary<int, Node>(k3dModel.nodes.Count);
-            var bhomElements = new Dictionary<int, Bar>();
+            // TODO decide if to create a bhom model to be used for con
+            var bhomModel = new BhOMModel(k3dModel.nodes.Count, k3dModel.elems.Count);
 
             // Convert all the nodes
             foreach (var node in k3dModel.nodes)
             {
-                bhomNodes[node.ind] = node.ToBHoM();
+                bhomModel.Nodes[node.ind] = node.ToBhOM();
             }
 
             // Convert all the elements 1D
             var beams = k3dModel.elems.OfType<ModelElementStraightLine>();
             foreach (var beam in beams)
             {
-                var bhomElement = beam.ToBhOM(k3dModel, bhomNodes);
+                var bhomElement = beam.ToBhOM(k3dModel, bhomModel);
 
                 if(bhomElement != null)
                 {
-                    bhomElements[beam.ind] = bhomElement;
+                    bhomModel.Elements1D[beam.ind] = bhomElement;
                 }
             }
 
             // Convert all the loads
-            IEnumerable<ILoad> loads = k3dModel.gravities.Values.Select(g => g.ToBhOM());
+            bhomModel.Loads.Concat(k3dModel.gravities.Values.Select(g => g.ToBhOM()));
+            // TODO unique LoadCase.Number needs to be created for each LoadCase.Name
             
             // Convert all the supports and assign them to the corresponding node.
             k3dModel.supports.ForEach(s =>
             {
-                var node = bhomNodes[s.node_ind];
+                var node = bhomModel.Nodes[s.node_ind];
                 node.RegisterSupport(s);
 
                 if(s.TryToConvertIntoPointDisplacement(node, out var displacementLoad))
-                    loads.Append(displacementLoad);
+                    bhomModel.Loads.Append(displacementLoad);
             });
 
-            return bhomElements.Values.Cast<IBHoMObject>()
-                               .Concat(bhomNodes.Values)
-                               .Concat(loads);
+            return bhomModel.ReturnBhOMEntities();
         }
 
         

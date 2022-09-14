@@ -45,10 +45,10 @@ namespace BH.Engine.Adapters.Karamba3D
         /*** Methods                                     ***/
         /***************************************************/
 
-        public static IMaterialFragment ToBHoM(this Karamba.Materials.FemMaterial k3dMaterial)
+        public static IMaterialFragment ToBhOM(this Karamba.Materials.FemMaterial k3dMaterial)
         {
             if (k3dMaterial is FemMaterial_Isotrop k3dIsotropic)
-                return k3dIsotropic.ToBHoM();
+                return k3dIsotropic.ToBhOM();
 
             throw new NotImplementedException($"Material conversion for `{k3dMaterial.name}` not yet implemented.");
         }

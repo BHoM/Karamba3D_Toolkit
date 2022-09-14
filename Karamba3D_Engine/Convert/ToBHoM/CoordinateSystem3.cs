@@ -15,10 +15,10 @@
             }
 
             return new Cartesian(
-                k3dCoSys.Origin.ToBHoM(),
-                k3dCoSys.X.ToBHoM(),
-                k3dCoSys.Y.ToBHoM(),
-                k3dCoSys.Z.ToBHoM());
+                k3dCoSys.Origin.ToBhOM(),
+                k3dCoSys.X.ToBhOM(),
+                k3dCoSys.Y.ToBhOM(),
+                k3dCoSys.Z.ToBhOM());
         }
 
         public static Cartesian ToBhOM(this Vector3[] k3dVectorArray)
@@ -31,15 +31,18 @@
             if (k3dVectorArray.Length != 3)
             {
                 Base.Compute.RecordError(
-                    $"The {k3dVectorArray.GetType().GetElementType()} array should contain 3 elements. Instead it contains {k3dVectorArray.Length} elements");
+                    string.Format(
+                        Resource.InvalidVectorArrayError,
+                        k3dVectorArray.GetType().GetElementType(),
+                        k3dVectorArray.Length));
                 return null;
             }
 
             return new Cartesian(
                 Point.Origin,
-                k3dVectorArray[0].ToBHoM(),
-                k3dVectorArray[1].ToBHoM(),
-                k3dVectorArray[2].ToBHoM());
+                k3dVectorArray[0].ToBhOM(),
+                k3dVectorArray[1].ToBhOM(),
+                k3dVectorArray[2].ToBhOM());
         }
         
     }

@@ -16,7 +16,7 @@ namespace BH.Engine.Adapters.Karamba3D
 
     public static partial class Convert
     {
-        public static Constraint6DOF ToBHoM(this Support k3dSupport)
+        public static Constraint6DOF ToBhOM(this Support k3dSupport)
         {
             var bhomSupport = Structure.Create.Constraint6DOF(
                 k3dSupport.Condition[0],
@@ -34,7 +34,7 @@ namespace BH.Engine.Adapters.Karamba3D
             return bhomSupport;
         }
 
-        public static bool TryToConvertIntoPointDisplacement(
+        internal static bool TryToConvertIntoPointDisplacement(
             this Support k3dSupport,
             Node bhomNode,
             out PointDisplacement load)

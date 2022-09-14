@@ -26,7 +26,7 @@ namespace Karamba3D_ToolkitTests
 
             var hea180 = table.crosecs.Single(c => c.name == "HEA180");
 
-            var bhomSection = ((CroSec_Beam)hea180).ToBHoM();
+            var bhomSection = ((CroSec_Beam)hea180).ToBhOM();
 
         }
     }

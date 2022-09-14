@@ -4,7 +4,7 @@ namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
-        public static Vector ToBHoM(this Karamba.Geometry.Vector3 obj)
+        public static Vector ToBhOM(this Karamba.Geometry.Vector3 obj)
         {
             return new Vector()
             {

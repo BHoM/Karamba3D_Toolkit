@@ -11,7 +11,7 @@
             {
                 Name = string.Empty,
                 Axis = LoadAxis.Global,
-                GravityDirection = k3dLoad.force.ToBHoM(),
+                GravityDirection = k3dLoad.force.ToBhOM(),
                 Projected = false,
                 Loadcase = new Loadcase()
                 {

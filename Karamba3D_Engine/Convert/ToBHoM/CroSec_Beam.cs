@@ -16,7 +16,7 @@ namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
-        public static ISectionProperty ToBHoM(this CroSec_Beam obj)
+        public static ISectionProperty ToBhOM(this CroSec_Beam obj)
         {
             if (obj is null)
                 return null;
@@ -26,7 +26,7 @@ namespace BH.Engine.Adapters.Karamba3D
                 return databaseSection;
             }
 
-            var material = obj.material.ToBHoM();
+            var material = obj.material.ToBhOM();
             var profile = CreateProfile(obj);
 
             if (profile != null)
