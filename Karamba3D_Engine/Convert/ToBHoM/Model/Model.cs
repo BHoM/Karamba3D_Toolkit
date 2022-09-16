@@ -5,6 +5,8 @@
     using System.Management.Automation.Language;
     using System.Xml;
     using Karamba.Elements;
+    using Karamba.Loads;
+    using Karamba.Models;
     using Karamba.Supports;
     using oM.Base;
     using oM.Structure.Elements;
@@ -36,8 +38,7 @@
             }
 
             // Convert all the loads
-            bhomModel.Loads.Concat(k3dModel.gravities.Values.Select(g => g.ToBhOM()));
-            // TODO unique LoadCase.Number needs to be created for each LoadCase.Name
+            bhomModel.Loads = GetLoads(k3dModel).SelectMany(g => g.ToBhOM(k3dModel, bhomModel));
             
             // Convert all the supports and assign them to the corresponding node.
             k3dModel.supports.ForEach(s =>
@@ -52,7 +53,14 @@
             return bhomModel.ReturnBhOMEntities();
         }
 
-        
-        
+        private static IEnumerable<Load> GetLoads(Model k3dModel)
+        {
+            return ((IEnumerable<Load>)k3dModel.ploads)
+                           .Concat(k3dModel.pmass)
+                           .Concat(k3dModel.mloads)
+                           .Concat(k3dModel.eloads)
+                           .Concat(k3dModel.gravities.Values);
+        }
+
     }
 }

@@ -61,6 +61,15 @@ namespace BH.Engine.Adapters.Karamba3D {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} cannot be converted to {1} due to Karamba&apos;s {2} property..
+        /// </summary>
+        internal static string BarPointLoadOrientationError {
+            get {
+                return ResourceManager.GetString("BarPointLoadOrientationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The {0} array should contain 3 elements. Instead it contains {1} elements..
         /// </summary>
         internal static string InvalidVectorArrayError {
@@ -70,11 +79,29 @@ namespace BH.Engine.Adapters.Karamba3D {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} is not supported yet..
+        ///   Looks up a localized string similar to {0} has been converted to BhOM&apos;s {1} and {2}..
         /// </summary>
-        internal static string NotSupportedTypeError {
+        internal static string NoteStrainLoadConversion {
             get {
-                return ResourceManager.GetString("NotSupportedTypeError", resourceCulture);
+                return ResourceManager.GetString("NoteStrainLoadConversion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temperature load is not supported yet for 2d elements..
+        /// </summary>
+        internal static string TemperatureLoadOnSurfacesError {
+            get {
+                return ResourceManager.GetString("TemperatureLoadOnSurfacesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not supported yet..
+        /// </summary>
+        internal static string WarningNotSupportedType {
+            get {
+                return ResourceManager.GetString("WarningNotSupportedType", resourceCulture);
             }
         }
     }

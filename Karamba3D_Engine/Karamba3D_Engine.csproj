@@ -128,28 +128,33 @@
   <ItemGroup>
     <Compile Include="Compute\GetDatasetData.cs" />
     <Compile Include="Convert\FromBHoM\_IFromBHoM.cs" />
-    <Compile Include="Convert\ToBHoM\BhOMModel.cs" />
-    <Compile Include="Convert\ToBHoM\CoordinateSystem3.cs" />
-    <Compile Include="Convert\ToBHoM\CroSec_Beam.cs" />
-    <Compile Include="Convert\ToBHoM\FemMaterial.cs" />
-    <Compile Include="Convert\ToBHoM\FemMaterial_Isotrop.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ConcentratedForce.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ConcentratedLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ConcentratedMoment.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\Load.cs" />
+    <Compile Include="Convert\ToBHoM\Model\BhOMModel.cs" />
+    <Compile Include="Convert\ToBHoM\Geometries\CoordinateSystem3.cs" />
+    <Compile Include="Convert\ToBHoM\CrossSections\CroSec_Beam.cs" />
+    <Compile Include="Convert\ToBHoM\Materials\FemMaterial.cs" />
+    <Compile Include="Convert\ToBHoM\Materials\FemMaterial_Isotrop.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ElementLoads\Element1DLoads\ConcentratedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ElementLoads\Element1DLoads\DistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ElementLoads\Element1DLoads\Imperfection.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ElementLoads\StrainLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ElementLoads\TemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\GravityLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Joint.cs" />
-    <Compile Include="Convert\ToBHoM\Load.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\Joint.cs" />
     <Compile Include="Convert\ToBHoM\Loads\PointLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\PointMass.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\RotationalGap.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\TranslationalGap.cs" />
-    <Compile Include="Convert\ToBHoM\Model.cs" />
-    <Compile Include="Convert\ToBHoM\ModelElementStraightLine.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ElementLoads\Element1DLoads\RotationalGap.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ElementLoads\Element1DLoads\TranslationalGap.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ElementLoads\Element1DLoads\UniformLoadOld.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\Utilities.cs" />
+    <Compile Include="Convert\ToBHoM\Model\Model.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ModelElement.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ModelElementStraightLine.cs" />
     <Compile Include="Convert\ToBHoM\Node.cs" />
-    <Compile Include="Convert\ToBHoM\Plane3.cs" />
+    <Compile Include="Convert\ToBHoM\Geometries\Plane3.cs" />
     <Compile Include="Convert\ToBHoM\Support.cs" />
-    <Compile Include="Convert\ToBHoM\Vector.cs" />
-    <Compile Include="Convert\ToBHoM\Point.cs" />
+    <Compile Include="Convert\ToBHoM\Geometries\Vector.cs" />
+    <Compile Include="Convert\ToBHoM\Geometries\Point.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Convert\ToBHoM\_IToBHoM.cs" />
@@ -178,6 +183,7 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

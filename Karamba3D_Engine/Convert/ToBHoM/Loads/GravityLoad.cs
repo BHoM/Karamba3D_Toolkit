@@ -1,13 +1,14 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
     using System;
+    using System.Collections.Generic;
     using oM.Structure.Loads;
 
     public static partial class Convert
     {
-        public static GravityLoad ToBhOM(this Karamba.Loads.GravityLoad k3dLoad)
+        public static IEnumerable<ILoad> ToBhOM(this Karamba.Loads.GravityLoad k3dLoad)
         {
-            return new GravityLoad()
+            yield return new GravityLoad()
             {
                 Name = string.Empty,
                 Axis = LoadAxis.Global,

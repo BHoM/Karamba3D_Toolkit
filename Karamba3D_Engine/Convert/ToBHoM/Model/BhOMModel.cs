@@ -9,12 +9,11 @@
 
     public class BhOMModel
     {
-        private static int _loadCaseNumberCount = 0;
-
-        private IDictionary<string, Loadcase> _loadCases = new Dictionary<string, Loadcase>();
+        private readonly IDictionary<string, Loadcase> _loadCases = new Dictionary<string, Loadcase>();
 
         public IDictionary<int, Node> Nodes { get; set; } = new Dictionary<int, Node>();
 
+        // TODO Review this part when will pass to 2d elements.
         public IDictionary<int, Bar> Elements1D { get; set; } = new Dictionary<int, Bar>();
 
         public IEnumerable<ILoad> Loads { get; set; } = Enumerable.Empty<ILoad>();
@@ -36,12 +35,11 @@
                 return loadCase;
             }
 
-            _loadCaseNumberCount++;
             loadCase = new Loadcase
             {
                 Name = loadCaseName,
                 Nature = LoadNature.Other,
-                Number = _loadCaseNumberCount
+                Number = _loadCases.Count
             };
             _loadCases.Add(loadCaseName, loadCase);
 

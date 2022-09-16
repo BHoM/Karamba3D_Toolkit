@@ -38,12 +38,10 @@ using Karamba.Utilities;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Karamba.Models;
+
     public static partial class Convert
     {
-        /***************************************************/
-        /*** Methods                                     ***/
-        /***************************************************/
-
         // Entry point
         public static IObject IToBhOM(this object obj)
         {

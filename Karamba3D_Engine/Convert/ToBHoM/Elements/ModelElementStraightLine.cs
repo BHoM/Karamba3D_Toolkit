@@ -52,7 +52,7 @@ namespace BH.Engine.Adapters.Karamba3D
              * The offset should combine all of them together. In custom data they should be stored as separately instead.
              */
             // TODO Store different eccentricities in custom data.
-            var totalEccentricity = k3dElement.totalEccentricity(k3dModel).ToBhOM();
+            var eccentricityVector = k3dElement.totalEccentricity(k3dModel).ToBhOM();
             var release = ((ModelTruss)k3dElement).joint.ToBhOM();
             
 
@@ -65,10 +65,11 @@ namespace BH.Engine.Adapters.Karamba3D
                 FEAType = k3dElement is ModelBeam ? BarFEAType.Flexural : BarFEAType.Axial,
                 Offset = new Offset
                 {
-                    Start = totalEccentricity,
-                    End = totalEccentricity
+                    Start = eccentricityVector,
+                    End = eccentricityVector
 
                 },
+                // TODO check how it works with vertical elements.
                 OrientationAngle = k3dElement.res_alpha,
                 Release = release,
                 Support = null,
