@@ -32,7 +32,7 @@
                     Force = k3dLoad is ConcentratedForce ? k3dLoad.Values.ToBhOM() : new Vector(),
                     Moment = k3dLoad is ConcentratedMoment ? k3dLoad.Values.ToBhOM() : new Vector(),
                     DistanceFromA = group.Key * k3dLoad.Position,
-                    Loadcase = bhomModel.RegisterLoadCase(k3dLoad.LcName),
+                    Loadcase = null,
                     Objects =  new BHoMGroup<Bar> { Elements = group.ToList() },
                     Axis = loadAxis,
                     Projected = isProjected

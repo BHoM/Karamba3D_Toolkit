@@ -63,18 +63,63 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to {0} cannot be converted to {1} due to Karamba&apos;s {2} property..
         /// </summary>
-        internal static string BarPointLoadOrientationError {
+        internal static string ErrorBarPointLoadOrientation {
             get {
-                return ResourceManager.GetString("BarPointLoadOrientationError", resourceCulture);
+                return ResourceManager.GetString("ErrorBarPointLoadOrientation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not find a convert method for {0}..
+        /// </summary>
+        internal static string ErrorConverterNotFound {
+            get {
+                return ResourceManager.GetString("ErrorConverterNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The cross section map path {0} was not found..
+        /// </summary>
+        internal static string ErrorCrossSectionMapNotFound {
+            get {
+                return ResourceManager.GetString("ErrorCrossSectionMapNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not create a valid cross section profile from {1}..
+        /// </summary>
+        internal static string ErrorCrossSectionProfileConversion {
+            get {
+                return ResourceManager.GetString("ErrorCrossSectionProfileConversion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Box cross section with different flange widths are not supported yet..
+        /// </summary>
+        internal static string ErrorDifferentFlangeNotSupported {
+            get {
+                return ResourceManager.GetString("ErrorDifferentFlangeNotSupported", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The {0} array should contain 3 elements. Instead it contains {1} elements..
         /// </summary>
-        internal static string InvalidVectorArrayError {
+        internal static string ErrorInvalidVectorArray {
             get {
-                return ResourceManager.GetString("InvalidVectorArrayError", resourceCulture);
+                return ResourceManager.GetString("ErrorInvalidVectorArray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temperature load is not supported yet for 2d elements..
+        /// </summary>
+        internal static string ErrorTemperatureLoadOnSurfaces {
+            get {
+                return ResourceManager.GetString("ErrorTemperatureLoadOnSurfaces", resourceCulture);
             }
         }
         
@@ -88,11 +133,20 @@ namespace BH.Engine.Adapters.Karamba3D {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Temperature load is not supported yet for 2d elements..
+        ///   Looks up a localized string similar to The cross section fillet values are not supported when when the box cross section has different thicknesses or flange widths. The fillet values have not been exported..
         /// </summary>
-        internal static string TemperatureLoadOnSurfacesError {
+        internal static string WarningBoxCrossSectionNotSupportedFillet {
             get {
-                return ResourceManager.GetString("TemperatureLoadOnSurfacesError", resourceCulture);
+                return ResourceManager.GetString("WarningBoxCrossSectionNotSupportedFillet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The cross section fillet value is not compatible with not symmetrical flanges. The value has not been exported..
+        /// </summary>
+        internal static string WarningICrossSectionNotSupportedFillet {
+            get {
+                return ResourceManager.GetString("WarningICrossSectionNotSupportedFillet", resourceCulture);
             }
         }
         

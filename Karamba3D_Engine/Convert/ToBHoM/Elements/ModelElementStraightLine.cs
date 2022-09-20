@@ -25,19 +25,22 @@ using System.Collections.Generic;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using System;
+    using System.IO;
     using Karamba.CrossSections;
     using Karamba.Elements;
     using Karamba.Models;
+    using oM.Dimensional;
     using oM.Structure.Offsets;
 
     public static partial class Convert
     {
-        internal static Bar ToBhOM(this ModelElementStraightLine k3dElement, Model k3dModel, BhOMModel bhomModel)
+        internal static IElement ToBhOM(this ModelElementStraightLine k3dElement, Model k3dModel, BhOMModel bhomModel)
         {
             // TODO See if ModelSpring can be converted to an existing BhOM object 
             if (k3dElement is ModelSpring)
             {
-                Base.Compute.RecordError("Spring is not supported yet");
+                Base.Compute.RecordError(string.Format(Resource.WarningNotSupportedType, typeof(ModelSpring)));
                 return null;
             }
 

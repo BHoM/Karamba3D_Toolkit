@@ -20,7 +20,7 @@
             {
                 Force = (k3dLoad.Load).ToBhOM(),
                 Moment = new Vector(),
-                Loadcase = bhomModel.RegisterLoadCase(k3dLoad.LcName),
+                Loadcase = null,
                 Objects = new BHoMGroup<Bar> { Elements = bars.ToList() },
                 Axis = loadAxis,
                 Projected = isProjected,

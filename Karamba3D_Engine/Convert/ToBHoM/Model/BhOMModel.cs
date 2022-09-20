@@ -16,7 +16,9 @@
         // TODO Review this part when will pass to 2d elements.
         public IDictionary<int, Bar> Elements1D { get; set; } = new Dictionary<int, Bar>();
 
-        public IEnumerable<ILoad> Loads { get; set; } = Enumerable.Empty<ILoad>();
+        public IList<ILoad> Loads { get; set; } = new List<ILoad>();
+
+        public IReadOnlyDictionary<string, Loadcase> LoadCases => (IReadOnlyDictionary<string, Loadcase>)_loadCases;
 
         public BhOMModel()
         {

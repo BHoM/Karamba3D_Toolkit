@@ -15,7 +15,7 @@
             yield return new PointLoad()
             {
                 Axis = LoadAxis.Global,
-                Loadcase = new Loadcase { Name = k3dPointLoad.LcName },
+                Loadcase = null,
                 Force = k3dPointLoad.force.ToBhOM(),
                 Moment = k3dPointLoad.moment.ToBhOM(),
                 Projected = false,

@@ -32,7 +32,7 @@
             {
                 Base.Compute.RecordError(
                     string.Format(
-                        Resource.InvalidVectorArrayError,
+                        Resource.ErrorInvalidVectorArray,
                         k3dVectorArray.GetType().GetElementType(),
                         k3dVectorArray.Length));
                 return null;

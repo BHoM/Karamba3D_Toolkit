@@ -30,7 +30,7 @@
 
                 default:
                     var message = string.Format(
-                        Resource.BarPointLoadOrientationError,
+                        Resource.ErrorBarPointLoadOrientation,
                         typeof(T),
                         typeof(BarPointLoad),
                         k3dLoad.LoadOrientation.GetType());

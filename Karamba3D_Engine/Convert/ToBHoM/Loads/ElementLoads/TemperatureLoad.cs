@@ -31,7 +31,7 @@
             yield return new BarUniformTemperatureLoad
             {
                 TemperatureChange = k3dLoad.incT,
-                Loadcase = bhomModel.RegisterLoadCase(k3dLoad.LcName),
+                Loadcase = null,
                 Objects = new BHoMGroup<Bar> { Elements = barGroup.ToList()},
                 Axis = loadAxis,
                 Projected = isProjected

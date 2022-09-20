@@ -40,15 +40,5 @@ namespace BH.Engine.Adapters.Karamba3D
 
             return bhomNode;
         }
-
-        internal static void RegisterSupport (this Node node, Support support)
-        {
-            node.Support = support.ToBhOM();
-
-            if (support.hasLocalCoosys)
-            {
-                node.Orientation = support.local_coosys.ToBhOM();
-            }
-        }
     }
 }

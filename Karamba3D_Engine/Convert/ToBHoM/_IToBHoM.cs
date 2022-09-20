@@ -55,7 +55,12 @@ namespace BH.Engine.Adapters.Karamba3D
             return null;
         }
 
-        /***************************************************/
+        private static object ToBhOM(this object obj, Model k3dModel, BhOMModel bhomModel)
+        {
+            var message = string.Format(Resource.ErrorConverterNotFound, obj.GetType().FullName);
+            Base.Compute.RecordError(message);
+            return null;
+        }
     }
 }
 

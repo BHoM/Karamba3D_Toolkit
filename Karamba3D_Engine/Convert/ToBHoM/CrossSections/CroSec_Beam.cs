@@ -16,6 +16,8 @@ namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
+        private const string _crossSectionMapPath = @"C:\ProgramData\BHoM\Datasets\Karamba3D\Karamba3DToBhOMCrossSectionMapper.csv";
+
         public static ISectionProperty ToBhOM(this CroSec_Beam obj)
         {
             if (obj is null)
@@ -68,14 +70,16 @@ namespace BH.Engine.Adapters.Karamba3D
             // TODO create a map for database materials.
             
             // Search for file
-            var mapperPath = @"C:\ProgramData\BHoM\Datasets\Karamba3D\Karamba3DToBhOMCrossSectionMapper.csv";
-
-            if (!File.Exists(mapperPath))
+            if (!File.Exists(_crossSectionMapPath))
             {
-                throw new FileNotFoundException($"{mapperPath} was not found.");
+                var message = string.Format(
+                    Resource.ErrorCrossSectionMapNotFound,
+                    Path.GetFullPath(_crossSectionMapPath));
+
+                throw new FileNotFoundException(message);
             }
 
-            var csvRow = File.ReadLines(mapperPath)
+            var csvRow = File.ReadLines(_crossSectionMapPath)
                                     .Select(l => l.Split(';'))
                                     .FirstOrDefault(r => r[0] == k3dSectionName);
 
@@ -97,17 +101,12 @@ namespace BH.Engine.Adapters.Karamba3D
         {
             switch (obj)
             {
-                // TODO maybe remove this switch case.
-                case CroSec_BeamModifier beamModifier:
-                    throw new ArgumentException($"Conversion from {typeof(CroSec_BeamModifier)} is not supported.");
-
                 case CroSec_Circle circle:
                 {
-                    // TODO remove the getHeight from the circle and use a property
                     var diameter = circle.getHeight();
                     var thickness = circle.thick;
                     
-                    // If the thickness less then zero or is higher then half diameter,
+                    // If the thickness is less then zero or is higher then half diameter,
                     // a full circle will be created. 
                     return thickness <= 0 || thickness >= diameter / 2 ? 
                         (IProfile)Spatial.Create.CircleProfile(diameter) :
@@ -128,8 +127,7 @@ namespace BH.Engine.Adapters.Karamba3D
                 {
                     if (Math.Abs(box.uf_width - box.lf_width) > double.Epsilon)
                     {
-                        Base.Compute.RecordError(
-                            "Box cross section with different flange widths are not supported yet.");
+                        Base.Compute.RecordError(Resource.ErrorDifferentFlangeNotSupported);
                     }
 
                     // TODO use a global tolerance for Karamba!
@@ -138,8 +136,7 @@ namespace BH.Engine.Adapters.Karamba3D
                     {
                         if (box.fillet_r > 0 || box.fillet_r1 > 0)
                         {
-                            Base.Compute.RecordWarning(
-                                "The cross section fillet values are not supported when when the box cross section has different thicknesses or flange widths. The fillet values have not been exported.");
+                            Base.Compute.RecordWarning(Resource.WarningBoxCrossSectionNotSupportedFillet);
                         }
 
                         return Spatial.Create.FabricatedISectionProfile(
@@ -168,9 +165,8 @@ namespace BH.Engine.Adapters.Karamba3D
                     {
                         if (iSection.fillet_r > 0)
                         {
-                            // TODO Add resource file
-                            Log.RecordWarning(
-                                "The cross section fillet value is not compatible with not symmetrical flanges. The value has not been exported.");
+
+                            Base.Compute.RecordWarning(Resource.WarningICrossSectionNotSupportedFillet);
                         }
 
 
@@ -196,7 +192,12 @@ namespace BH.Engine.Adapters.Karamba3D
 
                 default:
                 {
-                    Base.Compute.RecordError($"Could not find a convert method for {obj.GetType().FullName}.");
+                    var message = string.Format(
+                        Resource.ErrorCrossSectionProfileConversion,
+                        typeof(IProfile),
+                        obj.GetType().FullName);
+
+                    Base.Compute.RecordError(message);
                     return null;
                 }
             }

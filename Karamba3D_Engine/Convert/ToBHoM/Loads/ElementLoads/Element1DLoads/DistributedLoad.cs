@@ -40,7 +40,7 @@
                     ForceAtEnd = k3dLoad is DistributedForce ? (k3dLoad.Values[i+1] * k3dLoad.Direction).ToBhOM() : new Vector(),
                     MomentAtStart = k3dLoad is DistributedMoment ? (k3dLoad.Values[i] * k3dLoad.Direction).ToBhOM() : new Vector(),
                     MomentAtEnd = k3dLoad is DistributedMoment ? (k3dLoad.Values[i+1] * k3dLoad.Direction).ToBhOM() : new Vector(),
-                    Loadcase = bhomModel.RegisterLoadCase(k3dLoad.LcName),
+                    Loadcase = null,
                     Axis = loadAxis,
                     Projected = isProjected,
                     RelativePositions = true
@@ -59,7 +59,7 @@
             {
                 Force = k3dLoad is DistributedForce ? (k3dLoad.Values.First() * k3dLoad.Direction).ToBhOM() : new Vector(),
                 Moment = k3dLoad is DistributedForce ? (k3dLoad.Values.First() * k3dLoad.Direction).ToBhOM() : new Vector(),
-                Loadcase = bhomModel.RegisterLoadCase(k3dLoad.LcName),
+                Loadcase = null,
                 Objects = new BHoMGroup<Bar> { Elements = bars.ToList() },
                 Axis = loadAxis,
                 Projected = isProjected,

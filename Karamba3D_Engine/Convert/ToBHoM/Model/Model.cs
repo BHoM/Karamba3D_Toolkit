@@ -14,53 +14,42 @@
 
     public static partial class Convert
     {
+        private static IEnumerable<Load> GetLoads(this Model k3dModel)
+        {
+            return ((IEnumerable<Load>)k3dModel.ploads)
+                   .Concat(k3dModel.pmass)
+                   .Concat(k3dModel.mloads)
+                   .Concat(k3dModel.eloads)
+                   .Concat(k3dModel.gravities.Values);
+        }
+
         public static IEnumerable<IBHoMObject> ToBhOM(this Karamba.Models.Model k3dModel)
         {
-            // TODO decide if to create a bhom model to be used for con
             var bhomModel = new BhOMModel(k3dModel.nodes.Count, k3dModel.elems.Count);
 
-            // Convert all the nodes
-            foreach (var node in k3dModel.nodes)
-            {
-                bhomModel.Nodes[node.ind] = node.ToBhOM();
-            }
+            // Convert nodes
+            k3dModel.nodes.ForEach( n => bhomModel.Nodes[n.ind] = n.ToBhOM());
 
-            // Convert all the elements 1D
+            // Convert 1D elements
             var beams = k3dModel.elems.OfType<ModelElementStraightLine>();
             foreach (var beam in beams)
             {
                 var bhomElement = beam.ToBhOM(k3dModel, bhomModel);
 
-                if(bhomElement != null)
+                if(bhomElement is Bar bhomBar)
                 {
-                    bhomModel.Elements1D[beam.ind] = bhomElement;
+                    bhomModel.Elements1D[beam.ind] = bhomBar;
                 }
             }
 
-            // Convert all the loads
-            bhomModel.Loads = GetLoads(k3dModel).SelectMany(g => g.ToBhOM(k3dModel, bhomModel));
+            // Convert loads
+            bhomModel.Loads = k3dModel.GetLoads().SelectMany(g => g.ToBhOM(k3dModel, bhomModel)).ToList();
             
-            // Convert all the supports and assign them to the corresponding node.
-            k3dModel.supports.ForEach(s =>
-            {
-                var node = bhomModel.Nodes[s.node_ind];
-                node.RegisterSupport(s);
+            // Convert supports
+            k3dModel.supports.ForEach(s => s.ToBhOM(k3dModel, bhomModel));
 
-                if(s.TryToConvertIntoPointDisplacement(node, out var displacementLoad))
-                    bhomModel.Loads.Append(displacementLoad);
-            });
-
+            // TODO Is it possible to return splitted elements?
             return bhomModel.ReturnBhOMEntities();
         }
-
-        private static IEnumerable<Load> GetLoads(Model k3dModel)
-        {
-            return ((IEnumerable<Load>)k3dModel.ploads)
-                           .Concat(k3dModel.pmass)
-                           .Concat(k3dModel.mloads)
-                           .Concat(k3dModel.eloads)
-                           .Concat(k3dModel.gravities.Values);
-        }
-
     }
 }

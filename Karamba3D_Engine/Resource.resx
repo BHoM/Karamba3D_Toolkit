@@ -100,16 +100,34 @@
   <data name="WarningNotSupportedType" xml:space="preserve">
     <value>{0} is not supported yet.</value>
   </data>
-  <data name="InvalidVectorArrayError" xml:space="preserve">
+  <data name="ErrorInvalidVectorArray" xml:space="preserve">
     <value>The {0} array should contain 3 elements. Instead it contains {1} elements.</value>
   </data>
-  <data name="BarPointLoadOrientationError" xml:space="preserve">
+  <data name="ErrorBarPointLoadOrientation" xml:space="preserve">
     <value>{0} cannot be converted to {1} due to Karamba's {2} property.</value>
   </data>
-  <data name="TemperatureLoadOnSurfacesError" xml:space="preserve">
+  <data name="ErrorTemperatureLoadOnSurfaces" xml:space="preserve">
     <value>Temperature load is not supported yet for 2d elements.</value>
   </data>
   <data name="NoteStrainLoadConversion" xml:space="preserve">
     <value>{0} has been converted to BhOM's {1} and {2}.</value>
+  </data>
+  <data name="ErrorConverterNotFound" xml:space="preserve">
+    <value>Could not find a convert method for {0}.</value>
+  </data>
+  <data name="ErrorCrossSectionMapNotFound" xml:space="preserve">
+    <value>The cross section map path {0} was not found.</value>
+  </data>
+  <data name="ErrorDifferentFlangeNotSupported" xml:space="preserve">
+    <value>Box cross section with different flange widths are not supported yet.</value>
+  </data>
+  <data name="WarningBoxCrossSectionNotSupportedFillet" xml:space="preserve">
+    <value>The cross section fillet values are not supported when when the box cross section has different thicknesses or flange widths. The fillet values have not been exported.</value>
+  </data>
+  <data name="WarningICrossSectionNotSupportedFillet" xml:space="preserve">
+    <value>The cross section fillet value is not compatible with not symmetrical flanges. The value has not been exported.</value>
+  </data>
+  <data name="ErrorCrossSectionProfileConversion" xml:space="preserve">
+    <value>Could not create a valid cross section profile from {1}.</value>
   </data>
 </root>
