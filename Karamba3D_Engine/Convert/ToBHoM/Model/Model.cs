@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Management.Automation.Language;
-    using System.Xml;
     using Karamba.Elements;
     using Karamba.Loads;
     using Karamba.Models;
@@ -23,7 +21,14 @@
                    .Concat(k3dModel.gravities.Values);
         }
 
-        public static IEnumerable<IBHoMObject> ToBhOM(this Karamba.Models.Model k3dModel)
+        private static IEnumerable<IBHoMObject> ReturnBhOMObjects(this BhOMModel bhomModel)
+        {
+            return bhomModel.Elements1D.Values.Cast<IBHoMObject>()
+                             .Concat(bhomModel.Nodes.Values)
+                             .Concat(bhomModel.Loads);
+        }
+
+        internal static BhOMModel ToBhOMModel(this Karamba.Models.Model k3dModel)
         {
             var bhomModel = new BhOMModel(k3dModel.nodes.Count, k3dModel.elems.Count);
 
@@ -45,11 +50,15 @@
             // Convert loads
             bhomModel.Loads = k3dModel.GetLoads().SelectMany(g => g.ToBhOM(k3dModel, bhomModel)).ToList();
             
-            // Convert supports
+            // Convert supports and register to corresponding nodes
             k3dModel.supports.ForEach(s => s.ToBhOM(k3dModel, bhomModel));
 
-            // TODO Is it possible to return splitted elements?
-            return bhomModel.ReturnBhOMEntities();
+            return bhomModel;
+        }
+
+        public static IEnumerable<IBHoMObject> ToBhOM(this Karamba.Models.Model k3dModel)
+        {
+            return k3dModel.ToBhOMModel().ReturnBhOMObjects();
         }
     }
 }

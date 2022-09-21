@@ -47,12 +47,5 @@
 
             return loadCase;
         }
-
-        public IEnumerable<IBHoMObject> ReturnBhOMEntities()
-        {
-            return Elements1D.Values.Cast<IBHoMObject>()
-                        .Concat(Nodes.Values)
-                        .Concat(Loads);
-        }
     }
 }

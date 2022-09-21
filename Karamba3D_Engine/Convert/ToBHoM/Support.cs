@@ -17,7 +17,7 @@ namespace BH.Engine.Adapters.Karamba3D
 
     public static partial class Convert
     {
-        public static Constraint6DOF ToBhOM(this Support k3dSupport)
+        internal static Constraint6DOF ToBhOM(this Support k3dSupport)
         {
             var bhomSupport = Structure.Create.Constraint6DOF(
                 k3dSupport.Condition[0],
