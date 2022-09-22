@@ -87,10 +87,12 @@
             var node4 = bhomModel.Nodes.Values.Last();
             node4.Position = new Point
             {
-                X = node3.Position.X,
+                X = 9,
                 Y = node3.Position.Y,
                 Z = node3.Position.Z
             };
+            node3.Orientation = Basis.YZ;
+            node4.Orientation = Basis.YZ;
             node3.Tags = new HashSet<string>() { "pippo", "Topolino" };
             node4.Tags = new HashSet<string>() { "pippo", "Paperino"};
             CustomAssert.AllPropertiesAreEqual(node3, node4);

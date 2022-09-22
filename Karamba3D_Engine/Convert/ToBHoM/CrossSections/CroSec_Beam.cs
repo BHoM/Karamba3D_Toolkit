@@ -16,8 +16,6 @@ namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
-        private const string _crossSectionMapPath = @"C:\ProgramData\BHoM\Datasets\Karamba3D\Karamba3DToBhOMCrossSectionMapper.csv";
-
         public static ISectionProperty ToBhOM(this CroSec_Beam obj)
         {
             if (obj is null)
@@ -68,18 +66,24 @@ namespace BH.Engine.Adapters.Karamba3D
             bhomSection = null;
 
             // TODO create a map for database materials.
+            var crossSectionMapPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "BHoM",
+                "Datasets",
+                "Karamba3D",
+                "Karamba3DToBhOMCrossSectionMapper.csv");
             
             // Search for file
-            if (!File.Exists(_crossSectionMapPath))
+            if (!File.Exists(crossSectionMapPath))
             {
                 var message = string.Format(
                     Resource.ErrorCrossSectionMapNotFound,
-                    Path.GetFullPath(_crossSectionMapPath));
+                    Path.GetFullPath(crossSectionMapPath));
 
                 throw new FileNotFoundException(message);
             }
 
-            var csvRow = File.ReadLines(_crossSectionMapPath)
+            var csvRow = File.ReadLines(crossSectionMapPath)
                                     .Select(l => l.Split(';'))
                                     .FirstOrDefault(r => r[0] == k3dSectionName);
 
