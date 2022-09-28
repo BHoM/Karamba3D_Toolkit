@@ -2,6 +2,7 @@
 {
     using System;
     using Karamba.Geometry;
+    using Karamba3D_Engine;
     using oM.Geometry;
     using oM.Geometry.CoordinateSystem;
 

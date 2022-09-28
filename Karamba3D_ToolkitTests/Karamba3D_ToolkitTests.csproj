@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="FluentAssertions" Version="6.7.0" />
+		<PackageReference Include="KarambaCommon" Version="3.0.0" />
 		<PackageReference Include="NUnit" Version="3.12.0" />
 		<PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
@@ -35,9 +36,6 @@
 		<Reference Include="Geometry_oM">
 			<HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_oM.dll</HintPath>
 		</Reference>
-		<Reference Include="KarambaCommon">
-			<HintPath>bin\Debug\net48\KarambaCommon.dll</HintPath>
-		</Reference>
 		<Reference Include="Library_Engine">
 			<HintPath>C:\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
 		</Reference>
@@ -56,8 +54,7 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec
-			Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y&#xD;&#xA;EXIT 0" />
+		<Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y&#xD;&#xA;EXIT 0" />
 	</Target>
 
 </Project>

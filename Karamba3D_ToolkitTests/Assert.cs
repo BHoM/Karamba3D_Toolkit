@@ -14,31 +14,44 @@
 
     public static class CustomAssert
     {
-        public static void AllPropertiesAreEqual<T>(T actual, T expected)
+        public static void BhOMObjectsAreEqual<T>(T actual, T expected, double tolerance = 0.0, string message = "")
         {
-            CustomEquality(actual, expected, 0);
+            bool areEqual = AreEqualOrPropertiesEqual(actual, expected, tolerance, out var notEqualProperties);
+
+            if (areEqual)
+                return;
+
+            var sb = new StringBuilder();
+            if (!notEqualProperties.Any())
+            {
+                sb.AppendLine($"{typeof(T)} are not equal");
+            }
+
+            foreach (var property in notEqualProperties)
+            {
+                sb.AppendLine($"The property \"{property.Name}\" of \"{typeof(T)}\" are not equal");
+            }
+
+            message += Environment.NewLine + sb;
+            Assert.Fail(message);
         }
 
-        private static bool CustomEquality<T>(T actual, T expected, int loopLevel = 0)
+        private static bool AreEqualOrPropertiesEqual<T>(T actual, T expected, double tolerance, out IEnumerable<PropertyInfo> notEqualProperties)
         {
             // If the type is string, value type or override the equal method, the equal method will be used
             // else all the public readable properties will be compared
-            var stringBuilder = new StringBuilder();
-            bool arePropertiesEqual = true;
+            bool areEqual;
+            notEqualProperties = Enumerable.Empty<PropertyInfo>();
             if (EqualityCanBeDirectlyCheck(actual))
             {
-                arePropertiesEqual = Equals(actual, expected);
+                areEqual = Equals(actual, expected);
             }
             else
             {
-                arePropertiesEqual = CheckPropertyEquality<T>(actual, expected);
+                areEqual = CheckPropertiesEquality<T>(actual, expected, tolerance, out notEqualProperties);
             }
 
-            if (loopLevel == 0 && !arePropertiesEqual)
-            {
-                Assert.Fail(stringBuilder.ToString());
-            }
-            return arePropertiesEqual;
+            return areEqual;
         }
 
         public static bool OverridesEqualsMethod(object obj)
@@ -46,8 +59,14 @@
             return obj.GetType().GetMethods().Any(m => m.Name == "Equals" && m.DeclaringType != typeof(object));
         }
 
-        private static bool CheckPropertyEquality<T>(T actual, T expected, int loopLevel = 0)
+        private static bool CheckPropertiesEquality<T>(T actual, T expected, double tolerance, out IEnumerable<PropertyInfo> notEqualProperties)
         {
+            // The comparison will consider all the properties of the type T.
+            // 1. If the property type is string, value type or override the equal method,
+            // the equal method will be used.
+            // 2. If the type is IEnumerable each element of the enumerable will be tested.
+            // 3. If the type comes from IObject will be tested for property equality.
+            var failProperties = new List<PropertyInfo>();
             foreach (var property in GetAllPublicReadableProperties(actual))
             {
                 var areValuesEqual = true;
@@ -63,13 +82,13 @@
                     var expectedEnumerable = expectedValue as IEnumerable;
                     var actualEnumerator = actualEnumerable.GetEnumerator();
                     var expectedEnumerator = expectedEnumerable?.GetEnumerator();
-
                     bool actualCanMove = actualEnumerator.MoveNext();
                     bool expectedCanMove = expectedEnumerator?.MoveNext() ?? false;
+
                     while (actualCanMove && expectedCanMove && areValuesEqual)
                     {
-                        // When any entity is not property equal, the enumerables are not equal.
-                        areValuesEqual = CustomEquality(actualEnumerator.Current, expectedEnumerator.Current, loopLevel + 1);
+                        // When any entity is not equal, the enumerables are not equal too.
+                        areValuesEqual = AreEqualOrPropertiesEqual(actualEnumerator.Current, expectedEnumerator.Current, tolerance, out _);
 
                         actualCanMove = actualEnumerator.MoveNext();
                         expectedCanMove = expectedEnumerator.MoveNext();
@@ -95,20 +114,21 @@
                 else if (actualValue is IObject pActualObject)
                 {
                     var pExpectedObject = expectedValue as IObject;
-                    areValuesEqual = CustomEquality(pActualObject, pExpectedObject, loopLevel + 1);
+                    areValuesEqual = CheckPropertiesEquality(pActualObject, pExpectedObject, tolerance, out _);
                 }
                 else
                 {
-                    throw new ArgumentException($"{actualValue.GetType()} cannot be compared");
+                    throw new ArgumentException($"\"{actualValue.GetType()}\" property cannot be compared.");
                 }
 
-                if (loopLevel == 0 && !areValuesEqual)
+                if (!areValuesEqual)
                 {
-                    stringBuilder.AppendLine($"{typeof(T)}.{property.Name} are not equal.");
+                    failProperties.Add(property);
                 }
-
-                arePropertiesEqual &= areValuesEqual;
             }
+
+            notEqualProperties = failProperties;
+            return !notEqualProperties.Any();
         }
 
         private static IEnumerable<PropertyInfo> GetAllPublicReadableProperties(object obj)
@@ -123,6 +143,17 @@
         private static bool EqualityCanBeDirectlyCheck(object obj)
         {
             return obj is null || obj.GetType().IsValueType || obj is string || OverridesEqualsMethod(obj);
+        }
+
+        private static bool AreAlmostEqual(decimal actualValue, decimal expectedValue, double tolerance)
+        {
+            if (tolerance != 0.0 && 
+                (typeof(T) == typeof(double) || typeof(T) == typeof(decimal) || typeof(T) == typeof(float)))
+            {
+                return Math.Abs(actualValue - expectedValue) < test;
+                
+            }
+            Equals(actualValue, expectedValue);
         }
     }
 }

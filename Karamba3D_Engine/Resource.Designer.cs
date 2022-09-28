@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BH.Engine.Adapters.Karamba3D {
+namespace Karamba3D_Engine {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace BH.Engine.Adapters.Karamba3D {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace BH.Engine.Adapters.Karamba3D {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BH.Engine.Adapters.Karamba3D.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Karamba3D_Engine.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to {0} cannot be converted to {1} due to Karamba&apos;s {2} property..
         /// </summary>
-        internal static string ErrorBarPointLoadOrientation {
+        public static string ErrorBarPointLoadOrientation {
             get {
                 return ResourceManager.GetString("ErrorBarPointLoadOrientation", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to Could not find a convert method for {0}..
         /// </summary>
-        internal static string ErrorConverterNotFound {
+        public static string ErrorConverterNotFound {
             get {
                 return ResourceManager.GetString("ErrorConverterNotFound", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to The cross section map path {0} was not found..
         /// </summary>
-        internal static string ErrorCrossSectionMapNotFound {
+        public static string ErrorCrossSectionMapNotFound {
             get {
                 return ResourceManager.GetString("ErrorCrossSectionMapNotFound", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to Could not create a valid cross section profile from {1}..
         /// </summary>
-        internal static string ErrorCrossSectionProfileConversion {
+        public static string ErrorCrossSectionProfileConversion {
             get {
                 return ResourceManager.GetString("ErrorCrossSectionProfileConversion", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to Box cross section with different flange widths are not supported yet..
         /// </summary>
-        internal static string ErrorDifferentFlangeNotSupported {
+        public static string ErrorDifferentFlangeNotSupported {
             get {
                 return ResourceManager.GetString("ErrorDifferentFlangeNotSupported", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to The {0} array should contain 3 elements. Instead it contains {1} elements..
         /// </summary>
-        internal static string ErrorInvalidVectorArray {
+        public static string ErrorInvalidVectorArray {
             get {
                 return ResourceManager.GetString("ErrorInvalidVectorArray", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to Temperature load is not supported yet for 2d elements..
         /// </summary>
-        internal static string ErrorTemperatureLoadOnSurfaces {
+        public static string ErrorTemperatureLoadOnSurfaces {
             get {
                 return ResourceManager.GetString("ErrorTemperatureLoadOnSurfaces", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to {0} has been converted to BhOM&apos;s {1} and {2}..
         /// </summary>
-        internal static string NoteStrainLoadConversion {
+        public static string NoteStrainLoadConversion {
             get {
                 return ResourceManager.GetString("NoteStrainLoadConversion", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to The cross section fillet values are not supported when when the box cross section has different thicknesses or flange widths. The fillet values have not been exported..
         /// </summary>
-        internal static string WarningBoxCrossSectionNotSupportedFillet {
+        public static string WarningBoxCrossSectionNotSupportedFillet {
             get {
                 return ResourceManager.GetString("WarningBoxCrossSectionNotSupportedFillet", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to The cross section fillet value is not compatible with not symmetrical flanges. The value has not been exported..
         /// </summary>
-        internal static string WarningICrossSectionNotSupportedFillet {
+        public static string WarningICrossSectionNotSupportedFillet {
             get {
                 return ResourceManager.GetString("WarningICrossSectionNotSupportedFillet", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace BH.Engine.Adapters.Karamba3D {
         /// <summary>
         ///   Looks up a localized string similar to {0} is not supported yet..
         /// </summary>
-        internal static string WarningNotSupportedType {
+        public static string WarningNotSupportedType {
             get {
                 return ResourceManager.GetString("WarningNotSupportedType", resourceCulture);
             }

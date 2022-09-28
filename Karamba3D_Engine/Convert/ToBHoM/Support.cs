@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using BH.Engine.Base;
-using BH.oM.Structure.Constraints;
+﻿using BH.oM.Structure.Constraints;
 using Karamba.Supports;
+using System.Collections.Generic;
+using Karamba.Models;
+using BH.oM.Base;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
+using System.Linq;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using System.Linq;
-    using System.Threading;
-    using Karamba.Models;
-    using Microsoft.SqlServer.Server;
-    using oM.Base;
-    using oM.Geometry;
-    using oM.Structure.Elements;
-    using oM.Structure.Loads;
-
     public static partial class Convert
     {
         internal static Constraint6DOF ToBhOM(this Support k3dSupport)
@@ -25,12 +19,8 @@ namespace BH.Engine.Adapters.Karamba3D
                 k3dSupport.Condition[2],
                 k3dSupport.Condition[3],
                 k3dSupport.Condition[4],
-                k3dSupport.Condition[5]);
-
-            bhomSupport.CustomData.Add(nameof(k3dSupport.indexSet), k3dSupport.indexSet);
-            bhomSupport.CustomData.Add(nameof(k3dSupport.positionSet), k3dSupport.positionSet);
-            bhomSupport.CustomData.Add(nameof(k3dSupport.node_ind), k3dSupport.node_ind);
-            bhomSupport.CustomData.Add(nameof(k3dSupport.position), k3dSupport.position);
+                k3dSupport.Condition[5],
+                name: null);
 
             return bhomSupport;
         }
@@ -40,7 +30,6 @@ namespace BH.Engine.Adapters.Karamba3D
             var bhomSupport = k3dSupport.ToBhOM();
             var bhomNode = bhomModel.Nodes[k3dSupport.node_ind];
 
-            bhomModel.RegisterLoadCase(k3dSupport.LcName);
             bhomNode.RegisterSupport(k3dSupport);
 
             if (k3dSupport.IsConvertibleToPointDisplacement())
@@ -59,15 +48,17 @@ namespace BH.Engine.Adapters.Karamba3D
                     Z = k3dSupport._displacement[5],
                 };
 
-                bhomModel.Loads.Add( new PointDisplacement()
+                var load = new PointDisplacement
                 {
-                    Loadcase = bhomModel.LoadCases[k3dSupport.LcName],
+                    Loadcase = bhomModel.RegisterLoadCase(k3dSupport.LcName),
                     Objects = new BHoMGroup<Node> { Elements = new List<Node> { bhomNode } },
                     Translation = translation,
                     Rotation = rotation,
                     Axis = k3dSupport.hasLocalCoosys ? LoadAxis.Local : LoadAxis.Global,
                     Projected = false,
-                });
+                };
+
+                bhomModel.Loads.Concat(new[] { load });
             }
         }
 

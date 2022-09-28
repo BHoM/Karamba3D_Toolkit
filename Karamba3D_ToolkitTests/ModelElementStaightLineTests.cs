@@ -11,6 +11,7 @@
     using NUnit.Framework;
     using System.Collections.Generic;
     using System.Linq;
+    using BH.oM.Geometry.CoordinateSystem;
     using Node = Karamba.Nodes.Node;
 
     [TestFixture]
@@ -53,35 +54,6 @@
         }
 
         [Test]
-        public void ToBhOMTest()
-        {
-            // Arrange
-            var model = new Model();
-            var builderBeam = new BuilderBeam();
-            var modelNodes = new[] { new Node(0, new Point3(0, 0, 0)), new Node(1, new Point3(1, 0, 0)) };
-            var beam = new ModelBeam(1, builderBeam, new[] { 0, 1 }, new List<Node> { new Node(1, Point3.Unset) });
-            beam.BuilderElement().ecce_loc = 0.5 * Vector3.UnitY;
-            beam.BuilderElement().ecce_glo = 0.5 * Vector3.UnitY;
-
-            model.nodes.AddRange(modelNodes);
-            model.elems.Add(beam);
-
-            // Act
-            var bhomBar = model.ToBhOM().OfType<Bar>().First();
-
-            // Assert
-            Assert.AreEqual("1", bhomBar.Name);
-            Assert.AreEqual("0", bhomBar.StartNode.Name);
-            Assert.AreEqual("1", bhomBar.EndNode.Name);
-            Assert.AreEqual(Point.Origin, bhomBar.StartNode.Position);
-            Assert.AreEqual(BH.Engine.Geometry.Create.Point(1), bhomBar.EndNode.Position);
-            Assert.AreEqual(BarFEAType.Flexural, bhomBar.FEAType);
-            Assert.AreEqual(BH.Engine.Geometry.Create.Vector(0, 1, 0), bhomBar.Offset.Start);
-            Assert.AreEqual(BH.Engine.Geometry.Create.Vector(0, 1, 0), bhomBar.Offset.End);
-            // Assert.AreEqual(); TODO make test for cross section and use it to compare here
-        }
-
-        [Test]
         public void CoordinateSystemTest_LocalCoordinateSystems_HaveSameConvention()
         {
             // Arrange
@@ -90,31 +62,18 @@
             var nodes = model.nodes;
 
             // Act
-            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToArray();
-            var bhomBar = model.ToBhOM().OfType<Bar>();
-            var bhomCoordinateSystem = bhomBar.Select(BH.Engine.Structure.Query.CoordinateSystem).ToArray();
+            var bhomModel = model.ToBhOMModel();
+            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToList();
+            var bhomCoordinateSystem = bhomModel.Elements1D.Values.Select(BH.Engine.Structure.Query.CoordinateSystem).ToList();
 
             // Assert
-            Point test1 = Create.Point(1, 2, 3);
-            var test2 = Create.Point(1.1, 2.1, 3.1);
-
-            //test1.Should().BeEquivalentTo(test2, options => options.Using<double>(d => d.Subject.Should().BeApproximately(d.Expectation, 0.1)).When(info => info));
-
-            //for (int j = 0; j < k3dCoordinateSystems.Count(); j++)
-            //{
-            //    var k3dCoSys = k3dCoordinateSystems[j];
-            //    k3dCoSys.X.X = k3dCoSys.X.X + 0.01;
-            //    var bhomCoSys = bhomCoordinateSystem[j];
-            //    k3dCoSys.Should()
-            //            .BeEquivalentTo(
-            //                bhomCoSys,
-            //                options =>
-            //                {
-            //                    return options.Using<double>(d => d.Subject.Should().BeApproximately(d.Expectation, 0.1))
-            //                           .WhenTypeIs<double>();
-            //                });
-
-            //}
+            for (int i = 0; i < k3dCoordinateSystems.Count; i++)
+            {
+                CustomAssert.BhOMObjectsAreEqual(
+                    k3dCoordinateSystems[i],
+                    bhomCoordinateSystem[i],
+                    $"Iteration {i} failed.");
+            }
         }
 
         [Test]
@@ -126,16 +85,25 @@
             var beams = model.elems.OfType<ModelBeam>();
             var nodes = model.nodes;
 
-            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToArray();
-            var bhomBar = model.ToBhOM().OfType<Bar>();
-            var bhomCoordinateSystem = bhomBar.Select(BH.Engine.Structure.Query.CoordinateSystem).ToArray();
+            // Act
+            var bhomModel = model.ToBhOMModel();
+            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToList();
+            var bhomCoordinateSystem = bhomModel.Elements1D.Values.Select(BH.Engine.Structure.Query.CoordinateSystem).ToList();
 
             // Assert
-            for (int j = 0; j < k3dCoordinateSystems.Count(); j++)
+            double tolerance = 1E-5;
+            for (int i = 0; i < k3dCoordinateSystems.Count; i++)
             {
-                var k3dCoSys = k3dCoordinateSystems[j];
-                var bhomCoSys = bhomCoordinateSystem[j];
-                k3dCoSys.Should().BeEquivalentTo(bhomCoSys);
+                Assert.AreEqual(k3dCoordinateSystems[i].Origin, bhomCoordinateSystem[i].Origin);
+                Assert.AreEqual(k3dCoordinateSystems[i].X, bhomCoordinateSystem[i].X, tolerance);
+                Assert.AreEqual(k3dCoordinateSystems[i].Y, bhomCoordinateSystem[i].Y);
+                Assert.AreEqual(k3dCoordinateSystems[i].Z, bhomCoordinateSystem[i].Z);
+
+
+                CustomAssert.BhOMObjectsAreEqual(
+                    k3dCoordinateSystems[i],
+                    bhomCoordinateSystem[i],
+                    $"Iteration {i} failed.");
             }
         }
 

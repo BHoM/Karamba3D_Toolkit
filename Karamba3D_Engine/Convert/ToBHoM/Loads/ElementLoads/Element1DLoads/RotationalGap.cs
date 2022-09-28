@@ -4,6 +4,7 @@
     using System.Linq;
     using Karamba.Loads.Beam;
     using Karamba.Models;
+    using Karamba3D_Engine;
     using oM.Structure.Loads;
 
     public static partial class Convert
@@ -13,7 +14,7 @@
             Base.Compute.RecordError(
                 string.Format(
                     Resource.WarningNotSupportedType,
-                    typeof(RotationalGap)));
+                    nameof(RotationalGap)));
 
             return Enumerable.Empty<ILoad>();
         }

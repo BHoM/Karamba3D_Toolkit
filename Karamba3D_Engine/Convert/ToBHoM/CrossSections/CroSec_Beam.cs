@@ -14,24 +14,26 @@ using Log = BH.Engine.Adapter.Karamba3D.Log;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Karamba3D_Engine;
+
     public static partial class Convert
     {
-        public static ISectionProperty ToBhOM(this CroSec_Beam obj)
+        public static ISectionProperty ToBhOM(this CroSec_Beam k3dCrossSection)
         {
-            if (obj is null)
+            if (k3dCrossSection is null)
                 return null;
 
-            if (TryGetSectionFromDataSet(obj.name, out var databaseSection))
+            if (TryGetSectionFromDataSet(k3dCrossSection.name, out var databaseSection))
             {
                 return databaseSection;
             }
 
-            var material = obj.material.ToBhOM();
-            var profile = CreateProfile(obj);
+            var material = k3dCrossSection.material.ToBhOM();
+            var profile = CreateProfile(k3dCrossSection);
 
             if (profile != null)
             {
-                var section  = Engine.Structure.Create.SectionPropertyFromProfile(profile, material, obj.name);
+                var section  = Engine.Structure.Create.SectionPropertyFromProfile(profile, material, k3dCrossSection.name);
                 // TODO the set adapter id has to be setup?
                 // section.SetAdapterId();
                 return section;
@@ -40,23 +42,23 @@ namespace BH.Engine.Adapters.Karamba3D
             {
                 return new ExplicitSection()
                 {
-                    Name = obj.name,
+                    Name = k3dCrossSection.name,
                     Material = material,
-                    Area = obj.A,
-                    Rgy = obj.iy,
-                    Rgz = obj.iz,
-                    J = obj.Ipp,
-                    Iy = obj.Iyy,
-                    Iz = obj.Izz,
-                    Iw = obj.Cw,
-                    Wely = Math.Min(Math.Abs(obj.Wely_z_neg), obj.Welz_y_pos),
-                    Welz = Math.Min(Math.Abs(obj.Welz_y_neg), obj.Wely_z_pos),
-                    Wply = obj.Wply,
-                    Wplz = obj.Wplz,
-                    Vz = obj.zs,
-                    Vpz = obj.getHeight() - obj.zs,
-                    Asy = obj.Ay,
-                    Asz = obj.Az,
+                    Area = k3dCrossSection.A,
+                    Rgy = k3dCrossSection.iy,
+                    Rgz = k3dCrossSection.iz,
+                    J = k3dCrossSection.Ipp,
+                    Iy = k3dCrossSection.Iyy,
+                    Iz = k3dCrossSection.Izz,
+                    Iw = k3dCrossSection.Cw,
+                    Wely = Math.Min(Math.Abs(k3dCrossSection.Wely_z_neg), k3dCrossSection.Welz_y_pos),
+                    Welz = Math.Min(Math.Abs(k3dCrossSection.Welz_y_neg), k3dCrossSection.Wely_z_pos),
+                    Wply = k3dCrossSection.Wply,
+                    Wplz = k3dCrossSection.Wplz,
+                    Vz = k3dCrossSection.zs,
+                    Vpz = k3dCrossSection.getHeight() - k3dCrossSection.zs,
+                    Asy = k3dCrossSection.Ay,
+                    Asz = k3dCrossSection.Az,
                 };
             }
         }

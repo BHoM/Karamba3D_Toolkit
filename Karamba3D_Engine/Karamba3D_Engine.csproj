@@ -67,9 +67,24 @@
 		</Reference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Resource.Designer.cs">
+	    <Generator></Generator>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resource.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resource.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec
-			Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y&#xD;&#xA;EXIT 0" />
+		<Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y&#xD;&#xA;EXIT 0" />
 	</Target>
 
 </Project>

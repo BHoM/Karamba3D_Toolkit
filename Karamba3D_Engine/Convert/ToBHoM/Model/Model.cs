@@ -30,7 +30,11 @@
 
         internal static BhOMModel ToBhOMModel(this Karamba.Models.Model k3dModel)
         {
-            var bhomModel = new BhOMModel(k3dModel.nodes.Count, k3dModel.elems.Count);
+            var bhomModel = new BhOMModel()
+            {
+                Nodes = new Dictionary<int, Node>(k3dModel.nodes.Count),
+                Elements1D = new Dictionary<int, Bar>(k3dModel.elems.Count)
+            };
 
             // Convert nodes
             k3dModel.nodes.ForEach( n => bhomModel.Nodes[n.ind] = n.ToBhOM());
@@ -48,7 +52,7 @@
             }
 
             // Convert loads
-            bhomModel.Loads = k3dModel.GetLoads().SelectMany(g => g.ToBhOM(k3dModel, bhomModel)).ToList();
+            bhomModel.Loads = k3dModel.GetLoads().SelectMany(g => g.ToBhOM(k3dModel, bhomModel));
             
             // Convert supports and register to corresponding nodes
             k3dModel.supports.ForEach(s => s.ToBhOM(k3dModel, bhomModel));

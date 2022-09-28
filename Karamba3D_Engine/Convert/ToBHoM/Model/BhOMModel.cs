@@ -16,18 +16,17 @@
         // TODO Review this part when will pass to 2d elements.
         public IDictionary<int, Bar> Elements1D { get; set; } = new Dictionary<int, Bar>();
 
-        public IList<ILoad> Loads { get; set; } = new List<ILoad>();
+        public IEnumerable<ILoad> Loads { get; set; } = Enumerable.Empty<ILoad>();
 
-        public IReadOnlyDictionary<string, Loadcase> LoadCases => (IReadOnlyDictionary<string, Loadcase>)_loadCases;
+        public IEnumerable<Loadcase> LoadCases => _loadCases.Values;
 
         public BhOMModel()
         {
         }
 
-        public BhOMModel(int nodesCount, int elementsCount)
+        public bool TryGetLoadCase(string loadCaseName, out Loadcase loadcase)
         {
-            Nodes = new Dictionary<int, Node>(nodesCount);
-            Elements1D = new Dictionary<int, Bar>(elementsCount);
+            return _loadCases.TryGetValue(loadCaseName, out loadcase);
         }
 
         public Loadcase RegisterLoadCase(string loadCaseName)
