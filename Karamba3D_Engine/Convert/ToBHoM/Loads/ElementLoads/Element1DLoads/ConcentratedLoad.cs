@@ -1,20 +1,17 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Karamba.Elements;
-    using Karamba.Loads;
     using Karamba.Loads.Beam;
     using Karamba.Models;
     using oM.Base;
     using oM.Geometry;
     using oM.Structure.Elements;
     using oM.Structure.Loads;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public static partial class Convert
     {
-        internal static IEnumerable<ILoad> ToBhOM(this ConcentratedLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBhOM(this ConcentratedLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
         {
             k3dLoad.GetOrientation(out var loadAxis, out var isProjected);
 

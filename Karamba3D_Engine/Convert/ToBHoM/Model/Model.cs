@@ -1,14 +1,12 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Karamba.Elements;
     using Karamba.Loads;
     using Karamba.Models;
-    using Karamba.Supports;
     using oM.Base;
     using oM.Structure.Elements;
-    using oM.Structure.Loads;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public static partial class Convert
     {
@@ -52,7 +50,7 @@
             }
 
             // Convert loads
-            bhomModel.Loads = k3dModel.GetLoads().SelectMany(g => g.ToBhOM(k3dModel, bhomModel));
+            bhomModel.Loads = k3dModel.GetLoads().SelectMany(g => g.IToBhOM(k3dModel, bhomModel));
             
             // Convert supports and register to corresponding nodes
             k3dModel.supports.ForEach(s => s.ToBhOM(k3dModel, bhomModel));

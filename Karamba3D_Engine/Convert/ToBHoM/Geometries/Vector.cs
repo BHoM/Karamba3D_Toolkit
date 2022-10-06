@@ -1,7 +1,7 @@
-﻿using BH.oM.Geometry;
-
-namespace BH.Engine.Adapters.Karamba3D
+﻿namespace BH.Engine.Adapters.Karamba3D
 {
+    using oM.Geometry;
+
     public static partial class Convert
     {
         public static Vector ToBhOM(this Karamba.Geometry.Vector3 obj)

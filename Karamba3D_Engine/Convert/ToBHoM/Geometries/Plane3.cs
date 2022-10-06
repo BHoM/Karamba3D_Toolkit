@@ -1,7 +1,7 @@
-﻿using BH.oM.Geometry;
-
-namespace BH.Engine.Adapters.Karamba3D
+﻿namespace BH.Engine.Adapters.Karamba3D
 {
+    using oM.Geometry;
+
     public static partial class Convert
     {
         public static Basis ToBhOM(this Karamba.Geometry.Plane3 plane)

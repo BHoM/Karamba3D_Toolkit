@@ -1,15 +1,13 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Karamba.Loads;
     using Karamba.Models;
-    using Karamba.Utilities;
     using oM.Structure.Loads;
+    using System.Collections.Generic;
 
     public static partial class Convert
     {
-        public static IEnumerable<ILoad> ToBhOM(this Load k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> IToBhOM(this Load k3dLoad, Model k3dModel, BhOMModel bhomModel)
         {
             var bhomEntity =  ToBhOM(k3dLoad as dynamic, k3dModel, bhomModel);
 
@@ -25,6 +23,13 @@
             }
 
             return bhomEntity;
+        }
+
+        // Fallback method
+        private static IEnumerable<ILoad> ToBhOM(this object k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        {
+            BH.Engine.Base.Compute.RecordError($"Could not find a convert method for {k3dLoad.GetType().FullName}.");
+            return null;
         }
     }
 }

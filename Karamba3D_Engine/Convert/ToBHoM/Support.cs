@@ -1,14 +1,14 @@
-﻿using BH.oM.Structure.Constraints;
-using Karamba.Supports;
-using System.Collections.Generic;
-using Karamba.Models;
-using BH.oM.Base;
-using BH.oM.Structure.Elements;
-using BH.oM.Structure.Loads;
-using System.Linq;
-
-namespace BH.Engine.Adapters.Karamba3D
+﻿namespace BH.Engine.Adapters.Karamba3D
 {
+    using BH.oM.Base;
+    using BH.oM.Structure.Constraints;
+    using BH.oM.Structure.Elements;
+    using BH.oM.Structure.Loads;
+    using Karamba.Models;
+    using Karamba.Supports;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static partial class Convert
     {
         internal static Constraint6DOF ToBhOM(this Support k3dSupport)
@@ -58,7 +58,7 @@ namespace BH.Engine.Adapters.Karamba3D
                     Projected = false,
                 };
 
-                bhomModel.Loads.Concat(new[] { load });
+                bhomModel.Loads = bhomModel.Loads.Concat(new[] { load });
             }
         }
 

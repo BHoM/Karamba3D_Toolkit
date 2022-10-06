@@ -1,6 +1,5 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
-    // TODO Move all into namespace
     using BH.oM.Structure.Elements;
     using Karamba.Elements;
     using Karamba.Models;

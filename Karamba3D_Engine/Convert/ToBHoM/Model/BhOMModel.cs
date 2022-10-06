@@ -1,11 +1,9 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Karamba.Loads;
-    using oM.Base;
     using oM.Structure.Elements;
     using oM.Structure.Loads;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class BhOMModel
     {

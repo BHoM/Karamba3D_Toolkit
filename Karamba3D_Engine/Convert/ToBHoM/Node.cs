@@ -1,7 +1,7 @@
-﻿using BH.oM.Structure.Elements;
-
-namespace BH.Engine.Adapters.Karamba3D
+﻿namespace BH.Engine.Adapters.Karamba3D
 {
+    using BH.oM.Structure.Elements;
+
     public static partial class Convert
     {
         internal static Node ToBhOM(this Karamba.Nodes.Node k3dNode)

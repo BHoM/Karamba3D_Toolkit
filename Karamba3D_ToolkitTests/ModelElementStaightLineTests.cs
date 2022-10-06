@@ -1,17 +1,12 @@
 ﻿namespace Karamba3D_ToolkitTests
 {
     using BH.Engine.Adapters.Karamba3D;
-    using BH.Engine.Geometry;
-    using BH.oM.Geometry;
-    using BH.oM.Structure.Elements;
-    using FluentAssertions;
     using Karamba.Elements;
     using Karamba.Geometry;
     using Karamba.Models;
     using NUnit.Framework;
     using System.Collections.Generic;
     using System.Linq;
-    using BH.oM.Geometry.CoordinateSystem;
     using Node = Karamba.Nodes.Node;
 
     [TestFixture]
@@ -72,7 +67,7 @@
                 CustomAssert.BhOMObjectsAreEqual(
                     k3dCoordinateSystems[i],
                     bhomCoordinateSystem[i],
-                    $"Iteration {i} failed.");
+                    new BhOMEqualityTestOptions() { FailureMessage = $"Iteration {i} failed." });
             }
         }
 
@@ -94,16 +89,10 @@
             double tolerance = 1E-5;
             for (int i = 0; i < k3dCoordinateSystems.Count; i++)
             {
-                Assert.AreEqual(k3dCoordinateSystems[i].Origin, bhomCoordinateSystem[i].Origin);
-                Assert.AreEqual(k3dCoordinateSystems[i].X, bhomCoordinateSystem[i].X, tolerance);
-                Assert.AreEqual(k3dCoordinateSystems[i].Y, bhomCoordinateSystem[i].Y);
-                Assert.AreEqual(k3dCoordinateSystems[i].Z, bhomCoordinateSystem[i].Z);
-
-
                 CustomAssert.BhOMObjectsAreEqual(
                     k3dCoordinateSystems[i],
                     bhomCoordinateSystem[i],
-                    $"Iteration {i} failed.");
+                    new BhOMEqualityTestOptions { FailureMessage = $"Iteration {i} failed." , DoubleTolerance = tolerance});
             }
         }
 

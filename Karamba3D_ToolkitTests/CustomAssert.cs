@@ -1,22 +1,34 @@
 ﻿namespace Karamba3D_ToolkitTests
 {
+    using BH.oM.Base;
+    using NUnit.Framework;
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Drawing.Design;
     using System.Linq;
     using System.Reflection;
-    using System.Security.Permissions;
     using System.Text;
-    using BH.oM.Base;
-    using NUnit.Framework;
-    using NUnit.Framework.Constraints;
+
+    public class BhOMEqualityTestOptions
+    {
+        public double DoubleTolerance { get; set; } = 0;
+        public float SingleTolerance { get; set; } = 0;
+
+        public decimal DecimalTolerance { get; set; } = 0;
+        public string FailureMessage { get; set; } = string.Empty;
+
+        public bool AreTolerancesEnabled => DoubleTolerance != 0 || SingleTolerance != 0 || DecimalTolerance != 0;
+    }
 
     public static class CustomAssert
     {
-        public static void BhOMObjectsAreEqual<T>(T actual, T expected, double tolerance = 0.0, string message = "")
+        public static void BhOMObjectsAreEqual<T>(T actual, T expected, BhOMEqualityTestOptions options = default)
         {
-            bool areEqual = AreEqualOrPropertiesEqual(actual, expected, tolerance, out var notEqualProperties);
+            if (options is null)
+            {
+                options = new BhOMEqualityTestOptions();
+            }
+            bool areEqual = AreEqualOrPropertiesEqual(actual, expected, out var notEqualProperties, options);
 
             if (areEqual)
                 return;
@@ -32,23 +44,33 @@
                 sb.AppendLine($"The property \"{property.Name}\" of \"{typeof(T)}\" are not equal");
             }
 
-            message += Environment.NewLine + sb;
-            Assert.Fail(message);
+            string message = string.Empty;
+            if (options.FailureMessage != string.Empty)
+            {
+                message += options.FailureMessage + Environment.NewLine;
+            }
+            Assert.Fail(message + sb);
         }
 
-        private static bool AreEqualOrPropertiesEqual<T>(T actual, T expected, double tolerance, out IEnumerable<PropertyInfo> notEqualProperties)
+        private static bool AreEqualOrPropertiesEqual<T>(T actual, T expected, out IEnumerable<PropertyInfo> notEqualProperties, BhOMEqualityTestOptions options)
         {
             // If the type is string, value type or override the equal method, the equal method will be used
             // else all the public readable properties will be compared
             bool areEqual;
             notEqualProperties = Enumerable.Empty<PropertyInfo>();
-            if (EqualityCanBeDirectlyCheck(actual))
+
+            if (actual == null || expected == null)
+            {
+                return actual == null && expected == null;
+            }
+            
+            if (EqualityCanBeDirectlyCheck(actual) && !options.AreTolerancesEnabled)
             {
                 areEqual = Equals(actual, expected);
             }
             else
             {
-                areEqual = CheckPropertiesEquality<T>(actual, expected, tolerance, out notEqualProperties);
+                areEqual = CheckPropertiesEquality(actual, expected, out notEqualProperties, options);
             }
 
             return areEqual;
@@ -59,7 +81,7 @@
             return obj.GetType().GetMethods().Any(m => m.Name == "Equals" && m.DeclaringType != typeof(object));
         }
 
-        private static bool CheckPropertiesEquality<T>(T actual, T expected, double tolerance, out IEnumerable<PropertyInfo> notEqualProperties)
+        private static bool CheckPropertiesEquality<T>(T actual, T expected, out IEnumerable<PropertyInfo> notEqualProperties, BhOMEqualityTestOptions options)
         {
             // The comparison will consider all the properties of the type T.
             // 1. If the property type is string, value type or override the equal method,
@@ -70,12 +92,16 @@
             foreach (var property in GetAllPublicReadableProperties(actual))
             {
                 var areValuesEqual = true;
-                var actualValue = property.GetValue(actual);
-                var expectedValue = property.GetValue(expected);
+                var actualValue = property?.GetValue(actual);
+                var expectedValue = property?.GetValue(expected);
 
-                if (EqualityCanBeDirectlyCheck(actualValue))
+                if (actualValue == null || expectedValue == null)
                 {
-                    areValuesEqual = Equals(actualValue, expectedValue);
+                    areValuesEqual = actualValue == null && expectedValue == null;
+                }
+                else if (EqualityCanBeDirectlyCheck(actualValue))
+                {
+                    areValuesEqual = AreAlmostEqual(actualValue, expectedValue, options);
                 }
                 else if (actualValue is IEnumerable actualEnumerable)
                 {
@@ -88,7 +114,7 @@
                     while (actualCanMove && expectedCanMove && areValuesEqual)
                     {
                         // When any entity is not equal, the enumerables are not equal too.
-                        areValuesEqual = AreEqualOrPropertiesEqual(actualEnumerator.Current, expectedEnumerator.Current, tolerance, out _);
+                        areValuesEqual = AreEqualOrPropertiesEqual(actualEnumerator.Current, expectedEnumerator.Current, out _, options);
 
                         actualCanMove = actualEnumerator.MoveNext();
                         expectedCanMove = expectedEnumerator.MoveNext();
@@ -114,7 +140,7 @@
                 else if (actualValue is IObject pActualObject)
                 {
                     var pExpectedObject = expectedValue as IObject;
-                    areValuesEqual = CheckPropertiesEquality(pActualObject, pExpectedObject, tolerance, out _);
+                    areValuesEqual = CheckPropertiesEquality(pActualObject, pExpectedObject, out _, options);
                 }
                 else
                 {
@@ -142,18 +168,38 @@
 
         private static bool EqualityCanBeDirectlyCheck(object obj)
         {
-            return obj is null || obj.GetType().IsValueType || obj is string || OverridesEqualsMethod(obj);
+            return obj.GetType().IsValueType || obj is string || OverridesEqualsMethod(obj);
         }
 
-        private static bool AreAlmostEqual(decimal actualValue, decimal expectedValue, double tolerance)
+        private static bool AreAlmostEqual<T>(T actualValue, T expectedValue, BhOMEqualityTestOptions options)
         {
-            if (tolerance != 0.0 && 
-                (typeof(T) == typeof(double) || typeof(T) == typeof(decimal) || typeof(T) == typeof(float)))
+            if (!options.AreTolerancesEnabled)
+                return Equals(actualValue, expectedValue);
+
+            if (actualValue is double actualDouble && 
+                expectedValue is double expectedDouble)
             {
-                return Math.Abs(actualValue - expectedValue) < test;
-                
+                return Math.Abs(actualDouble - expectedDouble) < options.DoubleTolerance;
             }
-            Equals(actualValue, expectedValue);
+
+            if (actualValue is float actualFloat && 
+                expectedValue is float expectedFloat)
+            {
+                return Math.Abs(actualFloat - expectedFloat) < options.SingleTolerance;
+            }
+
+            if (actualValue is decimal actualDecimal && 
+                expectedValue is decimal expectedDecimal)
+            {
+                return Math.Abs(actualDecimal - expectedDecimal) < options.DecimalTolerance;
+            }
+
+            if (actualValue is IObject)
+            {
+                return CheckPropertiesEquality(actualValue, expectedValue, out _, options);
+            }
+
+            return Equals(actualValue, expectedValue);
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
-    using System.Linq;
     using Karamba.Elements;
     using Karamba.Models;
     using oM.Dimensional;
-    using oM.Structure.Loads;
 
     public static partial class Convert
     {

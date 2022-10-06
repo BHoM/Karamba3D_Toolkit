@@ -1,18 +1,18 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Karamba.Loads.Beam;
     using Karamba.Models;
     using oM.Base;
     using oM.Geometry;
     using oM.Structure.Elements;
     using oM.Structure.Loads;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public static partial class Convert
     {
-        public static IEnumerable<ILoad> ToBhOM(this DistributedLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBhOM(this DistributedLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
         {
             if (k3dLoad.Positions.Count == 2 &&
                 k3dLoad.Positions[0] == 0 &&

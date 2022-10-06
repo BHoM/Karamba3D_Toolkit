@@ -1,6 +1,5 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
-    using System;
     using Karamba.Geometry;
     using Karamba3D_Engine;
     using oM.Geometry;
@@ -38,12 +37,20 @@
                         k3dVectorArray.Length));
                 return null;
             }
-
-            return new Cartesian(
-                Point.Origin,
+            // TODO fix the bug
+            var test1 = Point.Origin;
+            var test2 = new Point
+            {
+                X = 0,
+                Y = 0,
+                Z = 0
+            };
+            var test = new Cartesian(
+                Point.Origin ,
                 k3dVectorArray[0].ToBhOM(),
                 k3dVectorArray[1].ToBhOM(),
                 k3dVectorArray[2].ToBhOM());
+            return test;
         }
         
     }

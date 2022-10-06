@@ -1,6 +1,5 @@
 ﻿namespace Karamba3D_ToolkitTests
 {
-    using System;
     using BH.Engine.Adapters.Karamba3D;
     using BH.oM.Base;
     using BH.oM.Base.Debugging;
@@ -10,28 +9,17 @@
     using BH.oM.Structure.Loads;
     using Karamba.Elements;
     using Karamba.Geometry;
+    using Karamba.Joints;
     using Karamba.Models;
     using Karamba.Supports;
     using Karamba3D_Engine;
     using NUnit.Framework;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using BH.oM.Structure.Offsets;
     using Node = Karamba.Nodes.Node;
 
-    // Test all type of load
-    // Test load case assign for the bhom Model
-    // Test support
-    // Test support with local coosys
-    // Test support with prescribed displacement
-    // Test beam
-        // Test orientation angle for all possible angles
-        // Test beam joints as releases
-
-    // Test truss
-    // Test eccentricity on beam
-    // Test releases on beam, truss
-    // Test orientation of local coosys for beam
+    
     // Ask for an implementation of sprin as non rigid link
 
     [TestFixture]
@@ -88,8 +76,6 @@
 
         public Model CreateKingPostTruss()
         {
-            
-
             var nodes = new List<Node>
             {
                 new Node(0, new Point3(0, 0.5, 0)),
@@ -314,6 +300,7 @@
                 SectionProperty = truss.crosec.ToBhOM(),
                 FEAType = BarFEAType.Axial,
             };
+            CustomAssert.BhOMObjectsAreEqual(bhomTruss.Offset, expectedTruss.Offset);
             CustomAssert.BhOMObjectsAreEqual(bhomTruss, expectedTruss);
         }
 
@@ -341,12 +328,64 @@
             // Therefore we expect a total eccentricity e_total = e_global + e_local.
             // Where e_local has been evaluated with respect to the local coordinate system of the beam
             // and consists of eccentricities given for the beam and for the cross section.
-            var tolerance = 1E-5;
+            var expectedVector = new Vector()
+            {
+                X = 0.3,
+                Y = 0.1 * (1 + Math.Sqrt(2)),
+                Z = 0.1 * Math.Sqrt(2)
+            };
             Assert.AreEqual(bhomBeam.Offset.Start, bhomBeam.Offset.End);
-            Assert.That(bhomBeam.Offset.Start.X, Is.EqualTo(0.3).Within(tolerance));
-            Assert.That(bhomBeam.Offset.Start.Y, Is.EqualTo(0.1 * (1 + Math.Sqrt(2))).Within(tolerance));
-            Assert.That(bhomBeam.Offset.Start.Z, Is.EqualTo(0.1 * Math.Sqrt(2)).Within(tolerance));
+            CustomAssert.BhOMObjectsAreEqual(bhomBeam.Offset.Start, expectedVector, new BhOMEqualityTestOptions { DoubleTolerance = 1E-5});
             Assert.That(bhomBeam.OrientationAngle, Is.EqualTo(rad));
+        }
+
+        [Test]
+        public void ModelBeam_WithReleases_ConversionTest()
+        {
+            // Arrange
+            var model = CreateHingedBeamModel();
+            var beam = model.elems.Single() as ModelBeam;
+            beam.joint = new Joint { c = new double?[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12} };
+
+            // Act
+            var bhomModel = model.ToBhOMModel();
+            var bhomRelease = bhomModel.Elements1D.Values.Single().Release;
+
+            // Assert
+            var expected = new BarRelease
+            {
+                StartRelease = new Constraint6DOF()
+                {
+                    TranslationX = DOFType.Spring,
+                    TranslationY = DOFType.Spring,
+                    TranslationZ = DOFType.Spring,
+                    RotationX = DOFType.Spring,
+                    RotationY = DOFType.Spring,
+                    RotationZ = DOFType.Spring,
+                    TranslationalStiffnessX = 1,
+                    TranslationalStiffnessY = 2,
+                    TranslationalStiffnessZ = 3,
+                    RotationalStiffnessX = 4,
+                    RotationalStiffnessY = 5,
+                    RotationalStiffnessZ = 6
+                },
+                EndRelease = new Constraint6DOF()
+                {
+                    TranslationX = DOFType.Spring,
+                    TranslationY = DOFType.Spring,
+                    TranslationZ = DOFType.Spring,
+                    RotationX = DOFType.Spring,
+                    RotationY = DOFType.Spring,
+                    RotationZ = DOFType.Spring,
+                    TranslationalStiffnessX = 7,
+                    TranslationalStiffnessY = 8,
+                    TranslationalStiffnessZ = 9,
+                    RotationalStiffnessX = 10,
+                    RotationalStiffnessY = 11,
+                    RotationalStiffnessZ = 12
+                },
+            };
+            CustomAssert.BhOMObjectsAreEqual(bhomRelease, expected);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
+    using System;
+    using System.Data.SqlTypes;
     using Karamba.Joints;
     using oM.Structure.Constraints;
 
@@ -90,7 +92,7 @@
 
             return new BarRelease()
             {
-                Name = k3dJoint.name,
+                Name = k3dJoint.name is null || k3dJoint.name == string.Empty ? null : k3dJoint.name,
                 StartRelease = startRelease,
                 EndRelease = endRelease,
             };
