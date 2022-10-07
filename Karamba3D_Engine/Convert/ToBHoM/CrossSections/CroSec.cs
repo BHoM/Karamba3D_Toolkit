@@ -1,5 +1,6 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
+    using Adapter.Karamba3D;
     using Karamba.CrossSections;
     using Karamba3D_Engine;
     using oM.Structure.SectionProperties;
@@ -13,7 +14,7 @@
                 return ToBhOM(k3dBeamCrossSection);
             }
 
-            Base.Compute.RecordWarning(string.Format(Resource.WarningNotSupportedType, k3dCrossSection.GetType().Name));
+            K3dLogger.RecordWarning(string.Format(Resource.WarningNotSupportedType, k3dCrossSection.GetType().Name));
             return null;
         }
     }

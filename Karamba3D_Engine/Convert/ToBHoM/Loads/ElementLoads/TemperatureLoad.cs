@@ -9,6 +9,7 @@
     using oM.Structure.Loads;
     using System.Collections.Generic;
     using System.Linq;
+    using Adapter.Karamba3D;
 
     public static partial class Convert
     {
@@ -23,7 +24,7 @@
             if (k3dLoad.incdT != Vector3.Unset)
             {
                 // Create linear temperature load
-                Base.Compute.RecordError("Linear temperature changes are not supported yet");
+                K3dLogger.RecordError("Linear temperature changes are not supported yet");
             }
 
             // Create uniform temperature load

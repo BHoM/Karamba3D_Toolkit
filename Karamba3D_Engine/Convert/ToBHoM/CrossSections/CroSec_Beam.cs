@@ -10,10 +10,10 @@ using Karamba.CrossSections;
 using BH.Engine.Spatial;
 using BH.Engine.Structure;
 using feb;
-using Log = BH.Engine.Adapter.Karamba3D.Log;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Adapter.Karamba3D;
     using Karamba3D_Engine;
 
     public static partial class Convert
@@ -133,7 +133,7 @@ namespace BH.Engine.Adapters.Karamba3D
                 {
                     if (Math.Abs(box.uf_width - box.lf_width) > double.Epsilon)
                     {
-                        Base.Compute.RecordError(Resource.ErrorDifferentFlangeNotSupported);
+                        K3dLogger.RecordError(Resource.ErrorDifferentFlangeNotSupported);
                     }
 
                     // TODO use a global tolerance for Karamba!
@@ -142,7 +142,7 @@ namespace BH.Engine.Adapters.Karamba3D
                     {
                         if (box.fillet_r > 0 || box.fillet_r1 > 0)
                         {
-                            Base.Compute.RecordWarning(Resource.WarningBoxCrossSectionNotSupportedFillet);
+                            K3dLogger.RecordWarning(Resource.WarningBoxCrossSectionNotSupportedFillet);
                         }
 
                         return Spatial.Create.FabricatedISectionProfile(
@@ -172,7 +172,7 @@ namespace BH.Engine.Adapters.Karamba3D
                         if (iSection.fillet_r > 0)
                         {
 
-                            Base.Compute.RecordWarning(Resource.WarningICrossSectionNotSupportedFillet);
+                            K3dLogger.RecordWarning(Resource.WarningICrossSectionNotSupportedFillet);
                         }
 
 
@@ -203,7 +203,7 @@ namespace BH.Engine.Adapters.Karamba3D
                         typeof(IProfile),
                         obj.GetType().FullName);
 
-                    Base.Compute.RecordError(message);
+                    K3dLogger.RecordError(message);
                     return null;
                 }
             }

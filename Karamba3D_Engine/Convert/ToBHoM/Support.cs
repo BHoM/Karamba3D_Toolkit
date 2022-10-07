@@ -25,7 +25,7 @@
             return bhomSupport;
         }
 
-        public static void ToBhOM(this Support k3dSupport, Model k3dModel, BhOMModel bhomModel)
+        private static void ToBhOM(this Support k3dSupport, Model k3dModel, BhOMModel bhomModel)
         {
             var bhomSupport = k3dSupport.ToBhOM();
             var bhomNode = bhomModel.Nodes[k3dSupport.node_ind];
@@ -58,7 +58,7 @@
                     Projected = false,
                 };
 
-                bhomModel.Loads = bhomModel.Loads.Concat(new[] { load });
+                bhomModel.Loads.AddRange(bhomModel.Loads.Concat(new[] { load }));
             }
         }
 

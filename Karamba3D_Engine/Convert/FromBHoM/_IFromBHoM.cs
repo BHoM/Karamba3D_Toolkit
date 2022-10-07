@@ -24,6 +24,8 @@ using BH.oM.Base;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Adapter.Karamba3D;
+
     public static partial class Convert
     {
         /***************************************************/
@@ -39,7 +41,7 @@ namespace BH.Engine.Adapters.Karamba3D
         // Fallback method
         private static object FromBHoM(this IObject bhomObject)
         {
-            BH.Engine.Base.Compute.RecordError($"Could not find a convert method for {bhomObject.GetType().FullName}.");
+            K3dLogger.RecordError($"Could not find a convert method for {bhomObject.GetType().FullName}.");
             return null;
         }
 

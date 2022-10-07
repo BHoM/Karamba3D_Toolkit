@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class BhOMModel
+    internal class BhOMModel
     {
         private readonly IDictionary<string, Loadcase> _loadCases = new Dictionary<string, Loadcase>();
 
@@ -14,7 +14,7 @@
         // TODO Review this part when will pass to 2d elements.
         public IDictionary<int, Bar> Elements1D { get; set; } = new Dictionary<int, Bar>();
 
-        public IEnumerable<ILoad> Loads { get; set; } = Enumerable.Empty<ILoad>();
+        public List<ILoad> Loads { get; set; } = new List<ILoad>();
 
         public IEnumerable<Loadcase> LoadCases => _loadCases.Values;
 

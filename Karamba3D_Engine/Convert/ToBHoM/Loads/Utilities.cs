@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Karamba.Elements;
 
     public static partial class Convert
     {
@@ -42,16 +43,40 @@
         internal static IEnumerable<Karamba.Elements.ModelElement> GetElements(this ElementLoad k3dLoad, Model k3dModel)
         {
 
-            var elementsFromTags = k3dModel.Elements(k3dLoad.ElementIds);
-            var elementsFromGuids = k3dLoad.ElementGuids.SelectMany(k3dModel.Elements);
+            var elementsFromTags = Enumerable.Empty<ModelElement>();
+            var elementsFromGuids = Enumerable.Empty<ModelElement>();
+            if (k3dLoad is null || k3dModel is null)
+            {
+                return Enumerable.Empty<ModelElement>();
+            }
+
+            if (k3dLoad.ElementIds?.Any() ?? false)
+            {
+                elementsFromTags = k3dModel.Elements(k3dLoad.ElementIds);
+            }
+
+            if (k3dLoad.ElementGuids?.Any() ?? false)
+            {
+                elementsFromGuids = k3dLoad.ElementGuids.SelectMany(k3dModel.Elements);
+            }
 
             return elementsFromTags.Concat(elementsFromGuids);
         }
 
         internal static IEnumerable<int> GetElementIndices(this ElementLoad k3dLoad, Model k3dModel)
         {
-            var indicesFromTags = k3dModel.ElementInds(k3dLoad.ElementIds);
-            var indicesFromGuids = k3dModel.ElementInds(k3dLoad.ElementGuids);
+            var indicesFromTags = Enumerable.Empty<int>();
+            var indicesFromGuids = Enumerable.Empty<int>();
+
+            if (k3dLoad.ElementIds?.Any() ?? false)
+            {
+                indicesFromTags = k3dModel.ElementInds(k3dLoad.ElementIds);
+            }
+
+            if (k3dLoad.ElementGuids?.Any() ?? false)
+            {
+                indicesFromGuids = k3dModel.ElementInds(k3dLoad.ElementGuids);
+            }
 
             return indicesFromTags.Concat(indicesFromGuids);
         }

@@ -41,7 +41,7 @@
             var beams = k3dModel.elems.OfType<ModelElementStraightLine>();
             foreach (var beam in beams)
             {
-                var bhomElement = beam.ToBhOM(k3dModel, bhomModel);
+                var bhomElement = beam.IToBhOM(k3dModel, bhomModel);
 
                 if(bhomElement is Bar bhomBar)
                 {
@@ -50,7 +50,7 @@
             }
 
             // Convert loads
-            bhomModel.Loads = k3dModel.GetLoads().SelectMany(g => g.IToBhOM(k3dModel, bhomModel));
+            bhomModel.Loads.AddRange(k3dModel.GetLoads().SelectMany(g => g.IToBhOM(k3dModel, bhomModel)));
             
             // Convert supports and register to corresponding nodes
             k3dModel.supports.ForEach(s => s.ToBhOM(k3dModel, bhomModel));

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BH.Engine.Adapter.Karamba3D
 {
-    public static class Log
+    public static class K3dLogger
     {
         private static List<string> m_allMessages = new List<string>();
         private static List<string> m_reportedErrors = new List<string>();

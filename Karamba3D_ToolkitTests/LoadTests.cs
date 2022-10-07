@@ -33,24 +33,27 @@
         public void GetOrientation_Test()
         {
             // Arrange
+            var model = TestUtilities.CreateHingedBeamModel();
+
+            var beamIds = model.elems.Select(b => b.id).ToList();
             string loadCase = "TestBhOMLoadCase";
             double position = 0.5;
             ElementLoad[] loads =
             {
                 // Global load
-                new ConcentratedForce(null, null, loadCase, position, Vector3.UnitZ, LoadOrientation.global),
+                new ConcentratedForce(beamIds, null, loadCase, position, Vector3.UnitZ, LoadOrientation.global),
 
                 // Local load
-                new ConcentratedForce(null, null, loadCase, position, Vector3.UnitZ, LoadOrientation.local),
+                new ConcentratedForce(beamIds, null, loadCase, position, Vector3.UnitZ, LoadOrientation.local),
 
                 // Projected load
-                new ConcentratedForce(null, null, loadCase, position, Vector3.UnitZ, LoadOrientation.proj)
+                new ConcentratedForce(beamIds, null, loadCase, position, Vector3.UnitZ, LoadOrientation.proj)
             };
-            var model = new Model();
             model.eloads.AddRange(loads);
 
             // Act
-            var bhomLoads = model.ToBhOMModel().Loads.OfType<IElementLoad<Bar>>().ToList();
+            var bhomModel = model.ToBhOMModel();
+            var bhomLoads = bhomModel.Loads.OfType<IElementLoad<Bar>>().ToList();
 
             // Arrange
             Assert.AreEqual(bhomLoads.Count(), 3);

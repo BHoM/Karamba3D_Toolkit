@@ -1,5 +1,6 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
+    using Adapter.Karamba3D;
     using BH.oM.Structure.Elements;
     using Karamba.Elements;
     using Karamba.Models;
@@ -14,7 +15,7 @@
         {
             if (k3dElement is ModelSpring)
             {
-                Base.Compute.RecordWarning(string.Format(Resource.WarningNotSupportedType, typeof(ModelSpring).Name));
+                K3dLogger.RecordWarning(string.Format(Resource.WarningNotSupportedType, typeof(ModelSpring).Name));
                 return null;
             }
             
