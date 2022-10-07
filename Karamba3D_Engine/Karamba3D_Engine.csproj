@@ -20,50 +20,50 @@
 
 	<ItemGroup>
 		<Reference Include="Adapter_oM">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Adapter_oM.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Adapter_oM.dll</HintPath>
 		</Reference>
 		<Reference Include="Analytical_oM">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Analytical_oM.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Analytical_oM.dll</HintPath>
 		</Reference>
 		<Reference Include="BHoM">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\BHoM.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM.dll</HintPath>
 		</Reference>
 		<Reference Include="BHoM_Adapter">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Adapter.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM_Adapter.dll</HintPath>
 		</Reference>
 		<Reference Include="BHoM_Engine">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
 		</Reference>
 		<Reference Include="Data_oM">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Data_oM.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Data_oM.dll</HintPath>
 		</Reference>
 		<Reference Include="Dimensional_oM">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Dimensional_oM.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Dimensional_oM.dll</HintPath>
 		</Reference>
 		<Reference Include="Geometry_oM">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_oM.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Geometry_oM.dll</HintPath>
 		</Reference>
 		<Reference Include="Library_Engine">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Library_Engine.dll</HintPath>
 		</Reference>
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="Physical_oM">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Physical_oM.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Physical_oM.dll</HintPath>
 		</Reference>
 		<Reference Include="Reflection_Engine">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
 		</Reference>
 		<Reference Include="Structure_Engine">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Structure_Engine.dll</HintPath>
 		</Reference>
 		<Reference Include="Structure_oM">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Structure_oM.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Structure_oM.dll</HintPath>
 		</Reference>
 		<Reference Include="Spatial_oM">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_oM.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Spatial_oM.dll</HintPath>
 		</Reference>
 		<Reference Include="Spatial_Engine">
-			<HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
@@ -84,7 +84,7 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y&#xD;&#xA;EXIT 0" />
+		<Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;$(ProgramData)\BHoM\Assemblies&quot; /Y&#xD;&#xA;EXIT 0" />
 	</Target>
 
 </Project>

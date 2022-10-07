@@ -1,145 +1,46 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9FF48041-B1F9-4C39-9629-9DF1E0B48C97}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Adapter.Karamba3D</RootNamespace>
-    <AssemblyName>Karamba3D_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\Build\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\Build\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Adapter_Engine">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\ProgramData\BHoM\Assemblies\Adapter_Engine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Adapter_oM">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\ProgramData\BHoM\Assemblies\Adapter_oM.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="BHoM">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="BHoM_Adapter">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Adapter.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="BHoM_Engine">
-      <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
-      <Private>False</Private>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Data_oM">
-      <HintPath>C:\ProgramData\BHoM\Assemblies\Data_oM.dll</HintPath>
-      <Private>False</Private>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Geometry_oM, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Reference Include="KarambaCommon, Version=2.2.0.14, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\KarambaCommon.3.0.0\lib\net48\KarambaCommon.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="Piglet, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Piglet.1.5.0\lib\net45\Piglet.dll</HintPath>
-    </Reference>
-    <Reference Include="Reflection_Engine">
-      <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
-      <Private>False</Private>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Structure_oM, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AdapterActions\Execute.cs" />
-    <Compile Include="AdapterActions\Remove.cs" />
-    <Compile Include="AdapterActions\Push.cs" />
-    <Compile Include="AdapterActions\Pull.cs" />
-    <Compile Include="Karamba3DAdapter.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Karamba3D_Engine\Karamba3D_Engine.csproj">
-      <Project>{d0b2a7e0-1d68-42a6-b699-8bb648d50932}</Project>
-      <Name>Karamba3D_Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj">
-      <Project>{d344dcf0-788d-4e0a-8596-70199a080619}</Project>
-      <Name>Karamba3D_oM</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CRUD\Create\" />
-    <Folder Include="CRUD\Delete\" />
-    <Folder Include="CRUD\Read\" />
-    <Folder Include="Methods\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)$(TargetFileName)"  "C:\ProgramData\BHoM\Assemblies" /Y
-EXIT 0</PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\packages\Baseclass.Contrib.Nuget.Output.2.4.3\build\Baseclass.Contrib.Nuget.Output.targets" Condition="Exists('..\packages\Baseclass.Contrib.Nuget.Output.2.4.3\build\Baseclass.Contrib.Nuget.Output.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Baseclass.Contrib.Nuget.Output.2.4.3\build\Baseclass.Contrib.Nuget.Output.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Baseclass.Contrib.Nuget.Output.2.4.3\build\Baseclass.Contrib.Nuget.Output.targets'))" />
-  </Target>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AssemblyName>Karamba3D_Adapter</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+	<ProjectReference Include="..\Karamba3D_Engine\Karamba3D_Engine.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="KarambaCommon" Version="3.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Adapter_Engine">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Adapter_Engine.dll</HintPath>
+		</Reference>
+		<Reference Include="Adapter_oM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Adapter_oM.dll</HintPath>
+		</Reference>
+		<Reference Include="BHoM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM.dll</HintPath>
+		</Reference>
+		<Reference Include="BHoM_Adapter">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM_Adapter.dll</HintPath>
+		</Reference>
+		<Reference Include="BHoM_Engine">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
+		</Reference>
+		<Reference Include="Data_oM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Data_oM.dll</HintPath>
+		</Reference>
+		<Reference Include="Geometry_oM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Geometry_oM.dll</HintPath>
+		</Reference>
+		<Reference Include="Reflection_Engine">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;$(ProgramData)\BHoM\Assemblies&quot; /Y&#xD;&#xA;EXIT 0" />
+	</Target>
+ 
 </Project>
