@@ -7,6 +7,7 @@
     using oM.Structure.Elements;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     public static partial class Convert
     {
@@ -19,11 +20,15 @@
                    .Concat(k3dModel.gravities.Values);
         }
 
-        private static IEnumerable<IBHoMObject> ReturnBhOMObjects(this BhOMModel bhomModel)
+        private static BH.oM.Karamba3D.FemModel ToFemModel(this BhOMModel bhomModel)
         {
-            return bhomModel.Elements1D.Values.Cast<IBHoMObject>()
-                             .Concat(bhomModel.Nodes.Values)
-                             .Concat(bhomModel.Loads);
+            return new oM.Karamba3D.FemModel()
+            {
+                Nodes = bhomModel.Nodes.Values.ToList(),
+                Bars = bhomModel.Elements1D.Values.ToList(),
+                Loads = bhomModel.Loads.ToList(),
+                LoadCases = bhomModel.LoadCases.ToList(),
+            };
         }
 
         internal static BhOMModel ToBhOMModel(this Karamba.Models.Model k3dModel)
@@ -58,9 +63,9 @@
             return bhomModel;
         }
 
-        public static IEnumerable<IBHoMObject> ToBhOM(this Karamba.Models.Model k3dModel)
+        public static oM.Karamba3D.FemModel ToBhOM(this Karamba.Models.Model k3dModel)
         {
-            return k3dModel.ToBhOMModel().ReturnBhOMObjects();
+            return k3dModel.ToBhOMModel().ToFemModel();
         }
     }
 }

@@ -8,7 +8,7 @@
 
     public static partial class Convert
     {
-        public static Cartesian ToBhOM(this CoordinateSystem3 k3dCoSys)
+        internal static Cartesian ToBhOM(this CoordinateSystem3 k3dCoSys)
         {
             if (k3dCoSys is null)
             {
@@ -22,7 +22,7 @@
                 k3dCoSys.Z.ToBhOM());
         }
 
-        public static Cartesian ToBhOM(this Vector3[] k3dVectorArray)
+        internal static Cartesian ToBhOM(this Vector3[] k3dVectorArray)
         {
             if (k3dVectorArray is null)
             {

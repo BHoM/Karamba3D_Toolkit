@@ -34,7 +34,7 @@
         {
             // Arrange
             var model = TestUtilities.CreateHingedBeamModel();
-
+            
             var beamIds = model.elems.Select(b => b.id).ToList();
             string loadCase = "TestBhOMLoadCase";
             double position = 0.5;
@@ -62,6 +62,8 @@
         [Test]
         public void ConcentratedForce_ConversionTest()
         {
+            // Arrange
+            Model model =TestUtilities.Create3HingesBeam();
         }
 
         [Test]

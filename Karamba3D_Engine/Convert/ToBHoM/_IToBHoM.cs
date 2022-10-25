@@ -9,12 +9,6 @@ namespace BH.Engine.Adapters.Karamba3D
 
     public static partial class Convert
     {
-        // Entry point
-        public static IObject IToBhOM(this object obj)
-        {
-            return ToBhOM(obj as dynamic);
-        }
-
         // Fallback methods
         private static IObject ToBhOM(this object obj)
         {

@@ -32,7 +32,7 @@ namespace BH.Engine.Adapters.Karamba3D
         /*** Methods                                     ***/
         /***************************************************/
 
-        public static object IFromBHoM(this IObject bhomObject)
+        private static object IFromBHoM(this IObject bhomObject)
         {
             return FromBHoM(bhomObject as dynamic);
         } 

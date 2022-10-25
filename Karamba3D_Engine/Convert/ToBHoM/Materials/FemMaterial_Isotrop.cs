@@ -5,7 +5,7 @@ namespace BH.Engine.Adapters.Karamba3D
 
     public static partial class Convert
     {
-        public static IIsotropic ToBhOM(this Karamba.Materials.FemMaterial_Isotrop k3dMaterial)
+        private static IIsotropic ToBhOM(this Karamba.Materials.FemMaterial_Isotrop k3dMaterial)
         {
             // TODO: Check Karamba settings for Units of Measure (INIReader reader)
             // OR use the automated Karamba conversion (which only converts numbers if they are not in the right Unit - works only at runtime via Karamba)

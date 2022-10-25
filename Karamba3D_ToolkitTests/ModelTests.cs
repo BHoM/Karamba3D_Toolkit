@@ -20,8 +20,6 @@
     using Node = Karamba.Nodes.Node;
 
     
-    // Ask for an implementation of sprin as non rigid link
-
     [TestFixture]
     public class ModelTests
     {

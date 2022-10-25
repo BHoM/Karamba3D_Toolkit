@@ -15,7 +15,7 @@
         {
             if (k3dElement is ModelSpring)
             {
-                K3dLogger.RecordWarning(string.Format(Resource.WarningNotSupportedType, typeof(ModelSpring).Name));
+                K3dLogger.RecordWarning(string.Format(Resource.WarningNotSupportedType, nameof(ModelSpring)));
                 return null;
             }
             

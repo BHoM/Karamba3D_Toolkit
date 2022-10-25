@@ -21,28 +21,33 @@
  */
 
 using BH.oM.Base;
-using System;
+using BH.oM.Structure;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.ComponentModel;
 
-namespace BH.oM.Adapters.Karamba3D
+namespace BH.oM.Karamba3D
 {
+    using Structure.Elements;
+    using Structure.Loads;
+
     [Description("Description of object")]
-    public class ExampleObject : BHoMObject
+    public class FemModel : BHoMObject
     {
         /***************************************************/
         /**** Properties                                ****/
         /***************************************************/
 
-        [Description("Description of this property")]
-        public virtual string PropertyOne { get; set; }
+        [Description("Nodes")]
+        public IEnumerable<Node> Nodes { get; set; }
 
-        [Description("Description of this property")]
-        public virtual string PropertyTwo { get; set; }
+        [Description("Bars")]
+        public IEnumerable<Bar> Bars { get; set; }
+
+        [Description("Loads")]
+        public IEnumerable<ILoad> Loads { get; set; }
+
+        [Description("LoadCases")]
+        public IEnumerable<Loadcase> LoadCases { get; set; }
     }
 }
 

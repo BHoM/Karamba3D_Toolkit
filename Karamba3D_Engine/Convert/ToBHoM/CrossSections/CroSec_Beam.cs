@@ -18,7 +18,7 @@ namespace BH.Engine.Adapters.Karamba3D
 
     public static partial class Convert
     {
-        public static ISectionProperty ToBhOM(this CroSec_Beam k3dCrossSection)
+        private static ISectionProperty ToBhOM(this CroSec_Beam k3dCrossSection)
         {
             if (k3dCrossSection is null)
                 return null;

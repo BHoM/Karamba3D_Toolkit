@@ -21,20 +21,8 @@
  */
 
 using BH.Engine.Adapters.Karamba3D;
-using BH.Engine.Reflection;
 using BH.oM.Adapter;
-using BH.oM.Data.Requests;
-using BH.oM.Adapters.Karamba3D;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BH.Engine.Base;
-using BH.oM.Base;
-using BH.oM.Data.Library;
 
 namespace BH.Adapter.Karamba3D
 {
@@ -72,7 +60,7 @@ namespace BH.Adapter.Karamba3D
 
             foreach (var obj in objects)
             {
-                convertedObjects.Add(obj.IToBhOM());
+                //convertedObjects.Add(obj.IToBhOM());
             }
 
             return convertedObjects;

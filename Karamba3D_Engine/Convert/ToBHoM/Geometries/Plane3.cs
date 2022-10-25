@@ -4,7 +4,7 @@
 
     public static partial class Convert
     {
-        public static Basis ToBhOM(this Karamba.Geometry.Plane3 plane)
+        private static Basis ToBhOM(this Karamba.Geometry.Plane3 plane)
         {
             return new Basis(plane.XAxis.ToBhOM(), plane.YAxis.ToBhOM(), plane.ZAxis.ToBhOM());
 
