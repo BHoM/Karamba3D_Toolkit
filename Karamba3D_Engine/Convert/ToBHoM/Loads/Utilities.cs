@@ -8,9 +8,17 @@
     using System.Collections.Generic;
     using System.Linq;
     using Karamba.Elements;
+    using oM.Structure.Elements;
 
     public static partial class Convert
     {
+        internal static List<Bar> GetLoadedBhomBars(ElementLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        {
+            return k3dLoad.GetLoadedK3dElements(k3dModel)
+                   .Select(e => bhomModel.Elements1D[e.ind])
+                   .ToList();
+        }
+
         internal static void GetOrientation<T>(this T k3dLoad, out LoadAxis loadAxis, out bool isProjected) 
             where T : ElementLoad
         {
@@ -40,7 +48,7 @@
             }
         }
 
-        internal static IEnumerable<Karamba.Elements.ModelElement> GetElements(this ElementLoad k3dLoad, Model k3dModel)
+        internal static IEnumerable<Karamba.Elements.ModelElement> GetLoadedK3dElements(this ElementLoad k3dLoad, Model k3dModel)
         {
 
             var elementsFromTags = Enumerable.Empty<ModelElement>();

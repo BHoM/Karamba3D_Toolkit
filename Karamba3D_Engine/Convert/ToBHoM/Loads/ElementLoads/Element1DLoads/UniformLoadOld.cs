@@ -14,14 +14,11 @@
         private static IEnumerable<ILoad> ToBhOM(this UniformlyDistLoad_OLD k3dLoad, Model k3dModel, BhOMModel bhomModel)
         {
             k3dLoad.GetOrientation(out var loadAxis, out var isProjected);
-            var bars = k3dLoad.GetElementIndices(k3dModel).Select(i => bhomModel.Elements1D[i]);
-
-            yield return new BarUniformlyDistributedLoad()
+            yield return new BarUniformlyDistributedLoad
             {
                 Force = (k3dLoad.Load).ToBhOM(),
-                Moment = new Vector(),
                 Loadcase = null,
-                Objects = new BHoMGroup<Bar> { Elements = bars.ToList() },
+                Objects = new BHoMGroup<Bar> { Elements = GetLoadedBhomBars(k3dLoad, k3dModel, bhomModel) },
                 Axis = loadAxis,
                 Projected = isProjected,
             };

@@ -12,7 +12,7 @@ using BH.oM.Structure.SectionProperties;
 
 namespace Karamba3D_ToolkitTests
 {
-    public class CroSecTests
+    public class CroSecTests : BaseTest
     {
         [Test]
         public void Concreteconversion()

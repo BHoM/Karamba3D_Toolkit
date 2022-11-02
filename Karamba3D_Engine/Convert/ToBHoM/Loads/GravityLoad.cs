@@ -3,6 +3,8 @@
     using Karamba.Models;
     using oM.Structure.Loads;
     using System.Collections.Generic;
+    using System.Linq;
+    using oM.Base;
 
     public static partial class Convert
     {
@@ -10,11 +12,11 @@
         {
             yield return new GravityLoad()
             {
-                Name = string.Empty,
                 Axis = LoadAxis.Global,
                 GravityDirection = k3dLoad.force.ToBhOM(),
                 Projected = false,
                 Loadcase = null,
+                Objects = new BHoMGroup<BHoMObject> { Elements = bhomModel.Elements1D.Values.Cast<BHoMObject>().ToList()}
             };
         }
         

@@ -31,7 +31,7 @@
             };
         }
 
-        internal static BhOMModel ToBhOMModel(this Karamba.Models.Model k3dModel)
+        internal static BhOMModel ToBhomModel(this Karamba.Models.Model k3dModel)
         {
             var bhomModel = new BhOMModel()
             {
@@ -43,19 +43,29 @@
             k3dModel.nodes.ForEach( n => bhomModel.Nodes[n.ind] = n.ToBhOM());
 
             // Convert 1D elements
-            var beams = k3dModel.elems.OfType<ModelElementStraightLine>();
-            foreach (var beam in beams)
+            var k3dBeams = k3dModel.elems.OfType<ModelElementStraightLine>();
+            foreach (var k3dBeam in k3dBeams)
             {
-                var bhomElement = beam.IToBhOM(k3dModel, bhomModel);
+                var bhomElement = k3dBeam.IToBhOM(k3dModel, bhomModel);
 
                 if(bhomElement is Bar bhomBar)
                 {
-                    bhomModel.Elements1D[beam.ind] = bhomBar;
+                    bhomModel.Elements1D[k3dBeam.ind] = bhomBar;
                 }
             }
 
             // Convert loads
-            bhomModel.Loads.AddRange(k3dModel.GetLoads().SelectMany(g => g.IToBhOM(k3dModel, bhomModel)));
+            var k3dLoads = k3dModel.GetLoads();
+            foreach (var k3dLoad in k3dLoads)
+            {
+                var bhomLoads = k3dLoad.IToBhOM(k3dModel, bhomModel).ToList();
+                foreach (var bhomLoad in bhomLoads)
+                {
+                    bhomLoad.Loadcase = bhomModel.RegisterLoadCase(k3dLoad.LcName);
+                }
+
+                bhomModel.Loads.AddRange(bhomLoads);
+            }
             
             // Convert supports and register to corresponding nodes
             k3dModel.supports.ForEach(s => s.ToBhOM(k3dModel, bhomModel));
@@ -65,7 +75,7 @@
 
         public static oM.Karamba3D.FemModel ToBhOM(this Karamba.Models.Model k3dModel)
         {
-            return k3dModel.ToBhOMModel().ToFemModel();
+            return k3dModel.ToBhomModel().ToFemModel();
         }
     }
 }

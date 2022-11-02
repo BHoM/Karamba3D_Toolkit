@@ -1,7 +1,9 @@
 ﻿namespace Karamba3D_ToolkitTests
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using BH.oM.Structure.Elements;
     using Karamba.CrossSections;
@@ -19,125 +21,321 @@
     {
         private const double _defaultLimitDistance = 0.005;
 
-        public static Model Create3HingesBeam()
+        /// <summary>
+        /// Create a 3 hinges beam with different lengths. The beam's lengths are in order
+        /// 8, 16 and 8 units.
+        /// </summary>
+        /// <param name="additionalEntities">Additional entities of a <see cref="Model"/> that will be added to the it.</param>
+        /// <returns>The <see cref="Model"/>.</returns>
+        public static Model Create3NotEqualLengthHingesBeam(params object[] additionalEntities)
         {
-            /*  P0      Beam0        P1      Beam1        P2      Beam2        P3
-             *   o--------------------o--------------------o--------------------o
-             *   Δ                    Δ                    Δ                    Δ
+            /*      Beam0        Beam1        Beam2
+             *   o--------o----------------o--------o
+             *   Δ        Δ                Δ        Δ
+             *   P0       P1               P2       P3
              */
 
-            Point3[] points = { Point3.Zero, new Point3(0.25, 0, 0), new Point3(0.75, 0, 0), new Point3(1, 0, 0) };
-            Support[] supports =
+            var points = new List<Point3>
+            {
+                Point3.Zero, 
+                new Point3(8, 0, 0),
+                new Point3(8 + 16, 0, 0), 
+                new Point3(8 + 16 + 8, 0, 0)
+            };
+            var supports = new List<Support>
             {
                 new Support(0, new[] { true, true, true, false, false, true }, Plane3.WorldXY),
                 new Support(1, new[] { true, true, true, false, false, true }, Plane3.WorldXY),
                 new Support(2, new[] { true, true, true, false, false, true }, Plane3.WorldXY),
                 new Support(3, new[] { true, true, true, false, false, true }, Plane3.WorldXY),
             };
-            BuilderElement[] beamBuilders =
+            var beamBuilders = new List<BuilderElement>
             {
                 new BuilderBeam(points[0], points[1]),
                 new BuilderBeam(points[1], points[2]),
                 new BuilderBeam(points[2], points[3])
             };
+            var crossSection = new CroSec_Circle();
+            beamBuilders.ForEach(b => b.crosec = crossSection);
 
-            var modelBuilder = new ModelBuilder(0.005);
-            var model = modelBuilder.build(
-                points.ToList(),
-                Enumerable.Empty<FemMaterial>().ToList(),
-                Enumerable.Empty<CroSec>().ToList(),
-                supports.ToList(),
-                Enumerable.Empty<Load>().ToList(),
-                beamBuilders.ToList(),
-                Enumerable.Empty<ElemSet>().ToList(),
-                Enumerable.Empty<Joint>().ToList(),
-                new MessageLogger());
-
+            var model = BuildModel(points, supports, beamBuilders, additionalEntities);
             return model;
         }
 
-        public static Model CreateHingedBeamModel(Point3 start = default, Point3 end = default, double orientationAngle = 0.0)
+        /// <summary>
+        /// Create a simple fixed fixed beam with a length of 10 units.
+        /// </summary>
+        /// <param name="additionalEntities">Additional entities of a <see cref="Model"/> that will be added to the it.</param>
+        /// <returns>The <see cref="Model"/>.</returns>
+        public static Model CreateFixedFixedBeam(params object[] additionalEntities)
         {
-            start = start == default ? Point3.Zero : start;
-            end = end == default ? new Point3(1, 0, 0) : end;
+            /*          Beam0      
+             *   |------------------|
+             *   P0                 P1
+             */
 
-            Node[] nodes = { new Node(0, start), new Node(1, start) };
-            Support[] supports =
+            var points = new List<Point3>
+            {
+                Point3.Zero, 
+                new Point3(10, 0, 0)
+            };
+            var supports = new List<Support>
             {
                 new Support(0, new[] { true, true, true, true, true, true }, Plane3.WorldXY),
-                new Support(1, new[] { true, true, true, false, false, false }, Plane3.WorldXY)
+                new Support(1, new[] { true, true, true, true, true, true }, Plane3.WorldXY),
             };
-
-            var beamBuilder = new BuilderBeam(start, end);
-            if (orientationAngle != 0)
+            var beamBuilders = new List<BuilderElement>
             {
-                var writer = beamBuilder.Ori.Writer;
-                writer.Alpha = orientationAngle;
-                beamBuilder.Ori = writer.Reader;
-            }
-            var beam = new ModelBeam(0, beamBuilder, nodes.Select(n => n.ind).ToList(), nodes.ToList());
+                new BuilderBeam(points[0], points[1]),
+            };
+            var crossSection = new CroSec_Circle();
+            beamBuilders.ForEach(b => b.crosec = crossSection);
 
-            var model = new Model();
-            var test = model.Elements();
-            model.nodes.AddRange(nodes);
-            model.supports.AddRange(supports);
-            model.elems.Add(beam);
-            model.crosecs.Add(beam.crosec);
-
+            var model = BuildModel(points, supports, beamBuilders, additionalEntities);
             return model;
         }
 
-        public static Model CreateHingedTrussModel()
+        /// <summary>
+        /// Create a simple fixed fixed beam with a length of 10 units.
+        /// </summary>
+        /// <param name="additionalEntities">Additional entities of a <see cref="Model"/> that will be added to the it.</param>
+        /// <returns>The <see cref="Model"/>.</returns>
+        public static Model CreateFixedFreeBeam(params object[] additionalEntities)
         {
-            Node[] nodes = { new Node(0, Point3.Zero), new Node(1, new Point3(1, 0, 0)) };
-            Support[] supports =
+            /*          Beam0      
+             *   |------------------
+             *   P0                 
+             */
+
+            var points = new List<Point3>
+            {
+                Point3.Zero, 
+                new Point3(10, 0, 0)
+            };
+            var supports = new List<Support>
             {
                 new Support(0, new[] { true, true, true, true, true, true }, Plane3.WorldXY),
-                new Support(1, new[] { true, true, true, false, false, false }, Plane3.WorldXY)
             };
+            var beamBuilders = new List<BuilderElement>
+            {
+                new BuilderBeam(points[0], points[1]),
+            };
+            var crossSection = new CroSec_Circle();
+            beamBuilders.ForEach(b => b.crosec = crossSection);
 
-            var truss = new ModelTruss(0, new BuilderBeam(), nodes.Select(n => n.ind).ToList(), nodes.ToList());
-
-            var model = new Model();
-            model.nodes.AddRange(nodes);
-            model.supports.AddRange(supports);
-            model.elems.Add(truss);
-
+            var model = BuildModel(points, supports, beamBuilders, additionalEntities);
             return model;
         }
 
-        public static Model CreateKingPostTruss()
+
+
+        /// <summary>
+        /// Create a king post model with trusses.
+        /// </summary>
+        /// <param name="additionalEntities">Additional entities of a <see cref="Model"/> that will be added to the it.</param>
+        /// <returns>The <see cref="Model"/>.</returns>
+        public static Model CreateKingPostTruss(params object[] additionalEntities)
         {
-            var nodes = new List<Node>
+            //               O  Node 0
+            //              /|\
+            //             / | \
+            //        T0  /  |  \ T3
+            //           / T4|   \
+            //          /    |    \
+            //         /  T1 |  T2 \
+            // Node 1 O------O------O Node 2
+            //        Δ    Node 3   □
+            var points = new[]
             {
-                new Node(0, new Point3(0, 0.5, 0)),
-                new Node(1, new Point3(0, 0, 0)),
-                new Node(2, new Point3(1, 0, 0)),
-                new Node(3, new Point3(0.5, 0, 0))
+                new Point3(0, 0.5, 0),
+                new Point3(0, 0, 0),
+                new Point3(1, 0, 0),
+                new Point3(0.5, 0, 0)
             };
 
-            Support[] supports =
+            var supports = new[]
             {
                 new Support(0, new[] { true, true, true, false, false, false }, Plane3.Default),
                 new Support(1, new[] { false, false, false, false, false, false }, Plane3.Default)
             };
 
-            var nodeIndices = nodes.Select(n => n.ind).ToList();
-            List<ModelElement> trusses = new List<ModelElement>
+            var trussBuilders = new List<BuilderBeam>
             {
-                new ModelTruss(0, new BuilderBeam(), new[] { nodeIndices[0], nodeIndices[1] }, new List<Node> { nodes[0], nodes[1] }),
-                new ModelTruss(1, new BuilderBeam(), new[] { nodeIndices[1], nodeIndices[3] }, new List<Node> { nodes[1], nodes[3] }),
-                new ModelTruss(2, new BuilderBeam(), new[] { nodeIndices[3], nodeIndices[2] }, new List<Node> { nodes[3], nodes[2] }),
-                new ModelTruss(3, new BuilderBeam(), new[] { nodeIndices[2], nodeIndices[0] }, new List<Node> { nodes[2], nodes[0] }),
-                new ModelTruss(4, new BuilderBeam(), new[] { nodeIndices[0], nodeIndices[3] }, new List<Node> { nodes[0], nodes[3] })
+                new BuilderBeam(points[0], points[1]),
+                new BuilderBeam(points[1], points[3]),
+                new BuilderBeam(points[3], points[2]),
+                new BuilderBeam(points[2], points[0]),
+                new BuilderBeam(points[0], points[3]),
             };
+            foreach (var truss in trussBuilders)
+            {
+                truss.bending_stiff = false;
+            }
+            var crossSection = new CroSec_Circle();
+            trussBuilders.ForEach(b => b.crosec = crossSection);
+
+            var model = BuildModel(points, supports, trussBuilders, additionalEntities);
+            return model;
+        }
+
+        public static Model CreateEightBeamModelToTest(double rotationAngle = 0.0)
+        {
+            var points = new[]
+            {
+                Point3.Zero,
+                new Point3(1, 1, 1),
+                new Point3(-1, 1, 1),
+                new Point3(-1, -1, 1),
+                new Point3(1, -1, 1),
+                new Point3(1, 1, -1),
+                new Point3(-1, 1, -1),
+                new Point3(-1, -1, -1),
+                new Point3(1, -1, -1),
+            };
+
+            int i = 0;
+            var nodes = points.Select(p =>  new Node(i++, p)).ToList();
+
+            i = 0;
+            var baseNode = new Node(0, points[0]);
+            var beams = points.Skip(1).Select(p =>
+            {
+                i++;
+                int[] indices = { 0, i };
+                Node[] beamNodes = { baseNode, new Node(i, points[i]) };
+                var builder = new BuilderBeam();
+                builder.Ori = new BuilderElementStraightLineOrientation(null, new List<double> { rotationAngle });
+                return new ModelBeam(i, builder, indices, beamNodes.ToList());
+            }).ToList();
 
             var model = new Model();
             model.nodes.AddRange(nodes);
-            model.supports.AddRange(supports);
-            model.elems.AddRange(trusses);
-
+            model.elems.AddRange(beams);
             return model;
+        }
+
+        public static Model CreateHingedBeamModel(double orientationAngle = 0.0, params object[] additionalEntities)
+        {
+            /*          Beam0      
+            *   o------------------o
+            *   Δ                  Δ
+            *   P0                 P1
+            */
+
+            var points = new[]
+            {
+                new Point3(0, 0.0, 0),
+                new Point3(1, 0, 0),
+            };
+            var supports = new[]
+            {
+                new Support(0, new[] { true, true, true, true, true, true }, Plane3.WorldXY),
+                new Support(1, new[] { true, true, true, false, false, false }, Plane3.WorldXY),
+            };
+            var beamBuilders = new[]
+            {
+                new BuilderBeam(points[0], points[1]),
+            };
+            if (orientationAngle != 0)
+            {
+                var writer = beamBuilders[0].Ori.Writer;
+                writer.Alpha = orientationAngle;
+                beamBuilders[0].Ori = writer.Reader;
+            }
+            beamBuilders[0].crosec = new CroSec_Circle();
+
+            var model = BuildModel(points, supports, beamBuilders, additionalEntities);
+            return model;
+        }
+
+        public static Model CreateHingedTrussModel(params object[] additionalEntities)
+        {
+            /*          Beam0      
+            *   o------------------o
+            *   Δ                  Δ
+            *   P0                 P1
+            */
+
+            var points = new[]
+            {
+                new Point3(0, 0.0, 0),
+                new Point3(1, 0, 0),
+            };
+            var supports = new[]
+            {
+                new Support(0, new[] { true, true, true, true, true, true }, Plane3.WorldXY),
+                new Support(1, new[] { true, true, true, false, false, false }, Plane3.WorldXY),
+            };
+            var beamBuilders = new List<BuilderElement>
+            {
+                new BuilderBeam(points[0], points[1]),
+            };
+            beamBuilders[0].bending_stiff = false;
+            var crossSection = new CroSec_Circle();
+            beamBuilders.ForEach(b => b.crosec = crossSection);
+
+            var model = BuildModel(points, supports, beamBuilders, additionalEntities);
+            return model;
+        }
+
+        private static Model BuildModel(
+            IEnumerable<Point3> points,
+            IEnumerable<Support> supports,
+            IEnumerable<BuilderElement> beamBuilders,
+            object[] additionalEntities)
+        {
+            
+            AddAdditionalModelObjects(out var materials, out var crossSections, out var loads, out var joints, additionalEntities);
+
+            var modelBuilder = new ModelBuilder(0.005);
+            var model = modelBuilder.build(
+                points.ToList(),
+                materials,
+                crossSections,
+                supports.ToList(),
+                loads,
+                beamBuilders.ToList(),
+                Enumerable.Empty<ElemSet>().ToList(),
+                joints,
+                out _);
+            return model;
+        }
+
+        private static void AddAdditionalModelObjects(
+            out List<FemMaterial> materials,
+            out List<CroSec> crossSections,
+            out List<Load> loads,
+            out List<Joint> joints,
+            params object[] additionalModelObjects)
+        {
+            materials = new List<FemMaterial>();
+            crossSections = new List<CroSec>();
+            loads = new List<Load>();
+            joints = new List<Joint>();
+            foreach (var entity in additionalModelObjects)
+            {
+                switch (entity)
+                {
+                    case FemMaterial femMaterial:
+                        materials.Add(femMaterial);
+                        continue;
+
+                    case CroSec crossSection:
+                        crossSections.Add(crossSection);
+                        continue;
+
+                    case Load load:
+                        loads.Add(load);
+                        continue;
+
+                    case Joint joint:
+                        joints.Add(joint);
+                        continue;
+
+                    default:
+                        throw new ArgumentException($"{entity.GetType()} cannot be used to create the model.");
+                }
+            }
         }
     }
 }

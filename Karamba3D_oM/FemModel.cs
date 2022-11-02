@@ -38,16 +38,16 @@ namespace BH.oM.Karamba3D
         /***************************************************/
 
         [Description("Nodes")]
-        public IEnumerable<Node> Nodes { get; set; }
+        public IList<Node> Nodes { get; set; }
 
         [Description("Bars")]
-        public IEnumerable<Bar> Bars { get; set; }
+        public IList<Bar> Bars { get; set; }
 
         [Description("Loads")]
-        public IEnumerable<ILoad> Loads { get; set; }
+        public IList<ILoad> Loads { get; set; }
 
         [Description("LoadCases")]
-        public IEnumerable<Loadcase> LoadCases { get; set; }
+        public IList<Loadcase> LoadCases { get; set; }
     }
 }
 

@@ -1,157 +1,71 @@
 ﻿namespace Karamba3D_ToolkitTests
 {
+    using System;
     using BH.Engine.Adapters.Karamba3D;
-    using BH.oM.Base;
+    using Karamba.Elements;
+    using Karamba.Geometry;
+    using Karamba.Models;
+    using NUnit.Framework;
+    using System.Collections.Generic;
+    using System.Linq;
+    using BH.Engine.Adapter.Karamba3D;
     using BH.oM.Base.Debugging;
     using BH.oM.Geometry;
     using BH.oM.Structure.Constraints;
     using BH.oM.Structure.Elements;
-    using BH.oM.Structure.Loads;
-    using Karamba.Elements;
-    using Karamba.Geometry;
     using Karamba.Joints;
-    using Karamba.Models;
-    using Karamba.Supports;
     using Karamba3D_Engine;
-    using NUnit.Framework;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Node = Karamba.Nodes.Node;
 
-    
     [TestFixture]
-    public class ModelTests
+    public class ModelElementStraightLineTests : BaseTest
     {
-        
-
         [Test]
-        public void Node_ConversionTest()
+        public void CoordinateSystemTest_LocalCoordinateSystems_HaveSameConvention()
         {
             // Arrange
-            var node = new Node(123, new Point3(1, 2, 3));
-            var model = new Model();
-            model.nodes.Add(node);
+            var model = TestUtilities.CreateEightBeamModelToTest();
+            var beams = model.elems.OfType<ModelBeam>();
+            var nodes = model.nodes;
 
             // Act
-            var bhomModel = model.ToBhOMModel();
+            var bhomModel = model.ToBhomModel();
+            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToList();
+            var bhomCoordinateSystem = bhomModel.Elements1D.Values.Select(BH.Engine.Structure.Query.CoordinateSystem).ToList();
 
             // Assert
-            var expectedNode = new BH.oM.Structure.Elements.Node()
+            for (int i = 0; i < k3dCoordinateSystems.Count; i++)
             {
-                Name = "123",
-                Position = new Point
-                {
-                    X = 1,
-                    Y = 2,
-                    Z = 3
-                }
-            };
-            CustomAssert.BhOMObjectsAreEqual(bhomModel.Nodes[123], expectedNode);
+                CustomAssert.BhOMObjectsAreEqual(
+                    k3dCoordinateSystems[i],
+                    bhomCoordinateSystem[i],
+                    new BhOMEqualityTestOptions() { FailureMessage = $"Iteration {i} failed." });
+            }
         }
 
         [Test]
-        public void Node_WithSupport_ConversionTest()
+        public void CoordinateSystemTest_WithRotationAngle()
         {
             // Arrange
-            var node = new Node(345, new Point3(4, 5, 6));
-            var localCoordinateSystem = new Plane3(Point3.Zero, Vector3.UnitX);
-            var support = new Support(345, new[] { true, false, true, false, true, false }, localCoordinateSystem);
-
-            var model = new Model();
-            model.supports.Add(support);
-            model.nodes.Add(node);
+            var rotationAngle = 45;
+            var model = TestUtilities.CreateEightBeamModelToTest(rotationAngle);
+            var beams = model.elems.OfType<ModelBeam>();
+            var nodes = model.nodes;
 
             // Act
-            var bhomModel = model.ToBhOMModel();
+            var bhomModel = model.ToBhomModel();
+            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToList();
+            var bhomCoordinateSystem = bhomModel.Elements1D.Values.Select(BH.Engine.Structure.Query.CoordinateSystem).ToList();
 
             // Assert
-            var expectedNode = new BH.oM.Structure.Elements.Node()
+            double tolerance = 1E-5;
+            for (int i = 0; i < k3dCoordinateSystems.Count; i++)
             {
-                Name = "345",
-                Position = new Point
-                {
-                    X = 4,
-                    Y = 5,
-                    Z = 6
-                },
-                Support = new Constraint6DOF
-                {
-                    TranslationX = DOFType.Fixed,
-                    TranslationY = DOFType.Free,
-                    TranslationZ = DOFType.Fixed,
-                    RotationX = DOFType.Free,
-                    RotationY = DOFType.Fixed,
-                    RotationZ = DOFType.Free
-                },
-                Orientation = Basis.YZ,
-            };
-            CustomAssert.BhOMObjectsAreEqual(bhomModel.Nodes[345], expectedNode);
-        }
-
-        [Test]
-        public void Node_WithSupportAndPrescribedDisplacement_ConversionTest()
-        {
-            // Arrange
-            var node = new Node(123, new Point3(4, 5, 6));
-            var prescribedTranslations = new Vector3(11, 22, 33);
-            var prescribedRotations = new Vector3(44, 55, 66);
-            var loadCaseName = "PrescribedDisplacementLoadCase";
-            var support = new Support(
-                node.ind,
-                new List<bool> { true, false, true, false, true, false },
-                Plane3.Default,
-                prescribedTranslations,
-                prescribedRotations,
-                loadCaseName);
-
-            var model = new Model();
-            model.supports.Add(support);
-            model.nodes.Add(node);
-
-            // Act
-            var bhomModel = model.ToBhOMModel();
-            var bhomLoad = bhomModel.Loads.Single() as PointDisplacement;
-
-            // Assert
-            var expectedNode = new BH.oM.Structure.Elements.Node()
-            {
-                Name = "123",
-                Position = new Point
-                {
-                    X = 4,
-                    Y = 5,
-                    Z = 6
-                },
-                Support = new Constraint6DOF
-                {
-                    TranslationX = DOFType.Fixed,
-                    TranslationY = DOFType.Free,
-                    TranslationZ = DOFType.Fixed,
-                    RotationX = DOFType.Free,
-                    RotationY = DOFType.Fixed,
-                    RotationZ = DOFType.Free
-                },
-            };
-
-            var expectedLoad = new PointDisplacement()
-            {
-                Loadcase = new Loadcase() { Name = loadCaseName, Number = 0 },
-                Objects =
-                    new BHoMGroup<BH.oM.Structure.Elements.Node>()
-                    {
-                        Elements = new List<BH.oM.Structure.Elements.Node> { expectedNode }
-                    },
-                Translation = prescribedTranslations.ToBhOM(),
-                Rotation = prescribedRotations.ToBhOM(),
-                Axis = LoadAxis.Global,
-                Projected = false
-            };
-
-            CustomAssert.BhOMObjectsAreEqual(bhomModel.Nodes[123], expectedNode);
-            CustomAssert.BhOMObjectsAreEqual(bhomModel.Loads.Single(), expectedLoad);
-            Assert.AreEqual(bhomModel.Nodes[123].BHoM_Guid, bhomLoad.Objects.Elements.Single().BHoM_Guid);
-            Assert.AreEqual(bhomModel.LoadCases.Single().BHoM_Guid, bhomLoad.Loadcase.BHoM_Guid);
+                CustomAssert.BhOMObjectsAreEqual(
+                    k3dCoordinateSystems[i],
+                    bhomCoordinateSystem[i],
+                    new BhOMEqualityTestOptions { FailureMessage = $"Iteration {i} failed." , DoubleTolerance = tolerance});
+            }
         }
 
         [Test]
@@ -162,7 +76,7 @@
             var beam = model.elems.Single() as ModelBeam;
 
             // Act
-            var bhomModel = model.ToBhOMModel();
+            var bhomModel = model.ToBhomModel();
             var bhomBeam = bhomModel.Elements1D.Values.Single();
 
             // Assert
@@ -187,25 +101,23 @@
             model.elems.Add(spring);
 
             // Act
-            var bhomModel = model.ToBhOMModel();
+            var bhomModel = model.ToBhomModel();
 
             // Assert
-            var expectedMessage = BH.Engine.Base.Query.AllEvents().Single();
-            Assert.AreEqual(expectedMessage.Type, EventType.Warning);
-            StringAssert.Contains(
-                expectedMessage.Message,
-                string.Format(Resource.WarningNotSupportedType, spring.GetType().Name));
+            var expectedMessage = string.Format(Resource.WarningNotSupportedType, spring.GetType().Name);
+            StringAssert.Contains(expectedMessage, K3dLogger.GetWarnings().Single());
         }
 
         [Test]
+
         public void ModelTruss_ConversionTest()
         {
             // Arrange
             var model = TestUtilities.CreateHingedTrussModel();
-            var truss = model.elems.Single() as ModelTruss;
+            var truss = model.elems.Cast<ModelTruss>().Single();
 
             // Act
-            var bhomModel = model.ToBhOMModel();
+            var bhomModel = model.ToBhomModel();
             var bhomTruss = bhomModel.Elements1D.Values.Single();
 
             // Assert
@@ -217,7 +129,6 @@
                 SectionProperty = truss.crosec.ToBhOM(),
                 FEAType = BarFEAType.Axial,
             };
-            CustomAssert.BhOMObjectsAreEqual(bhomTruss.Offset, expectedTruss.Offset);
             CustomAssert.BhOMObjectsAreEqual(bhomTruss, expectedTruss);
         }
 
@@ -236,7 +147,7 @@
             crossSection.ecce_loc = eccentricity;
 
             // Act
-            var bhomModel = model.ToBhOMModel();
+            var bhomModel = model.ToBhomModel();
             var bhomBeam = bhomModel.Elements1D.Values.Single();
             
 
@@ -265,7 +176,7 @@
             beam.joint = new Joint { c = new double?[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12} };
 
             // Act
-            var bhomModel = model.ToBhOMModel();
+            var bhomModel = model.ToBhomModel();
             var bhomRelease = bhomModel.Elements1D.Values.Single().Release;
 
             // Assert

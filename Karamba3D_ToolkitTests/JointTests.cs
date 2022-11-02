@@ -6,7 +6,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class JointTests
+    public class JointTests : BaseTest
     {
         [Test]
         public void ToBhOMConversionTest()

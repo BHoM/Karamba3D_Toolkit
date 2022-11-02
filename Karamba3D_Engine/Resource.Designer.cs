@@ -151,11 +151,29 @@ namespace Karamba3D_Engine {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is not supported yet..
+        ///   Looks up a localized string similar to Linear temperature changes are not supported yet..
+        /// </summary>
+        public static string WarningLinearTemperatureChangesNotSupported {
+            get {
+                return ResourceManager.GetString("WarningLinearTemperatureChangesNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; is not supported yet..
         /// </summary>
         public static string WarningNotSupportedType {
             get {
                 return ResourceManager.GetString("WarningNotSupportedType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The rotation for the local point load with the attached node is not supported yet..
+        /// </summary>
+        public static string WarningPointLoadLocalLoadNotSupported {
+            get {
+                return ResourceManager.GetString("WarningPointLoadLocalLoadNotSupported", resourceCulture);
             }
         }
     }

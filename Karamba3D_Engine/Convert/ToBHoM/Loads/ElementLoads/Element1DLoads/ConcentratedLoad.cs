@@ -15,13 +15,11 @@
         {
             k3dLoad.GetOrientation(out var loadAxis, out var isProjected);
 
-            var groupedBars = from element in k3dLoad.GetElements(k3dModel)
-                              let nodes = element.node_inds.Select(i => k3dModel.nodes[i]).ToList()
-                              let length = element.characteristic_length(nodes)
+            var groupedBars = from element in k3dLoad.GetLoadedK3dElements(k3dModel)
+                              let length = element.characteristic_length(k3dModel.nodes)
                               let bhomBar = bhomModel.Elements1D[element.ind]
                               group bhomBar by length;
-
-
+            
             foreach (var group in groupedBars)
             {
                 yield return new BarPointLoad

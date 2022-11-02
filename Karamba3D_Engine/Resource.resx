@@ -98,13 +98,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="WarningNotSupportedType" xml:space="preserve">
-    <value>{0} is not supported yet.</value>
+    <value>"{0}" is not supported yet.</value>
   </data>
   <data name="ErrorInvalidVectorArray" xml:space="preserve">
     <value>The {0} array should contain 3 elements. Instead it contains {1} elements.</value>
-  </data>
-  <data name="ErrorBarPointLoadOrientation" xml:space="preserve">
-    <value>{0} cannot be converted to {1} due to Karamba's {2} property.</value>
   </data>
   <data name="ErrorTemperatureLoadOnSurfaces" xml:space="preserve">
     <value>Temperature load is not supported yet for 2d elements.</value>
@@ -129,5 +126,14 @@
   </data>
   <data name="ErrorCrossSectionProfileConversion" xml:space="preserve">
     <value>Could not create a valid cross section profile from {1}.</value>
+  </data>
+  <data name="ErrorBarPointLoadOrientation" xml:space="preserve">
+    <value>{0} cannot be converted to {1} due to Karamba's {2} property.</value>
+  </data>
+  <data name="WarningLinearTemperatureChangesNotSupported" xml:space="preserve">
+    <value>Linear temperature changes are not supported yet.</value>
+  </data>
+  <data name="WarningPointLoadLocalLoadNotSupported" xml:space="preserve">
+    <value>The rotation for the local point load with the attached node is not supported yet.</value>
   </data>
 </root>
