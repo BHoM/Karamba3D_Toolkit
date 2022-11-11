@@ -11,11 +11,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj" />
+	  <PackageReference Include="KarambaCommonDebugVersion" Version="3.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="KarambaCommon" Version="3.0.0" />
+		<ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

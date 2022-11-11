@@ -1,14 +1,13 @@
 ﻿namespace Karamba3D_ToolkitTests
 {
-    using System;
-    using System.Linq;
     using BH.Engine.Adapters.Karamba3D;
     using Karamba.Geometry;
     using Karamba.Loads;
     using Karamba.Loads.Beam;
     using NUnit.Framework;
+    using System.Linq;
 
-    [TestFixture]
+    [TestFixture] 
     public class LoadCaseTests
     {
         [Test]

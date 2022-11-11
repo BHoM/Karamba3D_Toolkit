@@ -19,8 +19,6 @@
 
     public static class TestUtilities
     {
-        private const double _defaultLimitDistance = 0.005;
-
         /// <summary>
         /// Create a 3 hinges beam with different lengths. The beam's lengths are in order
         /// 8, 16 and 8 units.
@@ -57,6 +55,8 @@
             };
             var crossSection = new CroSec_Circle();
             beamBuilders.ForEach(b => b.crosec = crossSection);
+            int counter = 0;
+            beamBuilders.ForEach(b => b.id = $"beam{counter++}");
 
             var model = BuildModel(points, supports, beamBuilders, additionalEntities);
             return model;
@@ -159,7 +159,7 @@
                 new Support(1, new[] { false, false, false, false, false, false }, Plane3.Default)
             };
 
-            var trussBuilders = new List<BuilderBeam>
+            var trussBuilders = new[]
             {
                 new BuilderBeam(points[0], points[1]),
                 new BuilderBeam(points[1], points[3]),
@@ -167,12 +167,13 @@
                 new BuilderBeam(points[2], points[0]),
                 new BuilderBeam(points[0], points[3]),
             };
+
+            var crossSection = new CroSec_Circle();
             foreach (var truss in trussBuilders)
             {
                 truss.bending_stiff = false;
+                truss.crosec = crossSection;
             }
-            var crossSection = new CroSec_Circle();
-            trussBuilders.ForEach(b => b.crosec = crossSection);
 
             var model = BuildModel(points, supports, trussBuilders, additionalEntities);
             return model;

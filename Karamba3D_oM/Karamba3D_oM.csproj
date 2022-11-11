@@ -3,9 +3,8 @@
 		<TargetFramework>net48</TargetFramework>
 		<AssemblyName>Karamba3D_oM</AssemblyName>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<PackageReference Include="KarambaCommon" Version="3.0.0" />
+	  <PackageReference Include="KarambaCommonDebugVersion" Version="3.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

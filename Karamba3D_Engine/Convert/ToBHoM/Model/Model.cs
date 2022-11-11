@@ -33,7 +33,7 @@
 
         internal static BhOMModel ToBhomModel(this Karamba.Models.Model k3dModel)
         {
-            var bhomModel = new BhOMModel()
+            var bhomModel = new BhOMModel
             {
                 Nodes = new Dictionary<int, Node>(k3dModel.nodes.Count),
                 Elements1D = new Dictionary<int, Bar>(k3dModel.elems.Count)
