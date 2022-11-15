@@ -12,7 +12,7 @@
     {
         private static IEnumerable<ILoad> ToBhOM(this StrainLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
         {
-            var message = string.Format(Resource.WarningNotSupportedType, nameof(StrainLoad));
+            var message = string.Format(Resource.WarningNotYetSupportedType, nameof(StrainLoad));
             K3dLogger.RecordWarning(message);
 
             return Enumerable.Empty<ILoad>();

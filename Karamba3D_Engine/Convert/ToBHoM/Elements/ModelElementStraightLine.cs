@@ -1,21 +1,22 @@
 ﻿namespace BH.Engine.Adapters.Karamba3D
 {
     using Adapter.Karamba3D;
+    using BH.oM.Dimensional;
+    using BH.oM.Geometry;
     using BH.oM.Structure.Elements;
+    using BH.oM.Structure.Offsets;
     using Karamba.Elements;
     using Karamba.Models;
     using Karamba3D_Engine;
-    using BH.oM.Dimensional;
-    using BH.oM.Geometry;
-    using BH.oM.Structure.Offsets;
+    using oM.Structure.SectionProperties;
 
     public static partial class Convert
     {
-        internal static IElement ToBhOM(this ModelElementStraightLine k3dElement, Model k3dModel, BhOMModel bhomModel)
+        internal static Bar ToBhOM(this ModelElementStraightLine k3dElement, Model k3dModel, BhOMModel bhomModel)
         {
             if (k3dElement is ModelSpring)
             {
-                K3dLogger.RecordWarning(string.Format(Resource.WarningNotSupportedType, nameof(ModelSpring)));
+                K3dLogger.RecordWarning(string.Format(Resource.WarningNotYetSupportedType, nameof(ModelSpring)));
                 return null;
             }
             
@@ -35,7 +36,7 @@
                 Name = k3dElement.ind.ToString(),
                 StartNode = bhomModel.Nodes[k3dElement.node_inds[0]],
                 EndNode = bhomModel.Nodes[k3dElement.node_inds[1]],
-                SectionProperty = k3dElement.crosec.ToBhOM(),
+                SectionProperty = (ISectionProperty)k3dElement.crosec.IToBhOM(k3dModel, bhomModel),
                 FEAType = k3dElement is ModelBeam ? BarFEAType.Flexural : BarFEAType.Axial,
                 Offset = offset,
                 OrientationAngle = k3dElement.res_alpha, // TODO check how it works with vertical elements.

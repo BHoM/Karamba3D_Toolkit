@@ -1,72 +1,70 @@
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Base;
     using BH.oM.Structure.MaterialFragments;
     using Karamba.Materials;
+    using Karamba.Models;
 
     public static partial class Convert
     {
-        private static IIsotropic ToBhOM(this Karamba.Materials.FemMaterial_Isotrop k3dMaterial)
+        private static IMaterialFragment ToBhOM(this FemMaterial_Isotrop k3dMaterial, Model k3dModel, BhOMModel bhomModel)
         {
-            // TODO: Check Karamba settings for Units of Measure (INIReader reader)
-            // OR use the automated Karamba conversion (which only converts numbers if they are not in the right Unit - works only at runtime via Karamba)
+            if (bhomModel.Materials.TryGetValue(k3dMaterial.guid, out var bhomMaterial))
+            {
+                return bhomMaterial;
+            }
 
+            IIsotropic bhomIsotropicMaterial;
             switch (GetMaterialType(k3dMaterial))
             {
                 case MaterialType.Aluminium:
                 {
-                    return new Aluminium()
-                    {
-                        Density = k3dMaterial.gamma(), // TODO: map units
-                        YoungsModulus = k3dMaterial.E(),
-                        PoissonsRatio = k3dMaterial.nue12(), //(obj.E() / (2 * obj.G12())) - 1,
-                        Name = k3dMaterial.name // this may store the type of aluminum
-                    };
+                    bhomIsotropicMaterial = new Aluminium();
+                    break;
                 }
 
                 case MaterialType.Steel:
                 {
-                    return new Steel()
+                    bhomIsotropicMaterial = new Steel()
                     {
-                        Density = k3dMaterial.gamma(), // TODO: map units
-                        YoungsModulus = k3dMaterial.E(),
-                        PoissonsRatio = k3dMaterial.nue12(),
-                        Name = k3dMaterial.name,
-                        ThermalExpansionCoeff = k3dMaterial.alphaT(),
                         UltimateStress = k3dMaterial.ft(),
-                        YieldStress = k3dMaterial.ft() // TODO: where's Fy in Karamba?
+                        YieldStress = k3dMaterial.ft(),
                     };
+                    break;
                 }
 
                 case MaterialType.Concrete:
                 {
-                    return new Concrete()
+                    bhomIsotropicMaterial = new Concrete()
                     {
-                        Density = k3dMaterial.gamma(), // TODO: map units
-                        YoungsModulus = k3dMaterial.E(),
-                        PoissonsRatio = k3dMaterial.nue12(),
-                        Name = k3dMaterial.name,
-                        ThermalExpansionCoeff = k3dMaterial.alphaT(),
-                        CylinderStrength = k3dMaterial.fc(),
+                        CylinderStrength = -k3dMaterial.fc(),
+                        CubeStrength = default,
                     };
+                    break;
                 }
 
                 default:
                 {
-                    return new GenericIsotropicMaterial()
-                    {
-                        Density = k3dMaterial.gamma(), // TODO: map units
-                        YoungsModulus = k3dMaterial.E(),
-                        PoissonsRatio = k3dMaterial.nue12(),//(obj.E() / (2 * obj.G12())) - 1,
-                        Name = k3dMaterial.name
-                    };
+                    bhomIsotropicMaterial = new GenericIsotropicMaterial();
+                    break;
                 }
             }
+
+            bhomIsotropicMaterial.Density = k3dMaterial.gamma();
+            bhomIsotropicMaterial.DampingRatio = default;
+            bhomIsotropicMaterial.Name = k3dMaterial.name;
+            bhomIsotropicMaterial.PoissonsRatio = k3dMaterial.nue12();
+            bhomIsotropicMaterial.ThermalExpansionCoeff = k3dMaterial.alphaT();
+            bhomIsotropicMaterial.YoungsModulus = k3dMaterial.E();
+
+            bhomIsotropicMaterial.BHoM_Guid = k3dMaterial.guid;
+            bhomModel.Materials.Add(bhomIsotropicMaterial.BHoM_Guid, bhomIsotropicMaterial);
+
+            return bhomIsotropicMaterial;
         }
 
         private static MaterialType GetMaterialType(FemMaterial material)
         {
-            // TODO Should search inside K3D database. This require to have static method in Karamba to find our database.
-
             switch (material.family)
             {
                 case "Steel":
@@ -76,8 +74,10 @@ namespace BH.Engine.Adapters.Karamba3D
                 case "Hardwood":
                 case "ConiferousTimber":
                 case "GlulamTimber":
-                case "Aluminum":
                     return MaterialType.Timber;
+
+                case "Aluminum":
+                    return MaterialType.Aluminium;
 
                 case "Concrete":
                 case "LightweightConcrete":

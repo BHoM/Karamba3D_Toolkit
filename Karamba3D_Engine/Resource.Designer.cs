@@ -70,6 +70,15 @@ namespace Karamba3D_Engine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not find a convert method for &quot;{0}&quot;..
+        /// </summary>
+        public static string ErrorConversionNotFound {
+            get {
+                return ResourceManager.GetString("ErrorConversionNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not find a convert method for {0}..
         /// </summary>
         public static string ErrorConverterNotFound {
@@ -142,6 +151,15 @@ namespace Karamba3D_Engine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} is not currently explicitly supported. A generic section has been created. If was not possible to set a property the value has been set to NaN..
+        /// </summary>
+        public static string WarningCrossSectionExplicityConversionNotSupported {
+            get {
+                return ResourceManager.GetString("WarningCrossSectionExplicityConversionNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The cross section fillet value is not compatible with not symmetrical flanges. The value has not been exported..
         /// </summary>
         public static string WarningICrossSectionNotSupportedFillet {
@@ -162,9 +180,9 @@ namespace Karamba3D_Engine {
         /// <summary>
         ///   Looks up a localized string similar to &quot;{0}&quot; is not supported yet..
         /// </summary>
-        public static string WarningNotSupportedType {
+        public static string WarningNotYetSupportedType {
             get {
-                return ResourceManager.GetString("WarningNotSupportedType", resourceCulture);
+                return ResourceManager.GetString("WarningNotYetSupportedType", resourceCulture);
             }
         }
         

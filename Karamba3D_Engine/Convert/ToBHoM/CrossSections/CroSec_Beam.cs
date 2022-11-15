@@ -1,46 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using BH.oM.Spatial.ShapeProfiles;
-using BH.oM.Structure.MaterialFragments;
+﻿using BH.oM.Spatial.ShapeProfiles;
 using BH.oM.Structure.SectionProperties;
 using Karamba.CrossSections;
-using BH.Engine.Spatial;
-using BH.Engine.Structure;
-using feb;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using System.Runtime.InteropServices;
     using Adapter.Karamba3D;
+    using Karamba.Models;
     using Karamba3D_Engine;
+    using oM.Structure.MaterialFragments;
 
     public static partial class Convert
     {
-        private static ISectionProperty ToBhOM(this CroSec_Beam k3dCrossSection)
+        private static ISectionProperty ToBhOM(this CroSec_Beam k3dCrossSection, Model k3dModel, BhOMModel bhomModel)
         {
             if (k3dCrossSection is null)
                 return null;
 
+            if (bhomModel.CrossSections.TryGetValue(k3dCrossSection.guid, out var bhomCrossSection))
+                return bhomCrossSection;
+
+            return CreateSectionProperty(k3dCrossSection, k3dModel, bhomModel);
+        }
+
+        private static ISectionProperty CreateSectionProperty(CroSec_Beam k3dCrossSection, Model k3dModel, BhOMModel bhomModel)
+        {
+            ISectionProperty section;
             if (TryGetSectionFromDataSet(k3dCrossSection.name, out var databaseSection))
             {
-                return databaseSection;
+                section = databaseSection;
             }
-
-            var material = k3dCrossSection.material.ToBhOM();
-            var profile = CreateProfile(k3dCrossSection);
-
-            if (profile != null)
+            else if (TryCreateProfile(k3dCrossSection, out var profile))
             {
-                var section  = Engine.Structure.Create.SectionPropertyFromProfile(profile, material, k3dCrossSection.name);
-                // TODO the set adapter id has to be setup?
-                // section.SetAdapterId();
-                return section;
+                var material = (IMaterialFragment)k3dCrossSection.material.IToBhOM(k3dModel, bhomModel);
+                section = Structure.Create.SectionPropertyFromProfile(profile, material, k3dCrossSection.name);
             }
             else
             {
-                return new ExplicitSection()
+                var message = string.Format(
+                    Resource.WarningCrossSectionExplicityConversionNotSupported,
+                    k3dCrossSection.GetType().FullName);
+                K3dLogger.RecordWarning(message);
+
+                var material = (IMaterialFragment)k3dCrossSection.material.IToBhOM(k3dModel, bhomModel);
+                section = new ExplicitSection()
                 {
                     Name = k3dCrossSection.name,
                     Material = material,
@@ -59,8 +65,17 @@ namespace BH.Engine.Adapters.Karamba3D
                     Vpz = k3dCrossSection.getHeight() - k3dCrossSection.zs,
                     Asy = k3dCrossSection.Ay,
                     Asz = k3dCrossSection.Az,
+                    CentreY = double.NaN,
+                    CentreZ = double.NaN,
+                    Vpy = double.NaN,
+                    Vy = double.NaN
                 };
             }
+
+            section.BHoM_Guid = k3dCrossSection.guid;
+            bhomModel.CrossSections.Add(section.BHoM_Guid, section);
+
+            return section;
         }
 
         private static bool TryGetSectionFromDataSet(string k3dSectionName, out ISectionProperty bhomSection)
@@ -103,8 +118,9 @@ namespace BH.Engine.Adapters.Karamba3D
 
         }
 
-        private static IProfile CreateProfile(CroSec_Beam obj)
+        private static bool TryCreateProfile(CroSec_Beam obj, out IProfile profile)
         {
+            profile = null;
             switch (obj)
             {
                 case CroSec_Circle circle:
@@ -114,19 +130,21 @@ namespace BH.Engine.Adapters.Karamba3D
                     
                     // If the thickness is less then zero or is higher then half diameter,
                     // a full circle will be created. 
-                    return thickness <= 0 || thickness >= diameter / 2 ? 
+                    profile = thickness <= 0 || thickness >= diameter / 2 ? 
                         (IProfile)Spatial.Create.CircleProfile(diameter) :
                         Spatial.Create.TubeProfile(diameter, thickness);
+                    break;
                 }
 
                 case CroSec_T tSection:
                 {
-                    return Spatial.Create.TSectionProfile(
+                    profile = Spatial.Create.TSectionProfile(
                         tSection._height,
                         tSection.uf_width,
                         tSection.w_thick,
                         tSection.uf_thick,
                         tSection.fillet_r);
+                    break;
                 }
 
                 case CroSec_Box box:
@@ -136,7 +154,6 @@ namespace BH.Engine.Adapters.Karamba3D
                         K3dLogger.RecordError(Resource.ErrorDifferentFlangeNotSupported);
                     }
 
-                    // TODO use a global tolerance for Karamba!
                     if (Math.Abs(box.uf_thick - box.lf_thick) > double.Epsilon ||
                         Math.Abs(box.w_thick - box.uf_thick) > double.Epsilon)
                     {
@@ -145,22 +162,24 @@ namespace BH.Engine.Adapters.Karamba3D
                             K3dLogger.RecordWarning(Resource.WarningBoxCrossSectionNotSupportedFillet);
                         }
 
-                        return Spatial.Create.FabricatedISectionProfile(
+                        profile = Spatial.Create.FabricatedISectionProfile(
                             box._height,
                             box.uf_width,
                             box.lf_width,
                             box.w_thick,
                             box.uf_thick,
                             box.lf_thick);
+                        break;
                     }
                     else
                     {
-                        return Spatial.Create.BoxProfile(
+                        profile = Spatial.Create.BoxProfile(
                             box._height,
                             box.uf_width,
                             box.w_thick,
                             box.fillet_r1,
                             box.fillet_r);
+                        break;
                     }
                 }
 
@@ -175,38 +194,36 @@ namespace BH.Engine.Adapters.Karamba3D
                             K3dLogger.RecordWarning(Resource.WarningICrossSectionNotSupportedFillet);
                         }
 
-
-                        return Spatial.Create.FabricatedISectionProfile(
+                        profile = Spatial.Create.FabricatedISectionProfile(
                             iSection._height,
                             iSection.uf_width,
                             iSection.lf_width,
                             iSection.w_thick,
                             iSection.uf_thick,
                             iSection.lf_thick);
+                        break;
                     }
                     else
                     {
-                        return Spatial.Create.ISectionProfile(
+                        profile = Spatial.Create.ISectionProfile(
                             iSection._height,
                             iSection.uf_width,
                             iSection.w_thick,
                             iSection.uf_thick,
                             iSection.fillet_r,
                             0D);
+                        break;
                     }
                 }
 
                 default:
                 {
-                    var message = string.Format(
-                        Resource.ErrorCrossSectionProfileConversion,
-                        typeof(IProfile),
-                        obj.GetType().FullName);
-
-                    K3dLogger.RecordError(message);
-                    return null;
+                    profile = null;
+                    break;
                 }
             }
+
+            return profile != null;
         }
     }
 }

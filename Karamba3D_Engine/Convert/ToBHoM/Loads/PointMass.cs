@@ -12,7 +12,7 @@
     {
         private static IEnumerable<ILoad> ToBhOM(this PointMass k3dPointMass, Model k3dModel, BhOMModel bhomModel)
         {
-            K3dLogger.RecordWarning(string.Format(Resource.WarningNotSupportedType, nameof(PointMass)));
+            K3dLogger.RecordWarning(string.Format(Resource.WarningNotYetSupportedType, nameof(PointMass)));
             
             return Enumerable.Empty<ILoad>();
         }

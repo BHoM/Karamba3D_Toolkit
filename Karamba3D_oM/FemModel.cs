@@ -21,7 +21,6 @@
  */
 
 using BH.oM.Base;
-using BH.oM.Structure;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -29,6 +28,8 @@ namespace BH.oM.Karamba3D
 {
     using Structure.Elements;
     using Structure.Loads;
+    using Structure.MaterialFragments;
+    using Structure.SectionProperties;
 
     [Description("Description of object")]
     public class FemModel : BHoMObject
@@ -38,16 +39,24 @@ namespace BH.oM.Karamba3D
         /***************************************************/
 
         [Description("Nodes")]
-        public IList<Node> Nodes { get; set; }
+        public IList<Node> Nodes { get; set; } = new List<Node>();
 
         [Description("Bars")]
-        public IList<Bar> Bars { get; set; }
+        public IList<Bar> Bars { get; set; } = new List<Bar>();
 
         [Description("Loads")]
-        public IList<ILoad> Loads { get; set; }
+        public IList<ILoad> Loads { get; set; } = new List<ILoad>();
 
-        [Description("LoadCases")]
-        public IList<Loadcase> LoadCases { get; set; }
+        [Description("Load cases")]
+        public IList<Loadcase> LoadCases { get; set; } = new List<Loadcase>();
+
+        [Description("Cross sections")]
+        public IList<ISectionProperty> CrossSections { get; set; } = new List<ISectionProperty>();
+
+        [Description("Materials")]
+        public IList<IMaterialFragment> Materials { get; set; } = new List<IMaterialFragment>();
+
+
     }
 }
 

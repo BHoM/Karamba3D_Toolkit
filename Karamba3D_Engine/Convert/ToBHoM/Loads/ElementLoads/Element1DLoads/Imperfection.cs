@@ -12,7 +12,7 @@
     {
         private static IEnumerable<ILoad> ToBhOM(this Imperfection k3dLoad, Model k3dModel, BhOMModel bhomModel)
         {
-            var message = string.Format(Resource.WarningNotSupportedType, nameof(Imperfection));
+            var message = string.Format(Resource.WarningNotYetSupportedType, nameof(Imperfection));
             K3dLogger.RecordWarning(message);
 
             return Enumerable.Empty<ILoad>();

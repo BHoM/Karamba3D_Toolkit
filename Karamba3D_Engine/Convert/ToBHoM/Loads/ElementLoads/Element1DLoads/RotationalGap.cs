@@ -14,7 +14,7 @@
         {
             K3dLogger.RecordError(
                 string.Format(
-                    Resource.WarningNotSupportedType,
+                    Resource.WarningNotYetSupportedType,
                     nameof(RotationalGap)));
 
             return Enumerable.Empty<ILoad>();

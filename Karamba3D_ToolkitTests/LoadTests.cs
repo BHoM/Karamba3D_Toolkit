@@ -322,7 +322,7 @@
             k3dModel.ToBhOM();
 
             // Assert
-            string expectedMessage = string.Format(Resource.WarningNotSupportedType, load.GetType().Name);
+            string expectedMessage = string.Format(Resource.WarningNotYetSupportedType, load.GetType().Name);
             StringAssert.Contains(expectedMessage, K3dLogger.GetWarnings().Single());
         }
 
@@ -468,7 +468,7 @@
             k3dModel.ToBhOM();
 
             // Assert
-            string expectedMessage = string.Format(Resource.WarningNotSupportedType, load.GetType().Name);
+            string expectedMessage = string.Format(Resource.WarningNotYetSupportedType, load.GetType().Name);
             StringAssert.Contains(expectedMessage, K3dLogger.GetWarnings().Single());
         }
     }

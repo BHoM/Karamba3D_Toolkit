@@ -14,20 +14,26 @@ namespace Karamba3D_ToolkitTests
 {
     public class CroSecTests : BaseTest
     {
+        private CroSec  CreateCrossSectionToTest()
+        {
+            var material = MaterialTests.CreateMaterialToTest();
+            return new CroSec_Box("RandomFamily", "RandomName", "RandomCountry", null, material);
+        }
+
         [Test]
-        public void Concreteconversion()
-        { 
-            var table = new CroSecTable();
-            var defaultCrossSectionPath = Path.GetFullPath(Path.Combine(Assembly.GetExecutingAssembly().Location,"../../../../","ExternalFile/CrossSectionValues.bin"));
-            table.read(defaultCrossSectionPath);
+        public void CrossSections_WithSameGuids_WillBeInstancedOnce_Test()
+        {
+            // Arrange
+            var crossSection = CreateCrossSectionToTest();
+            crossSection.AddElemId(string.Empty); // the empty string means it will apply to all beams.
+            var model = TestUtilities.Create3NotEqualLengthHingesBeam(crossSection);
 
-            var test = table.crosecs.OfType<CroSec_Beam>().Where(c => Math.Abs(c.Wely_z_pos + c.Wely_z_neg) > 1E-12).ToList();
-            var families = test.Select(c => c.family).ToHashSet();
+            // Act
+            var bhomModel = model.ToBhOM();
+            var bhomMaterial = bhomModel.CrossSections.Single();
 
-            var hea180 = table.crosecs.Single(c => c.name == "HEA180");
-
-            var bhomSection = ((CroSec_Beam)hea180).ToBhOM();
-
+            // Assert
+            Assert.AreEqual(bhomMaterial.BHoM_Guid, crossSection.guid);
         }
     }
 }

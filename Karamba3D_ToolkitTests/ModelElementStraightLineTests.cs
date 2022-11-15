@@ -13,6 +13,7 @@
     using BH.oM.Geometry;
     using BH.oM.Structure.Constraints;
     using BH.oM.Structure.Elements;
+    using BH.oM.Structure.SectionProperties;
     using Karamba.Joints;
     using Karamba3D_Engine;
     using Node = Karamba.Nodes.Node;
@@ -78,6 +79,7 @@
             // Act
             var bhomModel = model.ToBhomModel();
             var bhomBeam = bhomModel.Elements1D.Values.Single();
+            var bhomCrossSection = bhomModel.CrossSections.Single().Value;
 
             // Assert
             var expectedBeam = new Bar()
@@ -85,7 +87,7 @@
                 Name = "0",
                 StartNode = bhomModel.Nodes[0],
                 EndNode = bhomModel.Nodes[1],
-                SectionProperty = beam.crosec.ToBhOM(),
+                SectionProperty = bhomCrossSection,
                 FEAType = BarFEAType.Flexural
             };
             CustomAssert.BhOMObjectsAreEqual(bhomBeam, expectedBeam);
@@ -104,7 +106,7 @@
             var bhomModel = model.ToBhomModel();
 
             // Assert
-            var expectedMessage = string.Format(Resource.WarningNotSupportedType, spring.GetType().Name);
+            var expectedMessage = string.Format(Resource.WarningNotYetSupportedType, spring.GetType().Name);
             StringAssert.Contains(expectedMessage, K3dLogger.GetWarnings().Single());
         }
 
@@ -119,6 +121,7 @@
             // Act
             var bhomModel = model.ToBhomModel();
             var bhomTruss = bhomModel.Elements1D.Values.Single();
+            var bhomCrossSection = bhomModel.CrossSections.Values.Single();
 
             // Assert
             var expectedTruss = new Bar()
@@ -126,7 +129,7 @@
                 Name = "0",
                 StartNode = bhomModel.Nodes[0],
                 EndNode = bhomModel.Nodes[1],
-                SectionProperty = truss.crosec.ToBhOM(),
+                SectionProperty = bhomCrossSection,
                 FEAType = BarFEAType.Axial,
             };
             CustomAssert.BhOMObjectsAreEqual(bhomTruss, expectedTruss);

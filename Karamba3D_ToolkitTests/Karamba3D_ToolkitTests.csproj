@@ -50,6 +50,9 @@
 		<Reference Include="Analytical_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Analytical_oM.dll</HintPath>
 		</Reference>
+		<Reference Include="Physical_oM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Physical_oM.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
