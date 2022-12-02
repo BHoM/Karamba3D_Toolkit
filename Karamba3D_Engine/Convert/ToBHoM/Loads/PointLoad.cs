@@ -10,7 +10,7 @@
 
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBhOM(this Karamba.Loads.PointLoad k3dPointLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBHoM(this Karamba.Loads.PointLoad k3dPointLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             if (k3dPointLoad.local)
             {
@@ -21,8 +21,8 @@
             {
                 Axis = LoadAxis.Global,
                 Loadcase = null,
-                Force = k3dPointLoad.force.ToBhOM(),
-                Moment = k3dPointLoad.moment.ToBhOM(),
+                Force = k3dPointLoad.force.ToBHoM(),
+                Moment = k3dPointLoad.moment.ToBHoM(),
                 Projected = false,
                 Objects = new BHoMGroup<Node> { Elements = new List<Node> { bhomModel.Nodes[k3dPointLoad.node_ind] } },
             };

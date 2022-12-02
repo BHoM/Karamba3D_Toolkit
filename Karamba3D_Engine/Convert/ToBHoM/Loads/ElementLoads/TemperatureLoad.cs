@@ -14,7 +14,7 @@
 
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBhOM(this TemperatureLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBHoM(this TemperatureLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             if (k3dLoad.incdT != Vector3.Unset ||
                 k3dLoad.incdT != Vector3.Zero)

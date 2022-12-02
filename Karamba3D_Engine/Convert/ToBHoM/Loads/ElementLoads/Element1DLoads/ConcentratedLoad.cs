@@ -11,7 +11,7 @@
 
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBhOM(this ConcentratedLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBHoM(this ConcentratedLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             k3dLoad.GetOrientation(out var loadAxis, out var isProjected);
 
@@ -24,8 +24,8 @@
             {
                 yield return new BarPointLoad
                 {
-                    Force = k3dLoad is ConcentratedForce ? k3dLoad.Values.ToBhOM() : new Vector(),
-                    Moment = k3dLoad is ConcentratedMoment ? k3dLoad.Values.ToBhOM() : new Vector(),
+                    Force = k3dLoad is ConcentratedForce ? k3dLoad.Values.ToBHoM() : new Vector(),
+                    Moment = k3dLoad is ConcentratedMoment ? k3dLoad.Values.ToBHoM() : new Vector(),
                     DistanceFromA = group.Key * k3dLoad.Position,
                     Loadcase = null,
                     Objects =  new BHoMGroup<Bar> { Elements = group.ToList() },

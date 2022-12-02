@@ -7,7 +7,7 @@
 
     public static partial class Convert
     {
-        internal static BarRelease ToBhOM(this Joint k3dJoint)
+        internal static BarRelease ToBHoM(this Joint k3dJoint)
         {
             if (k3dJoint?.c is null)
             {

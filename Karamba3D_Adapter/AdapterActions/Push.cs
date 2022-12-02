@@ -60,7 +60,7 @@ namespace BH.Adapter.Karamba3D
 
             foreach (var obj in objects)
             {
-                //convertedObjects.Add(obj.IToBhOM());
+                //convertedObjects.Add(obj.IToBHoM());
             }
 
             return convertedObjects;

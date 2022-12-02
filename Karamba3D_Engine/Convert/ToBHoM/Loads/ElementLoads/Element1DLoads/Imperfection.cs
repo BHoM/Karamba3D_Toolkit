@@ -10,7 +10,7 @@
 
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBhOM(this Imperfection k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBHoM(this Imperfection k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             var message = string.Format(Resource.WarningNotYetSupportedType, nameof(Imperfection));
             K3dLogger.RecordWarning(message);

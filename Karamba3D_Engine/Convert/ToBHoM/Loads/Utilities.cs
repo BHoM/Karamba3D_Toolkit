@@ -3,16 +3,16 @@
     using Karamba.Loads;
     using Karamba.Models;
     using Karamba3D_Engine;
-    using oM.Structure.Loads;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Karamba.Elements;
-    using oM.Structure.Elements;
+    using BH.oM.Structure.Elements;
+    using BH.oM.Structure.Loads;
 
     public static partial class Convert
     {
-        internal static List<Bar> GetLoadedBhomBars(ElementLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        internal static List<Bar> GetLoadedBhomBars(ElementLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             return k3dLoad.GetLoadedK3dElements(k3dModel)
                    .Select(e => bhomModel.Elements1D[e.ind])
@@ -48,9 +48,8 @@
             }
         }
 
-        internal static IEnumerable<Karamba.Elements.ModelElement> GetLoadedK3dElements(this ElementLoad k3dLoad, Model k3dModel)
+        internal static IEnumerable<Karamba.Elements.ModelElement> GetLoadedK3dElements(this ElementLoad k3dLoad, Karamba.Models.Model k3dModel)
         {
-
             var elementsFromTags = Enumerable.Empty<ModelElement>();
             var elementsFromGuids = Enumerable.Empty<ModelElement>();
             if (k3dLoad is null || k3dModel is null)
@@ -71,7 +70,7 @@
             return elementsFromTags.Concat(elementsFromGuids);
         }
 
-        internal static IEnumerable<int> GetElementIndices(this ElementLoad k3dLoad, Model k3dModel)
+        internal static IEnumerable<int> GetElementIndices(this ElementLoad k3dLoad, Karamba.Models.Model k3dModel)
         {
             var indicesFromTags = Enumerable.Empty<int>();
             var indicesFromGuids = Enumerable.Empty<int>();

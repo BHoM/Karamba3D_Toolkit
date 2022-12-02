@@ -16,19 +16,19 @@ namespace BH.Engine.Adapters.Karamba3D
             typeof(FemMaterial_Orthotropic),
         };
 
-        internal static object IToBhOM(this object obj, Model k3dModel, BhOMModel bhomModel)
+        internal static object IToBHoM(this object obj, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
-            return ToBhOM(obj as dynamic, k3dModel, bhomModel);
+            return ToBHoM(obj as dynamic, k3dModel, bhomModel);
         }
 
         // Fallback methods
-        private static IObject ToBhOM(this object obj)
+        private static IObject ToBHoM(this object obj)
         {
             K3dLogger.RecordError($"Could not find a convert method for {obj.GetType().FullName}.");
             return null;
         }
 
-        private static IObject ToBhOM(this object obj, Model k3dModel, BhOMModel bhomModel)
+        private static IObject ToBHoM(this object obj, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             if (UnsupportedType.Contains(obj.GetType()))
             {
