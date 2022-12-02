@@ -3,9 +3,6 @@
 		<TargetFramework>net48</TargetFramework>
 		<AssemblyName>Karamba3D_Adapter</AssemblyName>
 	</PropertyGroup>
-	<ItemGroup>
-	  <PackageReference Include="KarambaCommonDebugVersion" Version="3.0.0" />
-	</ItemGroup>
 
 	<ItemGroup>
 	<ProjectReference Include="..\Karamba3D_Engine\Karamba3D_Engine.csproj" />
