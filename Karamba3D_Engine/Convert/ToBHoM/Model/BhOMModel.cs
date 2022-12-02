@@ -44,7 +44,7 @@
             {
                 Name = loadCaseName,
                 Nature = LoadNature.Other,
-                Number = _loadCases.Count
+                Number = _loadCases.Count + 1
             };
             _loadCases.Add(loadCaseName, loadCase);
 
