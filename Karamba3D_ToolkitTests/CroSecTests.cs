@@ -29,7 +29,7 @@ namespace Karamba3D_ToolkitTests
             var model = TestUtilities.Create3NotEqualLengthHingesBeam(crossSection);
 
             // Act
-            var bhomModel = model.ToBhOM();
+            var bhomModel = model.ToBHoM();
             var bhomMaterial = bhomModel.CrossSections.Single();
 
             // Assert

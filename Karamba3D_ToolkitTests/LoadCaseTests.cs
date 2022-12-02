@@ -35,7 +35,7 @@
             //var model = TestUtilities.CreateFixedFreeBeam(loads);
 
             //// Act
-            //var bhomModel = model.ToBhOM();
+            //var bhomModel = model.ToBHoM();
             //var loadCases = bhomModel.LoadCases;
 
             //// Assert

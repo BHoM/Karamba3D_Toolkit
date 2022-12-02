@@ -24,7 +24,7 @@
             model.nodes.Add(node);
 
             // Act
-            var bhomModel = model.ToBhomModel();
+            var bhomModel = model.ToBHoMModel();
 
             // Assert
             var expectedNode = new BH.oM.Structure.Elements.Node()
@@ -53,7 +53,7 @@
             model.nodes.Add(node);
 
             // Act
-            var bhomModel = model.ToBhomModel();
+            var bhomModel = model.ToBHoMModel();
 
             // Assert
             var expectedNode = new BH.oM.Structure.Elements.Node()
@@ -100,7 +100,7 @@
             model.nodes.Add(node);
 
             // Act
-            var bhomModel = model.ToBhomModel();
+            var bhomModel = model.ToBHoMModel();
             var bhomLoad = bhomModel.Loads.Single() as PointDisplacement;
 
             // Assert
@@ -132,8 +132,8 @@
                     {
                         Elements = new List<BH.oM.Structure.Elements.Node> { expectedNode }
                     },
-                Translation = prescribedTranslations.ToBhOM(),
-                Rotation = prescribedRotations.ToBhOM(),
+                Translation = prescribedTranslations.ToBHoM(),
+                Rotation = prescribedRotations.ToBHoM(),
                 Axis = LoadAxis.Global,
                 Projected = false
             };

@@ -42,7 +42,7 @@
             model.eloads.AddRange(loads);
 
             // Act
-            var bhomModel = model.ToBhomModel();
+            var bhomModel = model.ToBHoMModel();
             var bhomLoads = bhomModel.Loads.OfType<IElementLoad<Bar>>().ToList();
 
             // Arrange
@@ -72,7 +72,7 @@
             var model = TestUtilities.Create3NotEqualLengthHingesBeam(load);
 
             // Act
-            var bhomModel = model.ToBhOM();
+            var bhomModel = model.ToBHoM();
             var bhomBars = bhomModel.Bars.ToList();
             var bhomLoads = bhomModel.Loads.Cast<BarPointLoad>().ToList();
             var bhomLoadCase = bhomModel.LoadCases.Single();
@@ -80,8 +80,8 @@
             // Assert
             LoadAxis loadAxis = loadOrientation == LoadOrientation.local ? LoadAxis.Local : LoadAxis.Global;
             bool projected = loadOrientation == LoadOrientation.proj;
-            var expectedForce = isForce ? vector.ToBhOM() : new Vector();
-            var expectedMoment = isForce ? new Vector() : vector.ToBhOM();
+            var expectedForce = isForce ? vector.ToBHoM() : new Vector();
+            var expectedMoment = isForce ? new Vector() : vector.ToBHoM();
             var expectedFirstLoad = new BarPointLoad
             {
                 Axis = loadAxis,
@@ -150,7 +150,7 @@
             var model = TestUtilities.Create3NotEqualLengthHingesBeam(load);
 
             // Act
-            var bhomModel = model.ToBhOM();
+            var bhomModel = model.ToBHoM();
             var bhomBars = bhomModel.Bars;
             var bhomLoad = bhomModel.Loads.Cast<BarUniformlyDistributedLoad>().Single();
             var bhomLoadCase = bhomModel.LoadCases.Single();
@@ -158,7 +158,7 @@
             // Assert
             var loadAxis = loadOrientation == LoadOrientation.local ? LoadAxis.Local : LoadAxis.Global;
             bool projected = loadOrientation == LoadOrientation.proj;
-            var expectedVector = (direction.Unitized * value).ToBhOM();
+            var expectedVector = (direction.Unitized * value).ToBHoM();
             var expectedLoad = new BarUniformlyDistributedLoad
             {
                 Force = isForce ? expectedVector : new Vector(),
@@ -214,7 +214,7 @@
             var model = TestUtilities.Create3NotEqualLengthHingesBeam(load);
 
             // Act// Act
-            var bhomModel = model.ToBhOM();
+            var bhomModel = model.ToBHoM();
             var bhomBars = bhomModel.Bars;
             var bhomLoads = bhomModel.Loads.Cast<BarVaryingDistributedLoad>().ToList();
             var bhomLoadCase = bhomModel.LoadCases.Single();
@@ -222,7 +222,7 @@
             // Assert
             var loadAxis = loadOrientation == LoadOrientation.local ? LoadAxis.Local : LoadAxis.Global;
             bool projected = loadOrientation == LoadOrientation.proj;
-            var expectedVectors = values.Select(v => (v * direction.Unitized).ToBhOM()).ToArray();
+            var expectedVectors = values.Select(v => (v * direction.Unitized).ToBHoM()).ToArray();
             var expectedLoad1 = new BarVaryingDistributedLoad()
             {
                 StartPosition = positions[0],
@@ -280,7 +280,7 @@
             var model = TestUtilities.CreateFixedFixedBeam(load);
 
             // Act
-            var bhomModel = model.ToBhOM();
+            var bhomModel = model.ToBHoM();
             var bhomBar = bhomModel.Bars.Single();
             var bhomLoad = bhomModel.Loads.Cast<BarUniformlyDistributedLoad>().Single();
             var bhomLoadCase = bhomModel.LoadCases.Single();
@@ -291,7 +291,7 @@
             bool projected = loadOrientation == LoadOrientation.proj;
             var expectedLoad = new BarUniformlyDistributedLoad
             {
-                Force = vector.ToBhOM(),
+                Force = vector.ToBHoM(),
                 Loadcase = bhomLoadCase,
                 Objects = new BHoMGroup<Bar> { Elements = new List<Bar> { bhomBar } },
                 Axis = loadAxis,
@@ -319,7 +319,7 @@
             var k3dModel = TestUtilities.CreateFixedFixedBeam(load);
 
             // Act
-            k3dModel.ToBhOM();
+            k3dModel.ToBHoM();
 
             // Assert
             string expectedMessage = string.Format(Resource.WarningNotYetSupportedType, load.GetType().Name);
@@ -334,7 +334,7 @@
             var k3dModel = TestUtilities.CreateFixedFixedBeam(load);
 
             // Act
-            var bhomModel = k3dModel.ToBhOM();
+            var bhomModel = k3dModel.ToBHoM();
             var bhomBar = bhomModel.Bars.Single();
             var bhomLoad = bhomModel.Loads.Cast<BarUniformTemperatureLoad>().Single();
             var bhomLoadCase = bhomModel.LoadCases.Single();
@@ -363,7 +363,7 @@
             var k3dModel = TestUtilities.CreateFixedFixedBeam(load);
 
             // Act
-            k3dModel.ToBhOM();
+            k3dModel.ToBHoM();
 
             // Assert
             string expectedMessage = Resource.WarningLinearTemperatureChangesNotSupported;
@@ -379,7 +379,7 @@
             var k3dModel = TestUtilities.Create3NotEqualLengthHingesBeam(load);
 
             // Act
-            var bhomModel = k3dModel.ToBhOM();
+            var bhomModel = k3dModel.ToBHoM();
             var bhomBars = bhomModel.Bars;
             var bhomLoad = bhomModel.Loads.Cast<BH.oM.Structure.Loads.GravityLoad>().Single();
             var bhomLoadCase = bhomModel.LoadCases.Single();
@@ -389,7 +389,7 @@
             var expectedLoad = new BH.oM.Structure.Loads.GravityLoad
             {
                 Axis = LoadAxis.Global,
-                GravityDirection = vector.ToBhOM(),
+                GravityDirection = vector.ToBHoM(),
                 Projected = false,
                 Loadcase = bhomLoadCase,
                 Objects = new BHoMGroup<BHoMObject> { Elements = bhomBars.Cast<BHoMObject>().ToList() }
@@ -416,7 +416,7 @@
             var k3dModel = TestUtilities.CreateFixedFreeBeam(load);
 
             // Act
-            var bhomModel = k3dModel.ToBhOM();
+            var bhomModel = k3dModel.ToBHoM();
             var bhomNode = bhomModel.Nodes[1];
             var bhomLoad = bhomModel.Loads.Cast<BH.oM.Structure.Loads.PointLoad>().Single();
             var bhomLoadCase = bhomModel.LoadCases.Single();
@@ -424,8 +424,8 @@
             // Assert
             var expectedLoad = new BH.oM.Structure.Loads.PointLoad()
             {
-                Force = force.ToBhOM(),
-                Moment = moment.ToBhOM(),
+                Force = force.ToBHoM(),
+                Moment = moment.ToBHoM(),
                 Axis = LoadAxis.Global,
                 Projected = false,
                 Objects = new BHoMGroup<Node> { Elements = new List<Node> { bhomNode } },
@@ -450,7 +450,7 @@
             var k3dModel = TestUtilities.CreateFixedFreeBeam(load);
 
             // Act
-            k3dModel.ToBhOM();
+            k3dModel.ToBHoM();
 
             // Assert
             string expectedMessage = Resource.WarningPointLoadLocalLoadNotSupported;
@@ -465,7 +465,7 @@
             var k3dModel = TestUtilities.CreateFixedFreeBeam(load);
 
             // Act
-            k3dModel.ToBhOM();
+            k3dModel.ToBHoM();
 
             // Assert
             string expectedMessage = string.Format(Resource.WarningNotYetSupportedType, load.GetType().Name);

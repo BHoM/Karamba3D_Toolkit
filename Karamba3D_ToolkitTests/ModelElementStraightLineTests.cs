@@ -30,8 +30,8 @@
             var nodes = model.nodes;
 
             // Act
-            var bhomModel = model.ToBhomModel();
-            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToList();
+            var bhomModel = model.ToBHoMModel();
+            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBHoM()).ToList();
             var bhomCoordinateSystem = bhomModel.Elements1D.Values.Select(BH.Engine.Structure.Query.CoordinateSystem).ToList();
 
             // Assert
@@ -54,8 +54,8 @@
             var nodes = model.nodes;
 
             // Act
-            var bhomModel = model.ToBhomModel();
-            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBhOM()).ToList();
+            var bhomModel = model.ToBHoMModel();
+            var k3dCoordinateSystems = beams.Select(b => b.localCoSys(nodes).ToBHoM()).ToList();
             var bhomCoordinateSystem = bhomModel.Elements1D.Values.Select(BH.Engine.Structure.Query.CoordinateSystem).ToList();
 
             // Assert
@@ -77,7 +77,7 @@
             var beam = model.elems.Single() as ModelBeam;
 
             // Act
-            var bhomModel = model.ToBhomModel();
+            var bhomModel = model.ToBHoMModel();
             var bhomBeam = bhomModel.Elements1D.Values.Single();
             var bhomCrossSection = bhomModel.CrossSections.Single().Value;
 
@@ -103,7 +103,7 @@
             model.elems.Add(spring);
 
             // Act
-            var bhomModel = model.ToBhomModel();
+            var bhomModel = model.ToBHoMModel();
 
             // Assert
             var expectedMessage = string.Format(Resource.WarningNotYetSupportedType, spring.GetType().Name);
@@ -119,7 +119,7 @@
             var truss = model.elems.Cast<ModelTruss>().Single();
 
             // Act
-            var bhomModel = model.ToBhomModel();
+            var bhomModel = model.ToBHoMModel();
             var bhomTruss = bhomModel.Elements1D.Values.Single();
             var bhomCrossSection = bhomModel.CrossSections.Values.Single();
 
@@ -150,7 +150,7 @@
             crossSection.ecce_loc = eccentricity;
 
             // Act
-            var bhomModel = model.ToBhomModel();
+            var bhomModel = model.ToBHoMModel();
             var bhomBeam = bhomModel.Elements1D.Values.Single();
             
 
@@ -179,7 +179,7 @@
             beam.joint = new Joint { c = new double?[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12} };
 
             // Act
-            var bhomModel = model.ToBhomModel();
+            var bhomModel = model.ToBHoMModel();
             var bhomRelease = bhomModel.Elements1D.Values.Single().Release;
 
             // Assert
