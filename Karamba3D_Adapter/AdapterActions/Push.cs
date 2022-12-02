@@ -23,6 +23,7 @@
 using BH.Engine.Adapters.Karamba3D;
 using BH.oM.Adapter;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BH.Adapter.Karamba3D
 {
@@ -58,9 +59,10 @@ namespace BH.Adapter.Karamba3D
         {
             List<object> convertedObjects = new List<object>();
 
-            foreach (var obj in objects)
+
+            foreach (var karambaMoDEL in objects.OfType<Karamba.Models.Model>())
             {
-                //convertedObjects.Add(obj.IToBHoM());
+                convertedObjects.Add(karambaMoDEL.ToBHoM());
             }
 
             return convertedObjects;
