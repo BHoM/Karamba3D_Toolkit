@@ -4,6 +4,7 @@ using Karamba.CrossSections;
 using System;
 using System.IO;
 using System.Linq;
+using log = BH.Engine.Adapter.Karamba3D.K3dLogger;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
@@ -97,7 +98,9 @@ namespace BH.Engine.Adapters.Karamba3D
                     Resource.ErrorCrossSectionMapNotFound,
                     Path.GetFullPath(crossSectionMapPath));
 
-                throw new FileNotFoundException(message);
+                log.RecordNote($"Could not find cross section dataset in {crossSectionMapPath}.", doNotRepeat: true);
+
+                return false;
             }
 
             var csvRow = File.ReadLines(crossSectionMapPath)
