@@ -8,12 +8,12 @@
 
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBhOM(this Karamba.Loads.GravityLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBHoM(this Karamba.Loads.GravityLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             yield return new GravityLoad()
             {
                 Axis = LoadAxis.Global,
-                GravityDirection = k3dLoad.force.ToBhOM(),
+                GravityDirection = k3dLoad.force.ToBHoM(),
                 Projected = false,
                 Loadcase = null,
                 Objects = new BHoMGroup<BHoMObject> { Elements = bhomModel.Elements1D.Values.Cast<BHoMObject>().ToList()}

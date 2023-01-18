@@ -5,7 +5,7 @@
 
     public static partial class Convertt
     {
-        public static Point ToBhOM(this Point3 obj)
+        public static Point ToBHoM(this Point3 obj)
         {
             Point result = new Point()
             {

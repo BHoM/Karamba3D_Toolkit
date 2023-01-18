@@ -1,13 +1,12 @@
+using BH.oM.Structure.MaterialFragments;
+using Karamba.Materials;
+using Karamba.Models;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using Base;
-    using BH.oM.Structure.MaterialFragments;
-    using Karamba.Materials;
-    using Karamba.Models;
-
     public static partial class Convert
     {
-        private static IMaterialFragment ToBhOM(this FemMaterial_Isotrop k3dMaterial, Model k3dModel, BhOMModel bhomModel)
+        private static IMaterialFragment ToBHoM(this FemMaterial_Isotrop k3dMaterial, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             if (bhomModel.Materials.TryGetValue(k3dMaterial.guid, out var bhomMaterial))
             {
@@ -61,34 +60,6 @@ namespace BH.Engine.Adapters.Karamba3D
             bhomModel.Materials.Add(bhomIsotropicMaterial.BHoM_Guid, bhomIsotropicMaterial);
 
             return bhomIsotropicMaterial;
-        }
-
-        private static MaterialType GetMaterialType(FemMaterial material)
-        {
-            switch (material.family)
-            {
-                case "Steel":
-                    return MaterialType.Steel;
-
-                case "Wood":
-                case "Hardwood":
-                case "ConiferousTimber":
-                case "GlulamTimber":
-                    return MaterialType.Timber;
-
-                case "Aluminum":
-                    return MaterialType.Aluminium;
-
-                case "Concrete":
-                case "LightweightConcrete":
-                    return MaterialType.Concrete;
-
-                case "ReinfSteel":
-                    return MaterialType.Rebar;
-
-                default:
-                    return MaterialType.Undefined;
-            }
         }
     }
 }

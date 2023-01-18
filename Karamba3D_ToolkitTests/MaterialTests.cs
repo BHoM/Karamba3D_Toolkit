@@ -34,7 +34,7 @@
             var model = TestUtilities.Create3NotEqualLengthHingesBeam(material);
 
             // Act
-            var bhomModel = model.ToBhOM();
+            var bhomModel = model.ToBHoM();
             var bhomMaterial = bhomModel.Materials.Single();
 
             // Assert
@@ -59,7 +59,7 @@
             var model = TestUtilities.CreateHingedBeamModel(additionalEntities: material);
 
             // Act
-            var bhomModel = model.ToBhOM();
+            var bhomModel = model.ToBHoM();
             var bhomMaterial = bhomModel.Materials.Single();
 
             // Assert

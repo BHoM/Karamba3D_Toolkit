@@ -8,7 +8,7 @@
 
     public static partial class Convert
     {
-        internal static Cartesian ToBhOM(this CoordinateSystem3 k3dCoSys)
+        internal static Cartesian ToBHoM(this CoordinateSystem3 k3dCoSys)
         {
             if (k3dCoSys is null)
             {
@@ -16,13 +16,13 @@
             }
 
             return new Cartesian(
-                k3dCoSys.Origin.ToBhOM(),
-                k3dCoSys.X.ToBhOM(),
-                k3dCoSys.Y.ToBhOM(),
-                k3dCoSys.Z.ToBhOM());
+                k3dCoSys.Origin.ToBHoM(),
+                k3dCoSys.X.ToBHoM(),
+                k3dCoSys.Y.ToBHoM(),
+                k3dCoSys.Z.ToBHoM());
         }
 
-        internal static Cartesian ToBhOM(this Vector3[] k3dVectorArray)
+        internal static Cartesian ToBHoM(this Vector3[] k3dVectorArray)
         {
             if (k3dVectorArray is null)
             {
@@ -41,9 +41,9 @@
             
             return new Cartesian(
                 new Point() { X = 0, Y = 0, Z = 0},
-                k3dVectorArray[0].ToBhOM(),
-                k3dVectorArray[1].ToBhOM(),
-                k3dVectorArray[2].ToBhOM());
+                k3dVectorArray[0].ToBHoM(),
+                k3dVectorArray[1].ToBHoM(),
+                k3dVectorArray[2].ToBHoM());
         }
     }
 }

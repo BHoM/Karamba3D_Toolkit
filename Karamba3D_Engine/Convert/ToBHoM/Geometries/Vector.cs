@@ -4,7 +4,7 @@
 
     public static partial class Convert
     {
-        internal static Vector ToBhOM(this Karamba.Geometry.Vector3 obj)
+        internal static Vector ToBHoM(this Karamba.Geometry.Vector3 obj)
         {
             return new Vector()
             {

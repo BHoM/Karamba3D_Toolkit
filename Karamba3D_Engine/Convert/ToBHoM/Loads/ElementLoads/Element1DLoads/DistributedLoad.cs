@@ -12,7 +12,7 @@
 
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBhOM(this DistributedLoad k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBHoM(this DistributedLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             var positions = k3dLoad.Positions.ToArray();
             var values = k3dLoad.Values.ToArray();
@@ -27,8 +27,8 @@
                 // Create uniform load
                 yield return new BarUniformlyDistributedLoad()
                 {
-                    Force = k3dLoad is DistributedForce ? (k3dLoad.Values.First() * k3dLoad.Direction).ToBhOM() : new Vector(),
-                    Moment = k3dLoad is DistributedMoment ? (k3dLoad.Values.First() * k3dLoad.Direction).ToBhOM() : new Vector(),
+                    Force = k3dLoad is DistributedForce ? (k3dLoad.Values.First() * k3dLoad.Direction).ToBHoM() : new Vector(),
+                    Moment = k3dLoad is DistributedMoment ? (k3dLoad.Values.First() * k3dLoad.Direction).ToBHoM() : new Vector(),
                     Loadcase = null,
                     Axis = loadAxis,
                     Projected = isProjected,
@@ -44,10 +44,10 @@
                     {
                         StartPosition = positions[i],
                         EndPosition = positions[i + 1],
-                        ForceAtStart = k3dLoad is DistributedForce ? (values[i] * k3dLoad.Direction).ToBhOM() : new Vector(),
-                        ForceAtEnd = k3dLoad is DistributedForce ? (values[i + 1] * k3dLoad.Direction).ToBhOM() : new Vector(),
-                        MomentAtStart = k3dLoad is DistributedMoment ? (values[i] * k3dLoad.Direction).ToBhOM() : new Vector(),
-                        MomentAtEnd = k3dLoad is DistributedMoment ? (values[i + 1] * k3dLoad.Direction).ToBhOM() : new Vector(),
+                        ForceAtStart = k3dLoad is DistributedForce ? (values[i] * k3dLoad.Direction).ToBHoM() : new Vector(),
+                        ForceAtEnd = k3dLoad is DistributedForce ? (values[i + 1] * k3dLoad.Direction).ToBHoM() : new Vector(),
+                        MomentAtStart = k3dLoad is DistributedMoment ? (values[i] * k3dLoad.Direction).ToBHoM() : new Vector(),
+                        MomentAtEnd = k3dLoad is DistributedMoment ? (values[i + 1] * k3dLoad.Direction).ToBHoM() : new Vector(),
                         Loadcase = null,
                         Axis = loadAxis,
                         Projected = isProjected,

@@ -20,6 +20,9 @@
 		<Reference Include="Geometry_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Geometry_oM.dll</HintPath>
 		</Reference>
+		<Reference Include="Physical_oM">
+		  <HintPath>$(ProgramData)\BHoM\Assemblies\Physical_oM.dll</HintPath>
+		</Reference>
 		<Reference Include="Structure_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Structure_oM.dll</HintPath>
 		</Reference>

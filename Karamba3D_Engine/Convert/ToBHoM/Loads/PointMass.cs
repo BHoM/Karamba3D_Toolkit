@@ -10,7 +10,7 @@
 
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBhOM(this PointMass k3dPointMass, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBHoM(this PointMass k3dPointMass, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             K3dLogger.RecordWarning(string.Format(Resource.WarningNotYetSupportedType, nameof(PointMass)));
             

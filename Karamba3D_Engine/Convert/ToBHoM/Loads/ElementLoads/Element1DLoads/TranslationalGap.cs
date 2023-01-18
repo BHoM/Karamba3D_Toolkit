@@ -10,7 +10,7 @@
 
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBhOM(this TranslationalGap k3dLoad, Model k3dModel, BhOMModel bhomModel)
+        private static IEnumerable<ILoad> ToBHoM(this TranslationalGap k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             K3dLogger.RecordError(
                 string.Format(

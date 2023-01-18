@@ -9,15 +9,15 @@
     public class JointTests : BaseTest
     {
         [Test]
-        public void ToBhOMConversionTest()
+        public void ToBHoMConversionTest()
         {
             var joint = new Joint();
             joint.c[0] = 0;
             joint.c[1] = 1;
             Joint nullJoint = null;
 
-            var barRelease = joint.ToBhOM();
-            var nullBarRelease = nullJoint.ToBhOM();
+            var barRelease = joint.ToBHoM();
+            var nullBarRelease = nullJoint.ToBHoM();
 
             Assert.IsNull(nullBarRelease);
             Assert.AreEqual(barRelease.StartRelease.TranslationX, DOFType.Spring);

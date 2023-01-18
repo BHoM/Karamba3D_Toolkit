@@ -4,6 +4,7 @@ using Karamba.CrossSections;
 using System;
 using System.IO;
 using System.Linq;
+using log = BH.Engine.Adapter.Karamba3D.K3dLogger;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
@@ -15,7 +16,7 @@ namespace BH.Engine.Adapters.Karamba3D
 
     public static partial class Convert
     {
-        private static ISectionProperty ToBhOM(this CroSec_Beam k3dCrossSection, Model k3dModel, BhOMModel bhomModel)
+        private static ISectionProperty ToBHoM(this CroSec_Beam k3dCrossSection, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             if (k3dCrossSection is null)
                 return null;
@@ -26,7 +27,7 @@ namespace BH.Engine.Adapters.Karamba3D
             return CreateSectionProperty(k3dCrossSection, k3dModel, bhomModel);
         }
 
-        private static ISectionProperty CreateSectionProperty(CroSec_Beam k3dCrossSection, Model k3dModel, BhOMModel bhomModel)
+        private static ISectionProperty CreateSectionProperty(CroSec_Beam k3dCrossSection, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             ISectionProperty section;
             if (TryGetSectionFromDataSet(k3dCrossSection.name, out var databaseSection))
@@ -35,7 +36,7 @@ namespace BH.Engine.Adapters.Karamba3D
             }
             else if (TryCreateProfile(k3dCrossSection, out var profile))
             {
-                var material = (IMaterialFragment)k3dCrossSection.material.IToBhOM(k3dModel, bhomModel);
+                var material = (IMaterialFragment)k3dCrossSection.material.IToBHoM(k3dModel, bhomModel);
                 section = Structure.Create.SectionPropertyFromProfile(profile, material, k3dCrossSection.name);
             }
             else
@@ -45,7 +46,7 @@ namespace BH.Engine.Adapters.Karamba3D
                     k3dCrossSection.GetType().FullName);
                 K3dLogger.RecordWarning(message);
 
-                var material = (IMaterialFragment)k3dCrossSection.material.IToBhOM(k3dModel, bhomModel);
+                var material = (IMaterialFragment)k3dCrossSection.material.IToBHoM(k3dModel, bhomModel);
                 section = new ExplicitSection()
                 {
                     Name = k3dCrossSection.name,
@@ -88,7 +89,7 @@ namespace BH.Engine.Adapters.Karamba3D
                 "BHoM",
                 "Datasets",
                 "Karamba3D",
-                "Karamba3DToBhOMCrossSectionMapper.csv");
+                "Karamba3DToBHoMCrossSectionMapper.csv");
             
             // Search for file
             if (!File.Exists(crossSectionMapPath))
@@ -97,7 +98,9 @@ namespace BH.Engine.Adapters.Karamba3D
                     Resource.ErrorCrossSectionMapNotFound,
                     Path.GetFullPath(crossSectionMapPath));
 
-                throw new FileNotFoundException(message);
+                log.RecordNote($"Could not find cross section dataset in {crossSectionMapPath}.", doNotRepeat: true);
+
+                return false;
             }
 
             var csvRow = File.ReadLines(crossSectionMapPath)

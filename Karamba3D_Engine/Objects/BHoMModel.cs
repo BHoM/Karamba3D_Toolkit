@@ -8,7 +8,7 @@
     using oM.Structure.MaterialFragments;
     using oM.Structure.SectionProperties;
 
-    internal class BhOMModel
+    internal class BHoMModel
     {
         private readonly IDictionary<string, Loadcase> _loadCases = new Dictionary<string, Loadcase>();
 
@@ -23,10 +23,6 @@
         public IDictionary<Guid, IMaterialFragment> Materials { get; set; } = new Dictionary<Guid, IMaterialFragment>();
 
         public IDictionary<Guid, ISectionProperty> CrossSections { get; set; } = new Dictionary<Guid, ISectionProperty>();
-
-        public BhOMModel()
-        {
-        }
 
         public bool TryGetLoadCase(string loadCaseName, out Loadcase loadcase)
         {
@@ -44,8 +40,9 @@
             {
                 Name = loadCaseName,
                 Nature = LoadNature.Other,
-                Number = _loadCases.Count
+                Number = _loadCases.Count + 1
             };
+
             _loadCases.Add(loadCaseName, loadCase);
 
             return loadCase;
