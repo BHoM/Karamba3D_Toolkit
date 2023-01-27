@@ -128,8 +128,8 @@
                 foreach (var bhomLoad in bhomLoads)
                 {
                     bhomLoad.Loadcase = bhomModel.RegisterLoadCase(k3dLoad.LcName);
+                    bhomModel.Loads.Add(bhomLoad);
                 }
-                bhomModel.Loads.AddRange(bhomLoads);
             }
             
             // Register supports infos to nodes and loads.
