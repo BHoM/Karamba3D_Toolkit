@@ -31,32 +31,30 @@ namespace BH.oM.Karamba3D
     using Structure.MaterialFragments;
     using Structure.SectionProperties;
 
-    [Description("Description of object")]
+    [Description("Container of the BHoMObjects converted from the Karamba model.")]
     public class FemModel : BHoMObject
     {
         /***************************************************/
         /**** Properties                                ****/
         /***************************************************/
 
-        [Description("Nodes")]
+        [Description("Nodes converted from the Karamba model.")]
         public IList<Node> Nodes { get; set; } = new List<Node>();
 
-        [Description("Bars")]
+        [Description("Bars converted from the Karamba model.")]
         public IList<Bar> Bars { get; set; } = new List<Bar>();
 
-        [Description("Loads")]
+        [Description("Loads converted from the Karamba model.")]
         public IList<ILoad> Loads { get; set; } = new List<ILoad>();
 
-        [Description("Load cases")]
+        [Description("Load cases converted from the Karamba model.")]
         public IList<Loadcase> LoadCases { get; set; } = new List<Loadcase>();
 
-        [Description("Cross sections")]
+        [Description("Cross sections converted from the Karamba model.")]
         public IList<ISectionProperty> CrossSections { get; set; } = new List<ISectionProperty>();
 
-        [Description("Materials")]
+        [Description("Materials converted from the Karamba model.")]
         public IList<IMaterialFragment> Materials { get; set; } = new List<IMaterialFragment>();
-
-
     }
 }
 
