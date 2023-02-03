@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
  *
@@ -129,3 +129,4 @@ namespace BH.Engine.Adapters.Karamba3D
         private const string _cachedDatasetFolder = @"..\..\..\Cache\CachedDatasets";
     }
 }
+
