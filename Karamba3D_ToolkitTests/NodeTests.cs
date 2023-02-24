@@ -148,7 +148,7 @@ namespace Karamba3D_ToolkitTests
 
             var expectedLoad = new PointDisplacement()
             {
-                Loadcase = new Loadcase() { Name = loadCaseName, Number = 0 },
+                Loadcase = new Loadcase() { Name = loadCaseName, Number = 1 },
                 Objects =
                     new BHoMGroup<BH.oM.Structure.Elements.Node>()
                     {

@@ -62,7 +62,7 @@ namespace BH.Engine.Adapters.Karamba3D
             {
                 Name = loadCaseName,
                 Nature = LoadNature.Other,
-                Number = _loadCases.Count
+                Number = _loadCases.Count + 1 // Added +1 as some adapters (Robot) require loadcases starting from 1 (not 0)
             };
 
             _loadCases.Add(loadCaseName, loadCase);
