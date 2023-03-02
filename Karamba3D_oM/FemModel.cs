@@ -23,16 +23,15 @@
 using BH.oM.Base;
 using System.Collections.Generic;
 using System.ComponentModel;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
+using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.SectionProperties;
 
 namespace BH.oM.Karamba3D
 {
-    using Structure.Elements;
-    using Structure.Loads;
-    using Structure.MaterialFragments;
-    using Structure.SectionProperties;
-
     [Description("Container of the BHoMObjects converted from the Karamba model.")]
-    public class FemModel : BHoMObject
+    public class FemModel : Base.IContainer
     {
         /***************************************************/
         /**** Properties                                ****/
@@ -57,5 +56,3 @@ namespace BH.oM.Karamba3D
         public IList<IMaterialFragment> Materials { get; set; } = new List<IMaterialFragment>();
     }
 }
-
-
