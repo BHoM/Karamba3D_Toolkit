@@ -20,10 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Geometry;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using oM.Geometry;
-
     public static partial class Convert
     {
         internal static Vector ToBHoM(this Karamba.Geometry.Vector3 obj)

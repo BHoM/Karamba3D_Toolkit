@@ -20,17 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections.Generic;
-using Karamba.CrossSections;
-using Karamba.Utilities;
-using NUnit.Framework;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
 using BH.Engine.Adapters.Karamba3D;
-using BH.oM.Structure.SectionProperties;
+using Karamba.CrossSections;
+using NUnit.Framework;
+using System.Linq;
 
 namespace Karamba3D_ToolkitTests
 {

@@ -20,26 +20,23 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapter.Karamba3D;
+using BH.Engine.Adapters.Karamba3D;
+using BH.oM.Geometry;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.Elements;
+using Karamba.Elements;
+using Karamba.Geometry;
+using Karamba.Joints;
+using Karamba.Models;
+using Karamba3D_Engine;
+using NUnit.Framework;
+using System;
+using System.Linq;
+using Node = Karamba.Nodes.Node;
+
 namespace Karamba3D_ToolkitTests
 {
-    using System;
-    using BH.Engine.Adapters.Karamba3D;
-    using Karamba.Elements;
-    using Karamba.Geometry;
-    using Karamba.Models;
-    using NUnit.Framework;
-    using System.Collections.Generic;
-    using System.Linq;
-    using BH.Engine.Adapter.Karamba3D;
-    using BH.oM.Base.Debugging;
-    using BH.oM.Geometry;
-    using BH.oM.Structure.Constraints;
-    using BH.oM.Structure.Elements;
-    using BH.oM.Structure.SectionProperties;
-    using Karamba.Joints;
-    using Karamba3D_Engine;
-    using Node = Karamba.Nodes.Node;
-
     [TestFixture]
     public class ModelElementStraightLineTests : BaseTest
     {
@@ -59,7 +56,7 @@ namespace Karamba3D_ToolkitTests
             // Assert
             for (int i = 0; i < k3dCoordinateSystems.Count; i++)
             {
-                CustomAssert.BhOMObjectsAreEqual(
+                CustomAsserts.BhOMObjectsAreEqual(
                     k3dCoordinateSystems[i],
                     bhomCoordinateSystem[i],
                     new BhOMEqualityTestOptions() { FailureMessage = $"Iteration {i} failed." });
@@ -84,7 +81,7 @@ namespace Karamba3D_ToolkitTests
             double tolerance = 1E-5;
             for (int i = 0; i < k3dCoordinateSystems.Count; i++)
             {
-                CustomAssert.BhOMObjectsAreEqual(
+                CustomAsserts.BhOMObjectsAreEqual(
                     k3dCoordinateSystems[i],
                     bhomCoordinateSystem[i],
                     new BhOMEqualityTestOptions { FailureMessage = $"Iteration {i} failed." , DoubleTolerance = tolerance});
@@ -112,7 +109,7 @@ namespace Karamba3D_ToolkitTests
                 SectionProperty = bhomCrossSection,
                 FEAType = BarFEAType.Flexural
             };
-            CustomAssert.BhOMObjectsAreEqual(bhomBeam, expectedBeam);
+            CustomAsserts.BhOMObjectsAreEqual(bhomBeam, expectedBeam);
         }
 
         [Test]
@@ -154,7 +151,7 @@ namespace Karamba3D_ToolkitTests
                 SectionProperty = bhomCrossSection,
                 FEAType = BarFEAType.Axial,
             };
-            CustomAssert.BhOMObjectsAreEqual(bhomTruss, expectedTruss);
+            CustomAsserts.BhOMObjectsAreEqual(bhomTruss, expectedTruss);
         }
 
         [Test]
@@ -188,7 +185,7 @@ namespace Karamba3D_ToolkitTests
                 Z = 0.1 * Math.Sqrt(2)
             };
             Assert.AreEqual(bhomBeam.Offset.Start, bhomBeam.Offset.End);
-            CustomAssert.BhOMObjectsAreEqual(bhomBeam.Offset.Start, expectedVector, new BhOMEqualityTestOptions { DoubleTolerance = 1E-5});
+            CustomAsserts.BhOMObjectsAreEqual(bhomBeam.Offset.Start, expectedVector, new BhOMEqualityTestOptions { DoubleTolerance = 1E-5});
             Assert.That(bhomBeam.OrientationAngle, Is.EqualTo(rad));
         }
 
@@ -238,7 +235,7 @@ namespace Karamba3D_ToolkitTests
                     RotationalStiffnessZ = 12
                 },
             };
-            CustomAssert.BhOMObjectsAreEqual(bhomRelease, expected);
+            CustomAsserts.BhOMObjectsAreEqual(bhomRelease, expected);
         }
     }
 }

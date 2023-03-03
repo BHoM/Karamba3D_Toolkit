@@ -20,11 +20,11 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Geometry;
+using Karamba.Geometry;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using oM.Geometry;
-    using Karamba.Geometry;
-
     public static partial class Convertt
     {
         public static Point ToBHoM(this Point3 obj)

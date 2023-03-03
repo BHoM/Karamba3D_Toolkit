@@ -20,10 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Text.RegularExpressions;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using System.Text.RegularExpressions;
-
     public static partial class Query
     {
         public static int CrossSectionNumber(this string crossSectionName)

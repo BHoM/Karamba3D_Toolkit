@@ -20,21 +20,17 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
+using Karamba.Elements;
+using Karamba.Loads;
+using Karamba.Supports;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using System;
-    using Karamba.Elements;
-    using Karamba.Loads;
-    using Karamba.Models;
-    using oM.Base;
-    using oM.Structure.Elements;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.CompilerServices;
-    using Karamba.Supports;
-    using oM.Structure.Loads;
-    using oM.Structure.SectionProperties;
-
     public static partial class Convert
     {
         private static IEnumerable<Load> GetLoads(this Karamba.Models.Model k3dModel)

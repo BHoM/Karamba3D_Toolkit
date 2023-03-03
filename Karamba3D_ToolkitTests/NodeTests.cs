@@ -20,21 +20,21 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Collections.Generic;
+using System.Linq;
+using BH.Engine.Adapters.Karamba3D;
+using BH.oM.Base;
+using BH.oM.Geometry;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.Loads;
+using Karamba.Geometry;
+using Karamba.Models;
+using Karamba.Nodes;
+using Karamba.Supports;
+using NUnit.Framework;
+
 namespace Karamba3D_ToolkitTests
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using BH.Engine.Adapters.Karamba3D;
-    using BH.oM.Base;
-    using BH.oM.Geometry;
-    using BH.oM.Structure.Constraints;
-    using BH.oM.Structure.Loads;
-    using Karamba.Geometry;
-    using Karamba.Models;
-    using Karamba.Nodes;
-    using Karamba.Supports;
-    using NUnit.Framework;
-
     public class NodeTests : BaseTest
     {
         [Test]
@@ -59,7 +59,7 @@ namespace Karamba3D_ToolkitTests
                     Z = 3
                 }
             };
-            CustomAssert.BhOMObjectsAreEqual(bhomModel.Nodes[123], expectedNode);
+            CustomAsserts.BhOMObjectsAreEqual(bhomModel.Nodes[123], expectedNode);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Karamba3D_ToolkitTests
                 },
                 Orientation = Basis.YZ,
             };
-            CustomAssert.BhOMObjectsAreEqual(bhomModel.Nodes[345], expectedNode);
+            CustomAsserts.BhOMObjectsAreEqual(bhomModel.Nodes[345], expectedNode);
         }
 
         [Test]
@@ -160,8 +160,8 @@ namespace Karamba3D_ToolkitTests
                 Projected = false
             };
 
-            CustomAssert.BhOMObjectsAreEqual(bhomModel.Nodes[123], expectedNode);
-            CustomAssert.BhOMObjectsAreEqual(bhomModel.Loads.Single(), expectedLoad);
+            CustomAsserts.BhOMObjectsAreEqual(bhomModel.Nodes[123], expectedNode);
+            CustomAsserts.BhOMObjectsAreEqual(bhomModel.Loads.Single(), expectedLoad);
             Assert.AreEqual(bhomModel.Nodes[123].BHoM_Guid, bhomLoad.Objects.Elements.Single().BHoM_Guid);
             Assert.AreEqual(bhomModel.LoadCases.Single().BHoM_Guid, bhomLoad.Loadcase.BHoM_Guid);
         }

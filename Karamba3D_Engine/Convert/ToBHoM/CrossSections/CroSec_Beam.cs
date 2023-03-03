@@ -20,9 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapter.Karamba3D;
 using BH.oM.Spatial.ShapeProfiles;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SectionProperties;
 using Karamba.CrossSections;
+using Karamba3D_Engine;
 using System;
 using System.IO;
 using System.Linq;
@@ -30,12 +33,6 @@ using log = BH.Engine.Adapter.Karamba3D.K3dLogger;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using System.Runtime.InteropServices;
-    using Adapter.Karamba3D;
-    using Karamba.Models;
-    using Karamba3D_Engine;
-    using oM.Structure.MaterialFragments;
-
     public static partial class Convert
     {
         private static ISectionProperty ToBHoM(this CroSec_Beam k3dCrossSection, Karamba.Models.Model k3dModel, BHoMModel bhomModel)

@@ -20,17 +20,17 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base;
+using NUnit.Framework;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+
 namespace Karamba3D_ToolkitTests
 {
-    using BH.oM.Base;
-    using NUnit.Framework;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
-
     public class BhOMEqualityTestOptions
     {
         public double DoubleTolerance { get; set; } = 0;
@@ -42,7 +42,7 @@ namespace Karamba3D_ToolkitTests
         public bool AreTolerancesEnabled => DoubleTolerance != 0 || SingleTolerance != 0 || DecimalTolerance != 0;
     }
 
-    public static class CustomAssert
+    public static class CustomAsserts
     {
         public static void BhOMObjectsAreEqual<T>(T actual, T expected, BhOMEqualityTestOptions options = default)
         {

@@ -20,13 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapters.Karamba3D;
+using BH.oM.Structure.Constraints;
+using Karamba.Joints;
+using NUnit.Framework;
+
 namespace Karamba3D_ToolkitTests
 {
-    using BH.Engine.Adapters.Karamba3D;
-    using BH.oM.Structure.Constraints;
-    using Karamba.Joints;
-    using NUnit.Framework;
-
     [TestFixture]
     public class JointTests : BaseTest
     {

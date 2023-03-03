@@ -20,14 +20,14 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapter.Karamba3D;
+using BH.oM.Geometry;
+using BH.oM.Geometry.CoordinateSystem;
+using Karamba.Geometry;
+using Karamba3D_Engine;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using Adapter.Karamba3D;
-    using Karamba.Geometry;
-    using Karamba3D_Engine;
-    using oM.Geometry;
-    using oM.Geometry.CoordinateSystem;
-
     public static partial class Convert
     {
         internal static Cartesian ToBHoM(this CoordinateSystem3 k3dCoSys)

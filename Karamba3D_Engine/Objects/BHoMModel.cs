@@ -20,16 +20,15 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
+using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.SectionProperties;
+using System;
+using System.Collections.Generic;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using System;
-    using oM.Structure.Elements;
-    using oM.Structure.Loads;
-    using System.Collections.Generic;
-    using System.Linq;
-    using oM.Structure.MaterialFragments;
-    using oM.Structure.SectionProperties;
-
     internal class BHoMModel
     {
         private readonly IDictionary<string, Loadcase> _loadCases = new Dictionary<string, Loadcase>();

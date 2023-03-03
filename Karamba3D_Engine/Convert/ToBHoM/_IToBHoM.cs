@@ -20,17 +20,15 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapter.Karamba3D;
+using BH.oM.Base;
+using Karamba.Materials;
+using Karamba3D_Engine;
+using System;
+using System.Collections.Generic;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using System;
-    using System.Collections.Generic;
-    using Adapter.Karamba3D;
-    using BH.oM.Base;
-    using Karamba.Materials;
-    using Karamba.Models;
-    using Karamba3D_Engine;
-    using oM.Structure.Loads;
-
     public static partial class Convert
     {
         public static ISet<Type> UnsupportedType = new HashSet<Type>()

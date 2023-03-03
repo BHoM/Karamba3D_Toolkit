@@ -20,16 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using NUnit.Framework;
 
 namespace Karamba3D_ToolkitTests
 {
-    using BH.Engine.Adapters.Karamba3D;
-    using Karamba.Geometry;
-    using Karamba.Loads;
-    using Karamba.Loads.Beam;
-    using NUnit.Framework;
-    using System.Linq;
-
     [TestFixture] 
     public class LoadCaseTests
     {
@@ -66,7 +60,7 @@ namespace Karamba3D_ToolkitTests
             //var expectedNumbers = new[] { 0, 1 };
             //CollectionAssert.AreEqual(expectedNames, loadCases.Select(l => l.Name).ToArray());
             //CollectionAssert.AreEqual(expectedNumbers, loadCases.Select(l => l.Number).ToArray());
-            Assert.Warn("TODO");
+            Assert.Warn("TODO Update NuGet version of K3D");
         }
     }
 }

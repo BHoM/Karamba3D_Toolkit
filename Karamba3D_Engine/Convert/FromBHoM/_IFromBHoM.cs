@@ -21,10 +21,11 @@
  */
 
 using BH.oM.Base;
+using BH.Engine.Adapter.Karamba3D;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using Adapter.Karamba3D;
+    
 
     public static partial class Convert
     {

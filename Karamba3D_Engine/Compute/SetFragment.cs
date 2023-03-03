@@ -23,12 +23,8 @@
 
 using BH.Engine.Base;
 using BH.oM.Base;
-using BH.oM.Structure.Loads;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BH.Engine.Adapters.Karamba3D
 {

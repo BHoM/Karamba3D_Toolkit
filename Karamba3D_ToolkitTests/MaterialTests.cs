@@ -20,15 +20,15 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapters.Karamba3D;
+using BH.oM.Structure.MaterialFragments;
+using Karamba.Materials;
+using NUnit.Framework;
+using System;
+using System.Linq;
+
 namespace Karamba3D_ToolkitTests
 {
-    using BH.Engine.Adapters.Karamba3D;
-    using BH.oM.Structure.MaterialFragments;
-    using Karamba.Materials;
-    using NUnit.Framework;
-    using System;
-    using System.Linq;
-
     public class MaterialTests
     {
         internal static FemMaterial_Isotrop CreateMaterialToTest(string name = null, string family = null)

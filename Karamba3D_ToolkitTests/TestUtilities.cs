@@ -20,25 +20,22 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using Karamba.CrossSections;
+using Karamba.Elements;
+using Karamba.Geometry;
+using Karamba.Joints;
+using Karamba.Loads;
+using Karamba.Materials;
+using Karamba.Models;
+using Karamba.Supports;
+using Karamba.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Node = Karamba.Nodes.Node;
+
 namespace Karamba3D_ToolkitTests
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using BH.oM.Structure.Elements;
-    using Karamba.CrossSections;
-    using Karamba.Elements;
-    using Karamba.Geometry;
-    using Karamba.Joints;
-    using Karamba.Loads;
-    using Karamba.Materials;
-    using Karamba.Models;
-    using Karamba.Supports;
-    using Karamba.Utilities;
-    using Node = Karamba.Nodes.Node;
-
     public static class TestUtilities
     {
         /// <summary>
@@ -226,8 +223,15 @@ namespace Karamba3D_ToolkitTests
                 i++;
                 int[] indices = { 0, i };
                 Node[] beamNodes = { baseNode, new Node(i, points[i]) };
-                var builder = new BuilderBeam();
-                builder.Ori = new BuilderElementStraightLineOrientation(null, new List<double> { rotationAngle });
+                var builder = new BuilderBeam
+                {
+                    Ori = new BuilderElementStraightLineOrientation(
+                        null,
+                        new List<double>
+                        {
+                            rotationAngle
+                        }),
+                };
                 return new ModelBeam(i, builder, indices, beamNodes.ToList());
             }).ToList();
 
@@ -320,7 +324,7 @@ namespace Karamba3D_ToolkitTests
                 beamBuilders.ToList(),
                 Enumerable.Empty<ElemSet>().ToList(),
                 joints,
-                out _);
+                new MessageLogger());
             return model;
         }
 

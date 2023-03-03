@@ -22,7 +22,6 @@
 
 using BH.oM.Structure.MaterialFragments;
 using Karamba.Materials;
-using Karamba.Models;
 
 namespace BH.Engine.Adapters.Karamba3D
 {

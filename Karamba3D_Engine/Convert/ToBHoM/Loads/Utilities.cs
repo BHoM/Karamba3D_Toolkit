@@ -20,18 +20,17 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
+using Karamba.Elements;
+using Karamba.Loads;
+using Karamba3D_Engine;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using Karamba.Loads;
-    using Karamba.Models;
-    using Karamba3D_Engine;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Karamba.Elements;
-    using BH.oM.Structure.Elements;
-    using BH.oM.Structure.Loads;
-
     public static partial class Convert
     {
         internal static List<Bar> GetLoadedBhomBars(ElementLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)

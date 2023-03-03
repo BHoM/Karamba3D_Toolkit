@@ -20,13 +20,11 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Structure.Constraints;
+using Karamba.Joints;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using System;
-    using System.Data.SqlTypes;
-    using Karamba.Joints;
-    using oM.Structure.Constraints;
-
     public static partial class Convert
     {
         internal static BarRelease ToBHoM(this Joint k3dJoint)

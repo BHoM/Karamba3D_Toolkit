@@ -20,14 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base;
+using BH.oM.Structure.Loads;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using Karamba.Models;
-    using oM.Structure.Loads;
-    using System.Collections.Generic;
-    using System.Linq;
-    using oM.Base;
-
     public static partial class Convert
     {
         private static IEnumerable<ILoad> ToBHoM(this Karamba.Loads.GravityLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
