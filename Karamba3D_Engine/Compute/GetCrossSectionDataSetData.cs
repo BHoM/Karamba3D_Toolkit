@@ -41,7 +41,7 @@ namespace BH.Engine.Adapters.Karamba3D
 
         [Description("Gets the data inside a BHoM dataset of cross sections.")]
         [Input("dataSetNameOrPath", "The path of the data set to read from.")]
-        [Input("document", "Input true if matching data sets should be concatenated.")]
+        [Input("concatenateMatchingDataSets", "Input true if matching data sets should be concatenated.")]
         public static List<T> GetCrossSectionDataSetData<T>(string dataSetNameOrPath, bool concatenateMatchingDataSets = false)
         {
             var dataSetPaths = Compute.GetDataSetPaths();
