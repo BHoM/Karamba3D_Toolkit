@@ -6,6 +6,11 @@
 		<FileVersion>6.1.0.0</FileVersion>
 		<Description>https://github.com/BHoM/Karamba3D_Toolkit</Description>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Query\**" />
+	  <EmbeddedResource Remove="Query\**" />
+	  <None Remove="Query\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
@@ -110,10 +115,6 @@
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resource.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Query\" />
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
