@@ -324,7 +324,7 @@ namespace Karamba3D_Engine_Tests
                 beamBuilders.ToList(),
                 Enumerable.Empty<ElemSet>().ToList(),
                 joints,
-                new MessageLogger());
+                out _);
             return model;
         }
 
