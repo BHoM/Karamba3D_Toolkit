@@ -142,4 +142,13 @@
   <data name="WarningCrossSectionExplicityConversionNotSupported" xml:space="preserve">
     <value>The {0} is not currently explicitly supported. A generic section has been created. If was not possible to set a property the value has been set to NaN.</value>
   </data>
+  <data name="NoCrossSectionDataSetError" xml:space="preserve">
+    <value>No data set matching "{0}" was found.</value>
+  </data>
+  <data name="MultipleCrossSectionDataSetError" xml:space="preserve">
+    <value>More than one matching data set found for "{0}". Please specify full path, OR set "{1}" to true. Data sets found:\n\t{2}</value>
+  </data>
+  <data name="DeserializationOfDataSetError" xml:space="preserve">
+    <value>Could not deserialize the data set "{0}". \nCheck that the data set file has not been altered (for example by opening it in a code editor and formatted): try building the visual studio solution `BHoM_Dataset` or re-installing BHoM.\nOtherwise, check that you are not using BHoM Nuget packages and mixing references from disk and Nuget.</value>
+  </data>
 </root>

@@ -37,21 +37,21 @@ namespace BH.oM.Karamba3D
         /***************************************************/
 
         [Description("Nodes converted from the Karamba model.")]
-        public IList<Node> Nodes { get; set; } = new List<Node>();
+        public virtual IList<Node> Nodes { get; set; } = new List<Node>();
 
         [Description("Bars converted from the Karamba model.")]
-        public IList<Bar> Bars { get; set; } = new List<Bar>();
+        public virtual IList<Bar> Bars { get; set; } = new List<Bar>();
 
         [Description("Loads converted from the Karamba model.")]
-        public IList<ILoad> Loads { get; set; } = new List<ILoad>();
+        public virtual IList<ILoad> Loads { get; set; } = new List<ILoad>();
 
         [Description("Load cases converted from the Karamba model.")]
-        public IList<Loadcase> LoadCases { get; set; } = new List<Loadcase>();
+        public virtual IList<Loadcase> LoadCases { get; set; } = new List<Loadcase>();
 
         [Description("Cross sections converted from the Karamba model.")]
-        public IList<ISectionProperty> CrossSections { get; set; } = new List<ISectionProperty>();
+        public virtual IList<ISectionProperty> CrossSections { get; set; } = new List<ISectionProperty>();
 
         [Description("Materials converted from the Karamba model.")]
-        public IList<IMaterialFragment> Materials { get; set; } = new List<IMaterialFragment>();
+        public virtual IList<IMaterialFragment> Materials { get; set; } = new List<IMaterialFragment>();
     }
 }

@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Karamba3D_Engine_Tests", "Karamba3D_Engine_Tests\Karamba3D_Engine_Tests.csproj", "{1E154A55-9067-4E15-9B3D-39FE8F85A3C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Karamba3D_oM", "..\..\Karamba3D_oM\Karamba3D_oM.csproj", "{4A0AD026-5C03-4E6E-BB9B-3908755FEE31}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Karamba3D_Engine", "..\..\Karamba3D_Engine\Karamba3D_Engine.csproj", "{DCA0F01C-5D72-4783-A946-ECB57D857A86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Karamba3D_Adapter", "..\..\Karamba3D_Adapter\Karamba3D_Adapter.csproj", "{1BCC475A-6F59-40B0-A4DC-3354886FE009}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Karamba3D_Toolkit", "Karamba3D_Toolkit", "{45FB1F23-6485-4965-8952-6563A2681417}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E154A55-9067-4E15-9B3D-39FE8F85A3C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E154A55-9067-4E15-9B3D-39FE8F85A3C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E154A55-9067-4E15-9B3D-39FE8F85A3C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E154A55-9067-4E15-9B3D-39FE8F85A3C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A0AD026-5C03-4E6E-BB9B-3908755FEE31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A0AD026-5C03-4E6E-BB9B-3908755FEE31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A0AD026-5C03-4E6E-BB9B-3908755FEE31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A0AD026-5C03-4E6E-BB9B-3908755FEE31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA0F01C-5D72-4783-A946-ECB57D857A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA0F01C-5D72-4783-A946-ECB57D857A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA0F01C-5D72-4783-A946-ECB57D857A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA0F01C-5D72-4783-A946-ECB57D857A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BCC475A-6F59-40B0-A4DC-3354886FE009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BCC475A-6F59-40B0-A4DC-3354886FE009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BCC475A-6F59-40B0-A4DC-3354886FE009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BCC475A-6F59-40B0-A4DC-3354886FE009}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A0AD026-5C03-4E6E-BB9B-3908755FEE31} = {45FB1F23-6485-4965-8952-6563A2681417}
+		{DCA0F01C-5D72-4783-A946-ECB57D857A86} = {45FB1F23-6485-4965-8952-6563A2681417}
+		{1BCC475A-6F59-40B0-A4DC-3354886FE009} = {45FB1F23-6485-4965-8952-6563A2681417}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F6AD5E5E-3405-4E2C-8896-69EB3D2D16BB}
+	EndGlobalSection
+EndGlobal

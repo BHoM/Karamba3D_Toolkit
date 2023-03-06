@@ -31,6 +31,9 @@ using System.Linq;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using System.ComponentModel;
+    using oM.Base.Attributes;
+
     public static partial class Convert
     {
         private static IEnumerable<Load> GetLoads(this Karamba.Models.Model k3dModel)
@@ -167,6 +170,9 @@ namespace BH.Engine.Adapters.Karamba3D
             return bhomModel;
         }
 
+        [Description("Converts a Karamba model to a set of BHoMObjects.")]
+        [Input("k3dModel", "The Karamba model to convert.")]
+        [Output("femModel", "The container of all converted BHoM objects.")]
         public static oM.Karamba3D.FemModel ToBHoM(this Karamba.Models.Model k3dModel)
         {
             return k3dModel.ToBHoMModel().ToFemModel();

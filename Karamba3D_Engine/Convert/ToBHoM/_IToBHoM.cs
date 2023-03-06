@@ -1,4 +1,4 @@
-/*
+    /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
  *
@@ -20,7 +20,6 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Adapter.Karamba3D;
 using BH.oM.Base;
 using Karamba.Materials;
 using Karamba3D_Engine;
@@ -31,7 +30,7 @@ namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
-        public static ISet<Type> UnsupportedType = new HashSet<Type>()
+        public static ISet<Type> UnsupportedTypes = new HashSet<Type>()
         {
             typeof(FemMaterial_Orthotropic),
         };
@@ -44,13 +43,13 @@ namespace BH.Engine.Adapters.Karamba3D
         // Fallback methods
         private static IObject ToBHoM(this object obj)
         {
-            K3dLogger.RecordError($"Could not find a convert method for {obj.GetType().FullName}.");
+            K3dLogger.RecordError(string.Format(Resource.ErrorConverterNotFound, obj.GetType().FullName));
             return null;
         }
 
         private static IObject ToBHoM(this object obj, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
-            if (UnsupportedType.Contains(obj.GetType()))
+            if (UnsupportedTypes.Contains(obj.GetType()))
             {
                 K3dLogger.RecordWarning(string.Format(Resource.WarningNotYetSupportedType, obj.GetType().FullName));
             }

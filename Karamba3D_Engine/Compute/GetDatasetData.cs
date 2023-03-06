@@ -29,31 +29,49 @@ using System.Linq;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using System.ComponentModel;
+    using System.Runtime.Serialization;
+    using Karamba3D_Engine;
+    using oM.Base.Attributes;
+
     public static partial class Compute
     {
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static List<T> GetDatasetData<T>(string datasetNameOrPath, bool concatenateMatchingDatasets = false)
+        [Description("Gets the data inside a BHoM dataset of cross sections.")]
+        [Input("dataSetNameOrPath", "The path of the data set to read from.")]
+        [Input("document", "Input true if matching data sets should be concatenated.")]
+        public static List<T> GetCrossSectionDataSetData<T>(string dataSetNameOrPath, bool concatenateMatchingDataSets = false)
         {
-            List<string> datasetPaths = Compute.GetDatasetPaths();
-            List<string> matchingDatasetsPaths = datasetPaths.Where(d => d.Contains(datasetNameOrPath)).ToList();
-            if (!matchingDatasetsPaths.Any())
-                throw new Exception($"No dataset matching `{datasetNameOrPath}` was found.");
+            var dataSetPaths = Compute.GetDataSetPaths();
+            var matchingDataSetsPaths = dataSetPaths.Where(d => d.Contains(dataSetNameOrPath)).ToList();
 
-            if (matchingDatasetsPaths.Count() > 1 && !concatenateMatchingDatasets)
-                throw new Exception($"More than one matching dataset found for `{datasetNameOrPath}`. " +
-                    $"Please specify full path, OR set `{nameof(concatenateMatchingDatasets)}` to true. Datasets found:\n\t{string.Join("\n\t", matchingDatasetsPaths)}");
+            if (!matchingDataSetsPaths.Any())
+            {
+                var message = string.Format(Resource.NoCrossSectionDataSetError, dataSetNameOrPath);
+                throw new FileNotFoundException(message);
+            }
 
-            matchingDatasetsPaths.Sort();
-            string cacheKey = string.Join("_", matchingDatasetsPaths
+            if (matchingDataSetsPaths.Count() > 1 && !concatenateMatchingDataSets)
+            {
+                string message = string.Format(
+                    Resource.MultipleCrossSectionDataSetError,
+                    dataSetNameOrPath,
+                    nameof(concatenateMatchingDataSets),
+                    string.Join("\n\t", matchingDataSetsPaths));
+                throw new Exception($"");
+            }
+
+            matchingDataSetsPaths.Sort();
+            string cacheKey = string.Join("_", matchingDataSetsPaths
                 .SelectMany(n => Path.GetFileNameWithoutExtension(n).Split('\\').Reverse().Take(2).Reverse())) + ".json";
 
             string cacheFile = "";
             try
             {
-                cacheFile = Directory.GetFiles(_cachedDatasetFolder, cacheKey).FirstOrDefault(f => f.Contains(cacheKey));
+                cacheFile = Directory.GetFiles(_cachedDataSetFolder, cacheKey).FirstOrDefault(f => f.Contains(cacheKey));
             }
             catch { }
 
@@ -66,9 +84,8 @@ namespace BH.Engine.Adapters.Karamba3D
                 return deserialized;
             }
             else
-                cacheFile = Path.Combine(_cachedDatasetFolder, cacheKey);
+                cacheFile = Path.Combine(_cachedDataSetFolder, cacheKey);
 
-            // LoadAllAssemblies is required by the BHoM_Engine datasets reading.
             if (!_assembliesLoaded)
             {
                 BH.Engine.Base.Compute.LoadAllAssemblies();
@@ -76,13 +93,15 @@ namespace BH.Engine.Adapters.Karamba3D
             }
 
             List<T> resultData = new List<T>();
-            foreach (string datasetPath in matchingDatasetsPaths)
+            foreach (string dataSetPath in matchingDataSetsPaths)
             {
-                Dataset dataset = BH.Engine.Library.Query.Datasets(datasetPath.ToDatasetPath()).FirstOrDefault();
+                Dataset dataset = BH.Engine.Library.Query.Datasets(dataSetPath.ToDataSetPath()).FirstOrDefault();
                 if (dataset.Data == null || !dataset.Data.Any())
-                    throw new Exception($"Could not deserialize the Dataset `{datasetPath}`. " +
-                        $"\nCheck that the dataset file has not been altered (for example by opening it in a code editor and formatted): try building the visual studio solution `BHoM_Dataset` or re-installing BHoM." +
-                        $"\nOtherwise, check that you are not using BHoM Nuget packages and mixing references from disk and Nuget.");
+                {
+                    string message = string.Format(Resource.DeserializationOfDataSetError, dataSetPath);
+                    throw new SerializationException(message);
+                }
+
                 resultData.AddRange(dataset.Data?.OfType<T>());
             }
 
@@ -90,7 +109,7 @@ namespace BH.Engine.Adapters.Karamba3D
             if (resultData.Any())
                 try
                 {
-                    Directory.CreateDirectory(_cachedDatasetFolder);
+                    Directory.CreateDirectory(_cachedDataSetFolder);
                     string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(resultData, settings);
                     File.WriteAllText(cacheFile, serialized);
                 }
@@ -103,16 +122,16 @@ namespace BH.Engine.Adapters.Karamba3D
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static List<string> GetDatasetPaths(string sourceFolder = _datasetsDiskLocation, string subFolder = "")
+        private static List<string> GetDataSetPaths(string sourceFolder = _dataSetsDiskLocation, string subFolder = "")
         {
             return System.IO.Directory.GetFiles(Path.Combine(sourceFolder, subFolder), "*.json", SearchOption.AllDirectories).ToList();
         }
 
         /***************************************************/
 
-        private static string ToDatasetPath(this string path)
+        private static string ToDataSetPath(this string path)
         {
-            path = path.Replace(_datasetsDiskLocation, "");
+            path = path.Replace(_dataSetsDiskLocation, "");
             path = path.Replace(".json", "");
             path = path.TrimStart('\\');
             return path;
@@ -123,8 +142,8 @@ namespace BH.Engine.Adapters.Karamba3D
         /***************************************************/
 
         private static bool _assembliesLoaded = false;
-        private const string _datasetsDiskLocation = @"C:\ProgramData\BHoM\Datasets";
-        private const string _cachedDatasetFolder = @"..\..\..\Cache\CachedDatasets";
+        private const string _dataSetsDiskLocation = @"C:\ProgramData\BHoM\Datasets";
+        private const string _cachedDataSetFolder = @"..\..\..\Cache\CachedDatasets";
     }
 }
 

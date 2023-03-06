@@ -20,7 +20,6 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Adapter.Karamba3D;
 using BH.oM.Structure.Loads;
 using Karamba.Loads.Beam;
 using Karamba3D_Engine;
@@ -31,7 +30,7 @@ namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBHoM(this TranslationalGap k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
+        internal static IEnumerable<ILoad> ToBHoM(this TranslationalGap k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             K3dLogger.RecordError(
                 string.Format(

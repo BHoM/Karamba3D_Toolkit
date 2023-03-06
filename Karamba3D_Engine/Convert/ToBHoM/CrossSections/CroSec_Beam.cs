@@ -20,7 +20,6 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Adapter.Karamba3D;
 using BH.oM.Spatial.ShapeProfiles;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SectionProperties;
@@ -29,13 +28,12 @@ using Karamba3D_Engine;
 using System;
 using System.IO;
 using System.Linq;
-using log = BH.Engine.Adapter.Karamba3D.K3dLogger;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
-        private static ISectionProperty ToBHoM(this CroSec_Beam k3dCrossSection, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
+        internal static ISectionProperty ToBHoM(this CroSec_Beam k3dCrossSection, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             if (k3dCrossSection is null)
                 return null;
@@ -117,7 +115,7 @@ namespace BH.Engine.Adapters.Karamba3D
                     Resource.ErrorCrossSectionMapNotFound,
                     Path.GetFullPath(crossSectionMapPath));
 
-                log.RecordNote($"Could not find cross section dataset in {crossSectionMapPath}.", doNotRepeat: true);
+                K3dLogger.RecordNote($"Could not find cross section dataset in {crossSectionMapPath}.", doNotRepeat: true);
 
                 return false;
             }
@@ -133,8 +131,8 @@ namespace BH.Engine.Adapters.Karamba3D
 
             var dataSetName = csvRow[1];
             var sectionName = csvRow[2];
-            var test = Compute.GetDatasetData<SteelSection>(dataSetName);
-            bhomSection = test.FirstOrDefault(s => s.Name == sectionName);
+            var dataSet = Compute.GetCrossSectionDataSetData<SteelSection>(dataSetName);
+            bhomSection = dataSet.FirstOrDefault(s => s.Name == sectionName);
 
             return bhomSection != null;
 

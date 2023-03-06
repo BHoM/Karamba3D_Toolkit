@@ -33,7 +33,7 @@ namespace BH.Adapter.Karamba3D
         /**** Methods                                  *****/
         /***************************************************/
 
-        [MultiOutput(0, "FirstOutput", "Description of output 1")]
+        [MultiOutput(0, "FirstOutput", "Description of output 1.")]
         [MultiOutput(1, "SecondOutput", "Bool indicating whether the command succeded for all the provided inputs.")]
         public override Output<List<object>, bool> Execute(IExecuteCommand command, ActionConfig actionConfig = null)
         {

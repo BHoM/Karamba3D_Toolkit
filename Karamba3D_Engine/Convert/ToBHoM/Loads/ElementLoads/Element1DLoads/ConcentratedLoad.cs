@@ -32,7 +32,7 @@ namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBHoM(this ConcentratedLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
+        internal static IEnumerable<ILoad> ToBHoM(this ConcentratedLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             k3dLoad.GetOrientation(out var loadAxis, out var isProjected);
 

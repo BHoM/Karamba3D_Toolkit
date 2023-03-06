@@ -33,24 +33,24 @@ namespace BH.Engine.Adapters.Karamba3D
     {
         private readonly IDictionary<string, Loadcase> _loadCases = new Dictionary<string, Loadcase>();
 
-        public IDictionary<int, Node> Nodes { get; set; } = new Dictionary<int, Node>();
+        internal IDictionary<int, Node> Nodes { get; set; } = new Dictionary<int, Node>();
 
-        public IDictionary<int, Bar> Elements1D { get; set; } = new Dictionary<int, Bar>();
+        internal IDictionary<int, Bar> Elements1D { get; set; } = new Dictionary<int, Bar>();
 
-        public List<ILoad> Loads { get; set; } = new List<ILoad>();
+        internal List<ILoad> Loads { get; set; } = new List<ILoad>();
 
-        public ICollection<Loadcase> LoadCases => _loadCases.Values;
+        internal ICollection<Loadcase> LoadCases => _loadCases.Values;
 
-        public IDictionary<Guid, IMaterialFragment> Materials { get; set; } = new Dictionary<Guid, IMaterialFragment>();
+        internal IDictionary<Guid, IMaterialFragment> Materials { get; set; } = new Dictionary<Guid, IMaterialFragment>();
 
-        public IDictionary<Guid, ISectionProperty> CrossSections { get; set; } = new Dictionary<Guid, ISectionProperty>();
+        internal IDictionary<Guid, ISectionProperty> CrossSections { get; set; } = new Dictionary<Guid, ISectionProperty>();
 
-        public bool TryGetLoadCase(string loadCaseName, out Loadcase loadcase)
+        internal bool TryGetLoadCase(string loadCaseName, out Loadcase loadcase)
         {
             return _loadCases.TryGetValue(loadCaseName, out loadcase);
         }
 
-        public Loadcase RegisterLoadCase(string loadCaseName)
+        internal Loadcase RegisterLoadCase(string loadCaseName)
         {
             if (_loadCases.TryGetValue(loadCaseName, out var loadCase))
             {

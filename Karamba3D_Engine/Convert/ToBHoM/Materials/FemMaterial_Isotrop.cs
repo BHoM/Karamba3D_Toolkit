@@ -27,7 +27,35 @@ namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
-        private static IMaterialFragment ToBHoM(this FemMaterial_Isotrop k3dMaterial, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
+        private static MaterialType GetMaterialType(FemMaterial material)
+        {
+            switch (material.family)
+            {
+                case "Steel":
+                    return MaterialType.Steel;
+
+                case "Wood":
+                case "Hardwood":
+                case "ConiferousTimber":
+                case "GlulamTimber":
+                    return MaterialType.Timber;
+
+                case "Aluminum":
+                    return MaterialType.Aluminium;
+
+                case "Concrete":
+                case "LightweightConcrete":
+                    return MaterialType.Concrete;
+
+                case "ReinfSteel":
+                    return MaterialType.Rebar;
+
+                default:
+                    return MaterialType.Undefined;
+            }
+        }
+
+        internal static IMaterialFragment ToBHoM(this FemMaterial_Isotrop k3dMaterial, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             if (bhomModel.Materials.TryGetValue(k3dMaterial.guid, out var bhomMaterial))
             {

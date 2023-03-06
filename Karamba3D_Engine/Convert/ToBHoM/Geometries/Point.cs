@@ -25,9 +25,9 @@ using Karamba.Geometry;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Convertt
+    public static partial class Convert
     {
-        public static Point ToBHoM(this Point3 obj)
+        internal static Point ToBHoM(this Point3 obj)
         {
             Point result = new Point()
             {

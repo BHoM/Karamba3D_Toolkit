@@ -61,6 +61,15 @@ namespace Karamba3D_Engine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not deserialize the data set &quot;{0}&quot;. \nCheck that the data set file has not been altered (for example by opening it in a code editor and formatted): try building the visual studio solution `BHoM_Dataset` or re-installing BHoM.\nOtherwise, check that you are not using BHoM Nuget packages and mixing references from disk and Nuget..
+        /// </summary>
+        public static string DeserializationOfDataSetError {
+            get {
+                return ResourceManager.GetString("DeserializationOfDataSetError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} cannot be converted to {1} due to Karamba&apos;s {2} property..
         /// </summary>
         public static string ErrorBarPointLoadOrientation {
@@ -129,6 +138,24 @@ namespace Karamba3D_Engine {
         public static string ErrorTemperatureLoadOnSurfaces {
             get {
                 return ResourceManager.GetString("ErrorTemperatureLoadOnSurfaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More than one matching data set found for &quot;{0}&quot;. Please specify full path, OR set &quot;{1}&quot; to true. Data sets found:\n\t{2}.
+        /// </summary>
+        public static string MultipleCrossSectionDataSetError {
+            get {
+                return ResourceManager.GetString("MultipleCrossSectionDataSetError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No data set matching &quot;{0}&quot; was found..
+        /// </summary>
+        public static string NoCrossSectionDataSetError {
+            get {
+                return ResourceManager.GetString("NoCrossSectionDataSetError", resourceCulture);
             }
         }
         

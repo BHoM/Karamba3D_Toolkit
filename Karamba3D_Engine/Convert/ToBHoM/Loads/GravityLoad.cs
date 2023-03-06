@@ -29,7 +29,7 @@ namespace BH.Engine.Adapters.Karamba3D
 {
     public static partial class Convert
     {
-        private static IEnumerable<ILoad> ToBHoM(this Karamba.Loads.GravityLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
+        internal static IEnumerable<ILoad> ToBHoM(this Karamba.Loads.GravityLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
             yield return new GravityLoad()
             {
