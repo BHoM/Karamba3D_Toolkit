@@ -28,12 +28,11 @@ using Karamba.Loads;
 using Karamba.Supports;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
+using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using System.ComponentModel;
-    using oM.Base.Attributes;
-
     public static partial class Convert
     {
         private static IEnumerable<Load> GetLoads(this Karamba.Models.Model k3dModel)

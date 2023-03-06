@@ -26,14 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ComponentModel;
+using System.Runtime.Serialization;
+using Karamba3D_Engine;
+using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    using System.ComponentModel;
-    using System.Runtime.Serialization;
-    using Karamba3D_Engine;
-    using oM.Base.Attributes;
-
     public static partial class Compute
     {
         /***************************************************/
