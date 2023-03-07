@@ -21,16 +21,6 @@
  */
 
 using BH.oM.Base;
-using BH.oM.Adapters.Karamba3D;
-using BH.oM.Base.Attributes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KarambaCommon.Utilities;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
@@ -40,16 +30,15 @@ namespace BH.Engine.Adapters.Karamba3D
         /*** Methods                                     ***/
         /***************************************************/
 
-        public static object IFromBHoM(this IObject bhomObject)
+        private static object IFromBHoM(this IObject bhomObject)
         {
             return FromBHoM(bhomObject as dynamic);
         } 
 
 
-        // Fallback method
         private static object FromBHoM(this IObject bhomObject)
         {
-            BH.Engine.Base.Compute.RecordError($"Could not find a convert method for {bhomObject.GetType().FullName}.");
+            K3dLogger.RecordError($"Could not find a convert method for {bhomObject.GetType().FullName}.");
             return null;
         }
 

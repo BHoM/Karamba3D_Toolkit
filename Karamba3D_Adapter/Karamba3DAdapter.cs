@@ -20,15 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter;
-using BH.Engine.Reflection;
-using BH.oM.Base;
-using BH.oM.Data.Requests;
-using BH.oM.Base.Attributes;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 
 namespace BH.Adapter.Karamba3D
 {
@@ -38,19 +30,10 @@ namespace BH.Adapter.Karamba3D
         /**** Constructors                              ****/
         /***************************************************/
 
-        [Description("")]
+        [Description("Adapter to connect to a Karamba3D model.")]
         public Karamba3DAdapter()
         {
         }
-
-        /***************************************************/
-        /**** Private Fields                            ****/
-        /***************************************************/
-
-
-        /***************************************************/
-        /**** Private Methods                           ****/
-        /***************************************************/
 
     }
 }

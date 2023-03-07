@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AssemblyName>Karamba3D_ToolkitTests</AssemblyName>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="KarambaCommon" Version="3.0.0" />
+		<PackageReference Include="NUnit" Version="3.12.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Karamba3D_Adapter\Karamba3D_Adapter.csproj" />
+		<ProjectReference Include="..\Karamba3D_Engine\Karamba3D_Engine.csproj" />
+		<ProjectReference Include="..\Karamba3D_oM\Karamba3D_oM.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="BHoM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM.dll</HintPath>
+		</Reference>
+		<Reference Include="BHoM_Engine">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
+		</Reference>
+		<Reference Include="Dimensional_oM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Dimensional_oM.dll</HintPath>
+		</Reference>
+		<Reference Include="Geometry_Engine">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Geometry_Engine.dll</HintPath>
+		</Reference>
+		<Reference Include="Geometry_oM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Geometry_oM.dll</HintPath>
+		</Reference>
+		<Reference Include="Library_Engine">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Library_Engine.dll</HintPath>
+		</Reference>
+		<Reference Include="Serialiser_Engine">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Serialiser_Engine.dll</HintPath>
+		</Reference>
+		<Reference Include="Structure_Engine">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Structure_Engine.dll</HintPath>
+		</Reference>
+		<Reference Include="Structure_oM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Structure_oM.dll</HintPath>
+		</Reference>
+		<Reference Include="Analytical_oM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Analytical_oM.dll</HintPath>
+		</Reference>
+		<Reference Include="Physical_oM">
+			<HintPath>$(ProgramData)\BHoM\Assemblies\Physical_oM.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;$(ProgramData)\BHoM\Assemblies&quot; /Y&#xD;&#xA;EXIT 0" />
+	</Target>
+
+</Project>

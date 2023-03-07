@@ -1,4 +1,4 @@
-/*
+    /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
  *
@@ -21,43 +21,44 @@
  */
 
 using BH.oM.Base;
-using BH.oM.Adapters.Karamba3D;
-using BH.oM.Base.Attributes;
+using Karamba.Materials;
+using Karamba3D_Engine;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Karamba.Geometry;
-using BH.oM.Geometry;
-using BH.oM.Structure.Elements;
-using BH.oM.Structure.MaterialFragments;
-using Karamba.Utilities;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
-    public static partial class Query
+    public static partial class Convert
     {
-        /***************************************************/
-        /*** Methods                                     ***/
-        /***************************************************/
-
-        // Entry point
-        public static IObject IToBHoM(this object obj)
+        public static ISet<Type> UnsupportedTypes = new HashSet<Type>()
         {
-            return ToBHoM(obj as dynamic);
+            typeof(FemMaterial_Orthotropic),
+        };
+
+        internal static object IToBHoM(this object obj, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
+        {
+            return ToBHoM(obj as dynamic, k3dModel, bhomModel);
         }
 
-        // Fallback method
+        // Fallback methods
         private static IObject ToBHoM(this object obj)
         {
-            BH.Engine.Base.Compute.RecordError($"Could not find a convert method for {obj.GetType().FullName}.");
+            K3dLogger.RecordError(string.Format(Resource.ErrorConverterNotFound, obj.GetType().FullName));
             return null;
         }
 
-        /***************************************************/
+        private static IObject ToBHoM(this object obj, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
+        {
+            if (UnsupportedTypes.Contains(obj.GetType()))
+            {
+                K3dLogger.RecordWarning(string.Format(Resource.WarningNotYetSupportedType, obj.GetType().FullName));
+            }
+            else
+            {
+                K3dLogger.RecordError(string.Format(Resource.ErrorConverterNotFound, obj.GetType().FullName));
+            }
+            return null;
+        }
     }
 }
 

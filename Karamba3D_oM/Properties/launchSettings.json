@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Karamba3D_oM": {
+      "commandName": "Project"
+    },
+    "Rhino6": {
+      "commandName": "Executable",
+      "executablePath": "$(ProgramData)\\Rhino 6\\System\\Rhino.exe",
+      "commandLineArgs": "/nosplash"  
+    }
+  }
+}
