@@ -58,7 +58,7 @@ namespace Karamba3D_Engine_Tests
                 CustomAsserts.BhOMObjectsAreEqual(
                     k3dCoordinateSystems[i],
                     bhomCoordinateSystem[i],
-                    new BhOMEqualityTestOptions() { FailureMessage = $"Iteration {i} failed." });
+                    new EqualityTestOptions() { FailureMessage = $"Iteration {i} failed." });
             }
         }
 
@@ -83,7 +83,7 @@ namespace Karamba3D_Engine_Tests
                 CustomAsserts.BhOMObjectsAreEqual(
                     k3dCoordinateSystems[i],
                     bhomCoordinateSystem[i],
-                    new BhOMEqualityTestOptions { FailureMessage = $"Iteration {i} failed." , DoubleTolerance = tolerance});
+                    new EqualityTestOptions { FailureMessage = $"Iteration {i} failed." , DoubleTolerance = tolerance});
             }
         }
 
@@ -184,7 +184,7 @@ namespace Karamba3D_Engine_Tests
                 Z = 0.1 * Math.Sqrt(2)
             };
             Assert.AreEqual(bhomBeam.Offset.Start, bhomBeam.Offset.End);
-            CustomAsserts.BhOMObjectsAreEqual(bhomBeam.Offset.Start, expectedVector, new BhOMEqualityTestOptions { DoubleTolerance = 1E-5});
+            CustomAsserts.BhOMObjectsAreEqual(bhomBeam.Offset.Start, expectedVector, new EqualityTestOptions { DoubleTolerance = 1E-5});
             Assert.That(bhomBeam.OrientationAngle, Is.EqualTo(rad));
         }
 
