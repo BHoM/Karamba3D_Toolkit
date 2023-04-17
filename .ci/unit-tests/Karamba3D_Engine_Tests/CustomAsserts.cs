@@ -31,24 +31,13 @@ using System.Text;
 
 namespace Karamba3D_Engine_Tests
 {
-    public class BhOMEqualityTestOptions
-    {
-        public double DoubleTolerance { get; set; } = 0;
-        public float SingleTolerance { get; set; } = 0;
-
-        public decimal DecimalTolerance { get; set; } = 0;
-        public string FailureMessage { get; set; } = string.Empty;
-
-        public bool AreTolerancesEnabled => DoubleTolerance != 0 || SingleTolerance != 0 || DecimalTolerance != 0;
-    }
-
     public static class CustomAsserts
     {
-        public static void BhOMObjectsAreEqual<T>(T actual, T expected, BhOMEqualityTestOptions options = default)
+        public static void BhOMObjectsAreEqual<T>(T actual, T expected, EqualityTestOptions options = default)
         {
             if (options is null)
             {
-                options = new BhOMEqualityTestOptions();
+                options = new EqualityTestOptions();
             }
             bool areEqual = AreEqualOrPropertiesEqual(actual, expected, out var notEqualProperties, options);
 
@@ -74,7 +63,7 @@ namespace Karamba3D_Engine_Tests
             Assert.Fail(message + sb);
         }
 
-        private static bool AreEqualOrPropertiesEqual<T>(T actual, T expected, out IEnumerable<PropertyInfo> notEqualProperties, BhOMEqualityTestOptions options)
+        private static bool AreEqualOrPropertiesEqual<T>(T actual, T expected, out IEnumerable<PropertyInfo> notEqualProperties, EqualityTestOptions options)
         {
             // If the type is string, value type or override the equal method, the equal method will be used
             // else all the public readable properties will be compared
@@ -103,7 +92,7 @@ namespace Karamba3D_Engine_Tests
             return obj.GetType().GetMethods().Any(m => m.Name == "Equals" && m.DeclaringType != typeof(object));
         }
 
-        private static bool CheckPropertiesEquality<T>(T actual, T expected, out IEnumerable<PropertyInfo> notEqualProperties, BhOMEqualityTestOptions options)
+        private static bool CheckPropertiesEquality<T>(T actual, T expected, out IEnumerable<PropertyInfo> notEqualProperties, EqualityTestOptions options)
         {
             // The comparison will consider all the properties of the type T.
             // 1. If the property type is string, value type or override the equal method,
@@ -193,7 +182,7 @@ namespace Karamba3D_Engine_Tests
             return obj.GetType().IsValueType || obj is string || OverridesEqualsMethod(obj);
         }
 
-        private static bool AreAlmostEqual<T>(T actualValue, T expectedValue, BhOMEqualityTestOptions options)
+        private static bool AreAlmostEqual<T>(T actualValue, T expectedValue, EqualityTestOptions options)
         {
             if (!options.AreTolerancesEnabled)
                 return Equals(actualValue, expectedValue);
