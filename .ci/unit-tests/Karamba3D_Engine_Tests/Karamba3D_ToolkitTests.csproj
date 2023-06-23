@@ -1,7 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net48</TargetFramework>
+<Description>https://github.com/BHoM/Karamba3D_Toolkit</Description>
 		<AssemblyName>Karamba3D_ToolkitTests</AssemblyName>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
