@@ -38,4 +38,5 @@ Clone and compile the Karamba_Toolkit to get them. Make sure Rhino/Excel/Revit a
 4. Push the converted `FemModel` to an external structural software of choice. For instructions on this, see [Introduction to BHoM_Adapter](https://bhom.xyz/documentation/BHoM_Adapter/#example-usage-use-robot-adapter-to-push-export-a-bhom-model-to-robot). It takes 5 minutes to read and set up a working example.
 
 ### Sample file: Beam cantilever
-Example file: [Beam_Cantilever.zip](https://github.com/BHoM/Karamba3D_Toolkit/files/10824421/Beam_Cantilever.zip)
+Example file for export to Robot: [Beam_Cantilever_ToRobot.gh](Examples/Beam_Cantilever_ToRobot.gh): works
+Example file for export to RFEM: [Beam_Cantilever_ToRFEM.gh](Examples/Beam_Cantilever_ToRFEM.gh): does not work

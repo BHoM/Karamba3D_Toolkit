@@ -31,15 +31,22 @@ using System.Linq;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Karamba.Utilities;
+
     public static partial class Convert
     {
         internal static IEnumerable<ILoad> ToBHoM(this DistributedLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
-            var positions = k3dLoad.Positions.ToArray();
-            var values = k3dLoad.Values.ToArray();
+            var ucf = UnitsConversionFactory.Conv();
+            var load = k3dLoad is DistributedForce ? ucf.conversion["N"] : ucf.conversion["N/m"];
+            var m = ucf.conversion["m"];
+
+            var positions = k3dLoad.Positions.Select(i => m.toUnit(i)).ToArray();
+            var values = k3dLoad.Values.Select(i => load.toUnit(i)).ToArray();
+
             k3dLoad.GetOrientation(out var loadAxis, out var isProjected);
             var objects = new BHoMGroup<Bar> { Elements = GetLoadedBhomBars(k3dLoad, k3dModel, bhomModel).ToList() };
-
+            
             if (positions.Length == 2 &&
                 Math.Abs(positions[0] - 0) < double.Epsilon &&
                 Math.Abs(positions[1] - 1) < double.Epsilon &&

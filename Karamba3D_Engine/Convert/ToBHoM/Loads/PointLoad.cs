@@ -28,6 +28,8 @@ using System.Collections.Generic;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Karamba.Utilities;
+
     public static partial class Convert
     {
         internal static IEnumerable<ILoad> ToBHoM(this Karamba.Loads.PointLoad k3dPointLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
@@ -37,12 +39,16 @@ namespace BH.Engine.Adapters.Karamba3D
                 K3dLogger.RecordWarning(Resource.WarningPointLoadLocalLoadNotSupported);
             }
 
+            var ucf = UnitsConversionFactory.Conv();
+            var N = ucf.conversion["N"];
+            var Nm = ucf.conversion["Nm"];
+
             yield return new PointLoad
             {
                 Axis = LoadAxis.Global,
                 Loadcase = null,
-                Force = k3dPointLoad.force.ToBHoM(),
-                Moment = k3dPointLoad.moment.ToBHoM(),
+                Force = N.toUnit(k3dPointLoad.force).ToBHoM(),
+                Moment = Nm.toUnit(k3dPointLoad.moment).ToBHoM(),
                 Projected = false,
                 Objects = new BHoMGroup<Node> { Elements = new List<Node> { bhomModel.Nodes[k3dPointLoad.node_ind] } },
             };

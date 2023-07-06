@@ -22,6 +22,7 @@
 
 using BH.oM.Structure.MaterialFragments;
 using Karamba.Materials;
+using Karamba.Utilities;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
@@ -62,6 +63,9 @@ namespace BH.Engine.Adapters.Karamba3D
                 return bhomMaterial;
             }
 
+            var ucf = UnitsConversionFactory.Conv();
+            var N_m2 = ucf.conversion["N/m/m"];
+
             IIsotropic bhomIsotropicMaterial;
             switch (GetMaterialType(k3dMaterial))
             {
@@ -75,8 +79,8 @@ namespace BH.Engine.Adapters.Karamba3D
                 {
                     bhomIsotropicMaterial = new Steel()
                     {
-                        UltimateStress = k3dMaterial.ft(),
-                        YieldStress = k3dMaterial.ft(),
+                        UltimateStress = N_m2.toUnit(k3dMaterial.ft()),
+                        YieldStress = N_m2.toUnit(k3dMaterial.ft()),
                     };
                     break;
                 }
@@ -85,7 +89,7 @@ namespace BH.Engine.Adapters.Karamba3D
                 {
                     bhomIsotropicMaterial = new Concrete()
                     {
-                        CylinderStrength = -k3dMaterial.fc(),
+                        CylinderStrength = N_m2.toUnit(-k3dMaterial.fc()),
                         CubeStrength = default,
                     };
                     break;
@@ -98,12 +102,14 @@ namespace BH.Engine.Adapters.Karamba3D
                 }
             }
 
-            bhomIsotropicMaterial.Density = k3dMaterial.gamma();
+            var N_m3 = ucf.conversion["N/m3"];
+
+            bhomIsotropicMaterial.Density = N_m3.toUnit(k3dMaterial.gamma());
             bhomIsotropicMaterial.DampingRatio = default;
             bhomIsotropicMaterial.Name = k3dMaterial.name;
             bhomIsotropicMaterial.PoissonsRatio = k3dMaterial.nue12();
             bhomIsotropicMaterial.ThermalExpansionCoeff = k3dMaterial.alphaT();
-            bhomIsotropicMaterial.YoungsModulus = k3dMaterial.E();
+            bhomIsotropicMaterial.YoungsModulus = N_m2.toUnit(k3dMaterial.E());
 
             bhomIsotropicMaterial.BHoM_Guid = k3dMaterial.guid;
             bhomModel.Materials.Add(bhomIsotropicMaterial.BHoM_Guid, bhomIsotropicMaterial);
