@@ -24,6 +24,7 @@ using BH.oM.Base;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using Karamba.Loads.Beam;
+using Karamba.Utilities;
 using System.Collections.Generic;
 
 
@@ -33,10 +34,13 @@ namespace BH.Engine.Adapters.Karamba3D
     {
         internal static IEnumerable<ILoad> ToBHoM(this UniformlyDistLoad_OLD k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
         {
+            var ucf = UnitsConversionFactory.Conv();
+            var N_m = ucf.conversion["N/m"];
+
             k3dLoad.GetOrientation(out var loadAxis, out var isProjected);
             yield return new BarUniformlyDistributedLoad
             {
-                Force = (k3dLoad.Load).ToBHoM(),
+                Force = N_m.toUnit(1) * (k3dLoad.Load).ToBHoM(),
                 Loadcase = null,
                 Objects = new BHoMGroup<Bar> { Elements = GetLoadedBhomBars(k3dLoad, k3dModel, bhomModel) },
                 Axis = loadAxis,

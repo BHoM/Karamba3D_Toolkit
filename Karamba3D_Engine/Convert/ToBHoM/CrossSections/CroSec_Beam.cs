@@ -31,6 +31,8 @@ using System.Linq;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Karamba.Utilities;
+
     public static partial class Convert
     {
         internal static ISectionProperty ToBHoM(this CroSec_Beam k3dCrossSection, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
@@ -64,25 +66,33 @@ namespace BH.Engine.Adapters.Karamba3D
                 K3dLogger.RecordWarning(message);
 
                 var material = (IMaterialFragment)k3dCrossSection.material.IToBHoM(k3dModel, bhomModel);
+
+                var ucf = UnitsConversionFactory.Conv();
+                var m = ucf.conversion["m"];
+                var m2 = ucf.conversion["m2"];
+                var m3 = ucf.conversion["m3"];
+                var m4 = ucf.conversion["m4"];
+                var m6 = ucf.conversion["m6"];
+
                 section = new ExplicitSection()
                 {
                     Name = k3dCrossSection.name,
                     Material = material,
-                    Area = k3dCrossSection.A,
-                    Rgy = k3dCrossSection.iy,
-                    Rgz = k3dCrossSection.iz,
-                    J = k3dCrossSection.Ipp,
-                    Iy = k3dCrossSection.Iyy,
-                    Iz = k3dCrossSection.Izz,
-                    Iw = k3dCrossSection.Cw,
-                    Wely = Math.Min(Math.Abs(k3dCrossSection.Wely_z_neg), k3dCrossSection.Welz_y_pos),
-                    Welz = Math.Min(Math.Abs(k3dCrossSection.Welz_y_neg), k3dCrossSection.Wely_z_pos),
-                    Wply = k3dCrossSection.Wply,
-                    Wplz = k3dCrossSection.Wplz,
-                    Vz = k3dCrossSection.zs,
-                    Vpz = k3dCrossSection.getHeight() - k3dCrossSection.zs,
-                    Asy = k3dCrossSection.Ay,
-                    Asz = k3dCrossSection.Az,
+                    Area = m2.toUnit(k3dCrossSection.A),
+                    Rgy = m.toUnit(k3dCrossSection.iy),
+                    Rgz = m.toUnit(k3dCrossSection.iz),
+                    J = m4.toUnit(k3dCrossSection.Ipp),
+                    Iy = m4.toUnit(k3dCrossSection.Iyy),
+                    Iz = m4.toUnit(k3dCrossSection.Izz),
+                    Iw = m6.toUnit(k3dCrossSection.Cw),
+                    Wely = m3.toUnit(Math.Min(Math.Abs(k3dCrossSection.Wely_z_neg), k3dCrossSection.Wely_z_pos)),
+                    Welz = m3.toUnit(Math.Min(Math.Abs(k3dCrossSection.Welz_y_neg), k3dCrossSection.Welz_y_pos)),
+                    Wply = m3.toUnit(k3dCrossSection.Wply),
+                    Wplz = m3.toUnit(k3dCrossSection.Wplz),
+                    Vz = m.toUnit(k3dCrossSection.zs),
+                    Vpz = m.toUnit(k3dCrossSection.getHeight() - k3dCrossSection.zs),
+                    Asy = m2.toUnit(k3dCrossSection.Ay),
+                    Asz = m2.toUnit(k3dCrossSection.Az),
                     CentreY = double.NaN,
                     CentreZ = double.NaN,
                     Vpy = double.NaN,
@@ -141,12 +151,14 @@ namespace BH.Engine.Adapters.Karamba3D
         private static bool TryCreateProfile(CroSec_Beam obj, out IProfile profile)
         {
             profile = null;
+            var ucf = UnitsConversionFactory.Conv();
+            var m = ucf.conversion["m"];
             switch (obj)
             {
                 case CroSec_Circle circle:
                 {
-                    var diameter = circle.getHeight();
-                    var thickness = circle.thick;
+                    var diameter = m.toUnit(circle.getHeight());
+                    var thickness = m.toUnit(circle.thick);
                     
                     // If the thickness is less then zero or is higher then half diameter,
                     // a full circle will be created. 
@@ -159,11 +171,11 @@ namespace BH.Engine.Adapters.Karamba3D
                 case CroSec_T tSection:
                 {
                     profile = Spatial.Create.TSectionProfile(
-                        tSection._height,
-                        tSection.uf_width,
-                        tSection.w_thick,
-                        tSection.uf_thick,
-                        tSection.fillet_r);
+                        m.toUnit(tSection._height),
+                        m.toUnit(tSection.uf_width),
+                        m.toUnit(tSection.w_thick),
+                        m.toUnit(tSection.uf_thick),
+                        m.toUnit(tSection.fillet_r));
                     break;
                 }
 
@@ -183,22 +195,22 @@ namespace BH.Engine.Adapters.Karamba3D
                         }
 
                         profile = Spatial.Create.FabricatedISectionProfile(
-                            box._height,
-                            box.uf_width,
-                            box.lf_width,
-                            box.w_thick,
-                            box.uf_thick,
-                            box.lf_thick);
+                            m.toUnit(box._height),
+                            m.toUnit(box.uf_width),
+                            m.toUnit(box.lf_width),
+                            m.toUnit(box.w_thick),
+                            m.toUnit(box.uf_thick),
+                            m.toUnit(box.lf_thick));
                         break;
                     }
                     else
                     {
                         profile = Spatial.Create.BoxProfile(
-                            box._height,
-                            box.uf_width,
-                            box.w_thick,
-                            box.fillet_r1,
-                            box.fillet_r);
+                            m.toUnit(box._height),
+                            m.toUnit(box.uf_width),
+                            m.toUnit(box.w_thick),
+                            m.toUnit(box.fillet_r1),
+                            m.toUnit(box.fillet_r));
                         break;
                     }
                 }
@@ -215,22 +227,22 @@ namespace BH.Engine.Adapters.Karamba3D
                         }
 
                         profile = Spatial.Create.FabricatedISectionProfile(
-                            iSection._height,
-                            iSection.uf_width,
-                            iSection.lf_width,
-                            iSection.w_thick,
-                            iSection.uf_thick,
-                            iSection.lf_thick);
+                            m.toUnit(iSection._height),
+                            m.toUnit(iSection.uf_width),
+                            m.toUnit(iSection.lf_width),
+                            m.toUnit(iSection.w_thick),
+                            m.toUnit(iSection.uf_thick),
+                            m.toUnit(iSection.lf_thick));
                         break;
                     }
                     else
                     {
                         profile = Spatial.Create.ISectionProfile(
-                            iSection._height,
-                            iSection.uf_width,
-                            iSection.w_thick,
-                            iSection.uf_thick,
-                            iSection.fillet_r,
+                            m.toUnit(iSection._height),
+                            m.toUnit(iSection.uf_width),
+                            m.toUnit(iSection.w_thick),
+                            m.toUnit(iSection.uf_thick),
+                            m.toUnit(iSection.fillet_r),
                             0D);
                         break;
                     }

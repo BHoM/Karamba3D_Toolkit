@@ -30,6 +30,8 @@ using System.Linq;
 
 namespace BH.Engine.Adapters.Karamba3D
 {
+    using Karamba.Utilities;
+
     public static partial class Convert
     {
         internal static IEnumerable<ILoad> ToBHoM(this ConcentratedLoad k3dLoad, Karamba.Models.Model k3dModel, BHoMModel bhomModel)
@@ -41,13 +43,18 @@ namespace BH.Engine.Adapters.Karamba3D
                               let bhomBar = bhomModel.Elements1D[element.ind]
                               group bhomBar by length;
             
+            var ucf = UnitsConversionFactory.Conv();
+            var N = ucf.conversion["N"];
+            var Nm = ucf.conversion["Nm"];
+            var m = ucf.conversion["m"];
+
             foreach (var group in groupedBars)
             {
                 yield return new BarPointLoad
                 {
-                    Force = k3dLoad is ConcentratedForce ? k3dLoad.Values.ToBHoM() : new Vector(),
-                    Moment = k3dLoad is ConcentratedMoment ? k3dLoad.Values.ToBHoM() : new Vector(),
-                    DistanceFromA = group.Key * k3dLoad.Position,
+                    Force = N.toUnit(1) * (k3dLoad is ConcentratedForce ? k3dLoad.Values.ToBHoM() : new Vector()),
+                    Moment = Nm.toUnit(1) * (k3dLoad is ConcentratedMoment ? k3dLoad.Values.ToBHoM() : new Vector()),
+                    DistanceFromA = m.toUnit(group.Key * k3dLoad.Position),
                     Loadcase = null,
                     Objects =  new BHoMGroup<Bar> { Elements = group.ToList() },
                     Axis = loadAxis,
