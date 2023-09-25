@@ -2,8 +2,8 @@
 	<PropertyGroup>
 		<TargetFramework>net48</TargetFramework>
 		<AssemblyName>Karamba3D_oM</AssemblyName>
-		<AssemblyVersion>6.0.0.0</AssemblyVersion>
-		<FileVersion>6.3.0.0</FileVersion>
+		<AssemblyVersion>7.0.0.0</AssemblyVersion>
+		<FileVersion>7.0.0.0</FileVersion>
 		<Description>https://github.com/BHoM/Karamba3D_Toolkit</Description>
 	</PropertyGroup>
 	<ItemGroup>
