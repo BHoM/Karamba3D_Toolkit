@@ -26,77 +26,77 @@
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="Adapter_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Adapter_oM.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Analytical_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Analytical_oM.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="BHoM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="BHoM_Adapter">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM_Adapter.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="BHoM_Engine">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Data_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Data_oM.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Dimensional_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Dimensional_oM.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Geometry_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Geometry_oM.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Library_Engine">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Library_Engine.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Physical_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Physical_oM.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Reflection_Engine">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Structure_Engine">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Structure_Engine.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Structure_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Structure_oM.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Spatial_oM">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Spatial_oM.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="Spatial_Engine">
 			<HintPath>$(ProgramData)\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
 			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 	</ItemGroup>
