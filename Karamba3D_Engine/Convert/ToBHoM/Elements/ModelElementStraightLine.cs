@@ -53,8 +53,8 @@ namespace BH.Engine.Adapters.Karamba3D
             return new Bar
             {
                 Name = k3dElement.ind.ToString(),
-                StartNode = bhomModel.Nodes[k3dElement.node_inds[0]],
-                EndNode = bhomModel.Nodes[k3dElement.node_inds[1]],
+                Start = bhomModel.Nodes[k3dElement.node_inds[0]],
+                End = bhomModel.Nodes[k3dElement.node_inds[1]],
                 SectionProperty = (ISectionProperty)k3dElement.crosec.IToBHoM(k3dModel, bhomModel),
                 FEAType = k3dElement is ModelBeam ? BarFEAType.Flexural : BarFEAType.Axial,
                 Offset = offset,
